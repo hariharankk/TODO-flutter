@@ -1,0 +1,124 @@
+{
+  "todo": [
+    {
+      "assignedTo": {
+        "name": "Jemal"
+      },
+      "category": "User",
+      "creation_time": "2021-02-03T00:28:26.783Z",
+      "description": {
+        "content": "Create Avatar Widget",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "- [] Selection of basic avatars\n- [] Upload image for avatar\n- [] Click avatar to view/update Profile",
+        "mime": "text/markdown"
+      },
+      "id": "4",
+      "prio": 0,
+      "references": [],
+      "title": "Avatar"
+    },
+    {
+      "assignedTo": {
+        "name": "Jemal"
+      },
+      "category": "Group",
+      "creation_time": "2021-02-03T00:31:12.612Z",
+      "description": {
+        "content": "Create List for Groups ",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "- [] Get User's groups from database",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "prio": 0,
+      "references": [],
+      "title": "Create Groups List"
+    },
+    {
+      "assignedTo": {
+        "name": "Jemal"
+      },
+      "category": "Sign Up Page",
+      "creation_time": "2021-02-03T00:24:09.130Z",
+      "description": {
+        "content": "Added required text fields to synchronize with user database",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "Fields\n-[]First Name\n-[]Last Name\n-[]Optional Phone Number\n-[]Avatar\n",
+        "mime": "text/markdown"
+      },
+      "id": "2",
+      "prio": 0,
+      "references": [],
+      "title": "Update to Include Added Personal Info"
+    }
+  ],
+  "in-progress": [
+    {
+      "assignedTo": {
+        "name": "Jemal"
+      },
+      "category": "Backend",
+      "creation_time": "2021-02-03T00:26:02.767Z",
+      "description": {
+        "content": "Account for database changes to User",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "- [x] First Name\n- [x] Last Name\n- [x] Phone Number\n- [x] Avatar",
+        "mime": "text/markdown"
+      },
+      "id": "3",
+      "prio": 0,
+      "references": [],
+      "title": "Update User CRUD"
+    }
+  ],
+  "testing": [
+    {
+      "assignedTo": {
+        "name": "Jemal"
+      },
+      "category": "Backend",
+      "creation_time": "2021-02-03T00:40:51.235Z",
+      "description": {
+        "content": "Create a Group table and a Group Members Table",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "Group Table\n- id\n- name\n\nGroup Members Table\n- group_id fk\n- user_id fk\n--role?\n\nTasks Table\n- group_id fk",
+        "mime": "text/markdown"
+      },
+      "id": "6",
+      "prio": 0,
+      "references": [],
+      "title": "Group Table"
+    }
+  ],
+  "done": [
+    {
+      "assignedTo": {
+        "name": "Jemal"
+      },
+      "category": "SideBar - UI",
+      "creation_time": "2021-02-01T18:00:27.974Z",
+      "description": {
+        "content": "Profile Button Leads to Update Profile Page with appealing UI",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "- [x] Edit Profile\n- [x] Current Password field\n- [x]Change Email Field\n- [x] New Password Field\n- [x] Confirm Password Field\n- [x] Update Profile Button",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "prio": 1,
+      "references": [],
+      "title": "Profile"
+    }
+  ]
+}
