@@ -4,11 +4,8 @@ import 'package:todolist/UI/pages/home_page.dart';
 import 'package:flutter/services.dart';
 import 'package:todolist/UI/pages/authenticate/login_page.dart';
 import 'package:todolist/UI/pages/sidebar_pages/create_new_group_page.dart';
-import 'package:todolist/UI/pages/sidebar_pages/group_info_page.dart';
-import 'package:todolist/UI/pages/sidebar_pages/group_page.dart';
 import 'package:todolist/UI/tabs/list_groups_tab.dart';
 import 'package:todolist/UI/tabs/subtask_list_tab.dart';
-import 'package:todolist/UI/tabs/todo_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/models/global.dart';
@@ -39,7 +36,6 @@ class MyApp extends StatelessWidget {
         ListGroupsTab.routeName: (BuildContext context) => ListGroupsTab(),
         SubtaskListTab.routeName: (BuildContext context) => SubtaskListTab(),
         CreateGroupPage.routeName: (BuildContext context) => CreateGroupPage(),
-        GroupPage.routeName: (BuildContext context) => GroupPage(),
       },
     );
   }

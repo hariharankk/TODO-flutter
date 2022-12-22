@@ -19,7 +19,7 @@ class ListGroupsTab extends StatelessWidget {
         endColor: lightBlueGradient,
         widget: TitleCard(
             title: "Groups",
-            child: GroupList(tileNavigatesTo: ToDoTab.routeName, top: height)),
+            child: GroupList(top: height)),
       )
     ]);
   }

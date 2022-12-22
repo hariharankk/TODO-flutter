@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/UI/pages/sidebar_pages/group_info_page.dart';
 import 'package:todolist/UI/tabs/todo_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
@@ -13,7 +12,6 @@ class GroupList extends StatefulWidget {
   /// Available Pages to Navigate To:
   /// * "ToDoTab"
   /// * "GroupInfoPage"
-  final String tileNavigatesTo;
 
   /// The offset from the top.
   final double top;
@@ -29,7 +27,7 @@ class GroupList extends StatefulWidget {
 
   /// Creates a visual Group List.
   GroupList(
-      {required this.tileNavigatesTo,
+      {
       this.top = 50,
       this.left = 30,
       this.right = 30,
@@ -136,6 +134,8 @@ class _GroupListState extends State<GroupList> {
           await groupBloc.deleteGroup(group.groupKey);
         } else if (group.members.length > 1) {
           try {
+            print('group delete');
+            print(userBloc.getUserObject().username);
             await repository.deleteGroupMember(
                 group.groupKey, userBloc.getUserObject().username);
           } catch (e) {
