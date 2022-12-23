@@ -22,6 +22,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   bool isPrivate = true;
   TextEditingController groupName = new TextEditingController();
   late double unitHeightValue, unitWidthValue;
+  bool saving = true;
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size  .width * 0.001;
 
-    return SafeArea(
+    return saving ? SafeArea(
       child: BackgroundColorContainer(
         startColor: lightBlue,
         endColor: lightBlueGradient,
@@ -75,7 +76,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
           ),
         ),
       ),
-    );
+    )
+        : Center(child: CircularProgressIndicator(),);
   }
 
   void saveGroup() async {
@@ -87,6 +89,9 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         ),
       );
     } else {
+      setState(() {
+        saving=false;
+      });
       String groupKey = await groupBloc.addGroup(groupName.text, !isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
@@ -96,6 +101,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         }
       }
       await groupBloc.updateGroups();
+
       Navigator.pop(context);
     }
   }
