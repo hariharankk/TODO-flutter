@@ -73,10 +73,7 @@ class GroupBloc {
   final _groupSubject = BehaviorSubject<List<Group>>();
   List<Group> _groups = [];
 
-  GroupBloc._privateConstructor() {
-    updateGroups();
-  }
-
+  GroupBloc._privateConstructor();
   static final GroupBloc _instance = GroupBloc._privateConstructor();
 
   factory GroupBloc() {

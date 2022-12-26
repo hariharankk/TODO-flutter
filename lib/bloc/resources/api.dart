@@ -13,7 +13,8 @@ class ApiProvider {
   //static String baseURL = "https://taskmanager-group-pro.herokuapp.com/api";
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
-  static String stageHost = '36a8-35-233-212-103.ngrok.io';
+
+  static String stageHost = 'd71f-34-67-216-156.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -82,7 +83,6 @@ class ApiProvider {
 
   /// Sign User In using username and password or API_Key
   Future signinUser(String username, String password, String apiKey) async {
-    print(signinURL);
     final response = await client.post(
       signinURL,
       headers: {"Authorization": apiKey,
@@ -101,7 +101,6 @@ class ApiProvider {
       // If the call to the server was successful, parse the JSON
       await saveApiKey(result["data"]["api_key"]);
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      print(result["data"]);
       return User.fromJson(result["data"]);
     } else {
       // If that call was not successful, throw an error.
@@ -153,6 +152,7 @@ class ApiProvider {
   /// Get a list of the User's Groups
   Future<List<Group>> getUserGroups() async {
     final _apiKey = await getApiKey();
+
     List<Group> groups = [];
     if (_apiKey.isNotEmpty) {
       final response = await client.get(
@@ -165,6 +165,7 @@ class ApiProvider {
         },
       );
       final Map result = json.decode(response.body);
+      print('group ${result["data"]}');
       if (response.statusCode == 200) {
         // If the call to the server was successful, parse the JSON
         for (Map<String, dynamic> json_ in result["data"]) {
@@ -262,7 +263,6 @@ class ApiProvider {
 // GroupMember CRUD Functions
   /// Get a list of the Group's Members.
   Future<List<GroupMember>> getGroupMembers(String groupKey) async {
-    print("$groupKey");
     final response = await client.get(
       groupmemberURL,
       headers: {"Authorization": groupKey,

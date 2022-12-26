@@ -168,9 +168,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
           backgroundColor: Colors.green,
         ),
       );
-      await groupBloc
-          .updateGroups()
-          .then((_) => Navigator.pushReplacementNamed(context, "/home"));
+    Navigator.pushReplacementNamed(context, "/home");
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

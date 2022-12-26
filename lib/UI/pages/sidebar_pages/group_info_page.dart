@@ -21,6 +21,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   late List<GroupMember> initialMembers;
   late int membersLength;
   late double unitHeightValue, unitWidthValue;
+  bool saving = true;
 
   @override
   void initState(){
@@ -28,15 +29,12 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
     group = widget.group;
     initialMembers = [...widget.group.members];
     membersLength = initialMembers.length;
-    print('init inital members are ${initialMembers}');
   }
   @override
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
-    print('build inital members are ${initialMembers}');
-    print('build new members of group are ${group.members}');
-    return SafeArea(
+    return saving ?SafeArea(
       child: BackgroundColorContainer(
         startColor: lightBlue,
         endColor: lightBlueGradient,
@@ -66,13 +64,14 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           ),
         ),
       ),
-    );
+    ): Center(child: CircularProgressIndicator(),);
   }
 
    void updateGroup() async {
     String groupKey = group.groupKey;
-    print('the inital members are ${initialMembers}');
-    print('the new members of group are ${group.members}');
+    setState(() {
+      saving=false;
+    });
     for (GroupMember member in initialMembers) {
       if (!group.members.contains(member)) {
         try {
