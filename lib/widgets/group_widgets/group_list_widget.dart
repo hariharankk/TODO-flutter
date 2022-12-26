@@ -117,9 +117,10 @@ class _GroupListState extends State<GroupList> {
   }
 
   Dismissible buildGroupListTile(Group group) {
-    dynamic arguments;
     group.addListener(() {
-      setState(() {});
+      if (this.mounted) {
+        setState(() {});
+      }
     });
     return Dismissible(
       key: Key(group.groupKey),
@@ -134,8 +135,6 @@ class _GroupListState extends State<GroupList> {
           await groupBloc.deleteGroup(group.groupKey);
         } else if (group.members.length > 1) {
           try {
-            print('group delete');
-            print(userBloc.getUserObject().username);
             await repository.deleteGroupMember(
                 group.groupKey, userBloc.getUserObject().username);
           } catch (e) {

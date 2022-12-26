@@ -23,12 +23,19 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   late double unitHeightValue, unitWidthValue;
 
   @override
+  void initState(){
+    super.initState();
+    group = widget.group;
+    initialMembers = [...widget.group.members];
+    membersLength = initialMembers.length;
+    print('init inital members are ${initialMembers}');
+  }
+  @override
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
-    group = widget.group;
-    initialMembers = group.members;
-    membersLength = initialMembers.length;
+    print('build inital members are ${initialMembers}');
+    print('build new members of group are ${group.members}');
     return SafeArea(
       child: BackgroundColorContainer(
         startColor: lightBlue,
@@ -64,11 +71,10 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
 
    void updateGroup() async {
     String groupKey = group.groupKey;
-    print('update');
-    //delete from members
+    print('the inital members are ${initialMembers}');
+    print('the new members of group are ${group.members}');
     for (GroupMember member in initialMembers) {
       if (!group.members.contains(member)) {
-        //delete memeber from group dbtable
         try {
           await repository.deleteGroupMember(groupKey, member.username);
         } catch (e) {
