@@ -21,15 +21,20 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   late List<GroupMember> initialMembers;
   late int membersLength;
   late double unitHeightValue, unitWidthValue;
+  bool saving = true;
 
+  @override
+  void initState(){
+    super.initState();
+    group = widget.group;
+    initialMembers = [...widget.group.members];
+    membersLength = initialMembers.length;
+  }
   @override
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
-    group = widget.group;
-    initialMembers = group.members;
-    membersLength = initialMembers.length;
-    return SafeArea(
+    return saving ?SafeArea(
       child: BackgroundColorContainer(
         startColor: lightBlue,
         endColor: lightBlueGradient,
@@ -59,16 +64,16 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           ),
         ),
       ),
-    );
+    ): Center(child: CircularProgressIndicator(),);
   }
 
    void updateGroup() async {
     String groupKey = group.groupKey;
-    print('update');
-    //delete from members
+    setState(() {
+      saving=false;
+    });
     for (GroupMember member in initialMembers) {
       if (!group.members.contains(member)) {
-        //delete memeber from group dbtable
         try {
           await repository.deleteGroupMember(groupKey, member.username);
         } catch (e) {

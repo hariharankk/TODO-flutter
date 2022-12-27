@@ -159,7 +159,6 @@ class _AddMembersPageState extends State<AddMembersPage> {
       _searchQueryController.clear();
       searchResults = [];
       _isSearching = false;
-      updateSearchQuery("");
     });
   }
 

@@ -54,7 +54,7 @@ class _GroupListState extends State<GroupList> {
     mediaQuery = MediaQuery.of(context).size;
     groupListItemWidth = mediaQuery.width * 0.85;
     groupListItemHeight = mediaQuery.height * 0.17;
-    return _buildStreamBuilder();
+    return  _buildStreamBuilder();
   }
 
   StreamBuilder<List<Group>> _buildStreamBuilder() {
@@ -75,23 +75,23 @@ class _GroupListState extends State<GroupList> {
             if (!snapshot.hasData) {
               //print("Waiting Data");
               return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasData) {
-              groups = snapshot.data!;
-              return buildGroupListView();
             }
             break;
           case ConnectionState.active:
             //print("Active Data: " + snapshot.data.toString());
             if (snapshot.hasData) {
               groups = snapshot.data!;
+              return buildGroupListView();
             }
-            return buildGroupListView();
+            break;
+
           case ConnectionState.done:
             print("Done Data: " + snapshot.toString());
             if (snapshot.hasData) {
               groups = snapshot.data!;
+              return buildGroupListView();
             }
-            return buildGroupListView();
+
         }
         return SizedBox.shrink();
       },
@@ -117,9 +117,10 @@ class _GroupListState extends State<GroupList> {
   }
 
   Dismissible buildGroupListTile(Group group) {
-    dynamic arguments;
     group.addListener(() {
-      setState(() {});
+      if (this.mounted) {
+        setState(() {});
+      }
     });
     return Dismissible(
       key: Key(group.groupKey),
@@ -134,8 +135,6 @@ class _GroupListState extends State<GroupList> {
           await groupBloc.deleteGroup(group.groupKey);
         } else if (group.members.length > 1) {
           try {
-            print('group delete');
-            print(userBloc.getUserObject().username);
             await repository.deleteGroupMember(
                 group.groupKey, userBloc.getUserObject().username);
           } catch (e) {
