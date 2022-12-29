@@ -13,7 +13,10 @@ import 'package:todolist/widgets/task_widgets/add_subtask_widget.dart';
 import 'package:todolist/widgets/task_widgets/subtask_list_item_widget.dart';
 
 class SubtaskListTab extends StatefulWidget {
-  static const routeName = '/listSubtasksTab';
+  final Group group;
+  final Task task;
+  SubtaskListTab({required this.group, required this.task});
+
   @override
   _SubtaskListTabState createState() => _SubtaskListTabState();
 }
@@ -33,10 +36,8 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as SubtaskListTabArguments;
-    task = args.task;
-    group = args.group;
+    task = widget.task;
+    group = widget.group;
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
     Size mediaQuery = MediaQuery.of(context).size;
@@ -299,7 +300,4 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
 }
 
 class SubtaskListTabArguments {
-  final Group group;
-  final Task task;
-  SubtaskListTabArguments(this.group, this.task);
 }

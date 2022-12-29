@@ -33,8 +33,6 @@ class MyApp extends StatelessWidget {
         LoginPage.routeName: (BuildContext context) => LoginPage(),
         SignupPage.routeName: (BuildContext context) => SignupPage(),
         HomePage.routeName: (BuildContext context) => HomePage(),
-        ListGroupsTab.routeName: (BuildContext context) => ListGroupsTab(),
-        SubtaskListTab.routeName: (BuildContext context) => SubtaskListTab(),
         CreateGroupPage.routeName: (BuildContext context) => CreateGroupPage(),
       },
     );

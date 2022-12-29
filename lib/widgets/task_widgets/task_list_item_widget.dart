@@ -36,8 +36,9 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
 
     return GestureDetector(
       key: UniqueKey(),
-      onTap: () => Navigator.pushNamed(context, SubtaskListTab.routeName,
-          arguments: SubtaskListTabArguments(widget.group, widget.task)),
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task))),
+       // arguments: SubtaskListTabArguments()),
       child: Container(
         height: height,
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),

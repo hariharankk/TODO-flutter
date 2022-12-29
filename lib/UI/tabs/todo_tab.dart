@@ -15,7 +15,6 @@ import 'package:todolist/UI/pages/sidebar_pages/group_info_page.dart';
 /// Argument that can be passed when navigating to ToDoTab
 /// * group
 class ToDoTab extends StatefulWidget {
-  static const routeName = '/list_tasks';
   Group group;
   ToDoTab({required this.group});
   @override
@@ -99,7 +98,6 @@ class _ToDoTabState extends State<ToDoTab> {
                   ),
                 ),
                 AddTask(
-                  length: group.tasks.length,
                   taskbloc: taskBloc,
                 ),
               ],
@@ -122,10 +120,6 @@ class _ToDoTabState extends State<ToDoTab> {
             print("None Data");
             break;
           case ConnectionState.active:
-            print("Active Data: " +
-                snapshot.data.toString() +
-                " @" +
-                DateTime.now().toString());
             if (snapshot.hasData && !listEquals(group.tasks, snapshot.data)) {
               group.tasks = snapshot.data!;
             }
@@ -136,9 +130,6 @@ class _ToDoTabState extends State<ToDoTab> {
           case ConnectionState.waiting:
             return Center(
                 child: CircularProgressIndicator(color: Colors.black54));
-          case ConnectionState.done:
-            print("Done Data: " + snapshot.toString());
-            break;
         }
         return CircularProgressIndicator();
       },
