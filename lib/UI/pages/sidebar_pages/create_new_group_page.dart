@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todolist/UI/pages/sidebar_pages/add_members.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
@@ -52,7 +52,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
           },
           child: Scaffold(
             appBar: CustomAppBar(
-              "New Group/Project",
+              "",
               actions: <Widget>[
                 TextButton(
                   onPressed: saveGroup,

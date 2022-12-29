@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> {
                 Icons.group_add,
                 color: darkBlueGradient,
                 size: 32 * unitHeightValue,
+
               ),
+              tooltip: 'Add Group',
               onPressed: () {
                 Navigator.pushNamed(context, CreateGroupPage.routeName);
               }, //will go to Create a group Page

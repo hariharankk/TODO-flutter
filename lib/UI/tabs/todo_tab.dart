@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
@@ -65,6 +64,7 @@ class _ToDoTabState extends State<ToDoTab> {
               backgroundColor: Colors.white,
               elevation: 0,
               leading: IconButton(
+                tooltip: 'back',
                 icon: Icon(Icons.arrow_back,
                     size: 32.0 * unitHeightValue, color: darkBlueGradient),
                 onPressed: () {
@@ -75,8 +75,9 @@ class _ToDoTabState extends State<ToDoTab> {
 
               actions: [
                 IconButton(
+                        tooltip:  'Edit Group',
                         icon: Icon(
-                            Icons.group_add,
+                            Icons.group_add_outlined,
                         size: 32.0 * unitHeightValue, color: darkBlueGradient),
                         onPressed: () {
                                   Navigator.push(context,

@@ -6,6 +6,7 @@ import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
+import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
 class GroupInfoPage extends StatefulWidget {
   static const routeName = '/GroupInfoPage';
@@ -91,6 +92,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         }
       }
     }
+    await groupBloc.updateGroups();
     Navigator.pop(context);
   }
 
