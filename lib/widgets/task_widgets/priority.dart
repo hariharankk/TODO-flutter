@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/models/global.dart';
+import 'package:todolist/widgets/task_widgets/priority box.dart';
 
 class PriorityPicker extends StatefulWidget {
   int selindex;
@@ -10,25 +11,6 @@ class PriorityPicker extends StatefulWidget {
 
 class _PriorityPickerState extends State<PriorityPicker> {
 
-  Container box(int index) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      height: 70,
-      child: Container(
-        child: Center(
-          child: Text(priorityText[index],
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold)),
-        ),
-        decoration: BoxDecoration(
-          color: priorityColor[index],
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(width: 2, color: Colors.black),
-        ),
-      ),
-    );
-  }
   // Array list of items
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:todolist/widgets/task_widgets/priority box.dart';
 import 'package:todolist/UI/tabs/subtask_list_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
@@ -74,6 +74,8 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),
+
+                  box(widget.task.priority)
                 ],
               ),
             ),

@@ -24,15 +24,13 @@ class Task extends Equatable {
   /// Has the Task been completed
   bool completed;
 
+  int priority;
+
   /// Time Created
   DateTime timeCreated;
 
   /// Time Updated
   DateTime timeUpdated;
-
-  /// Not Implemented
-  String note;
-
 
   Task(
       {required this.title,
@@ -40,7 +38,7 @@ class Task extends Equatable {
       required this.groupName,
       required this.completed,
       required this.id,
-      required this.note,
+      required this.priority,
       required this.taskKey,
       required this.timeCreated,
       required this.timeUpdated});
@@ -51,7 +49,7 @@ class Task extends Equatable {
         title: parsedJson['title'],
         taskKey: parsedJson['task_key'],
         completed: parsedJson['completed'],
-        note: parsedJson['note'],
+        priority: parsedJson['priority'],
         groupKey: parsedJson['group_key'],
         groupName: parsedJson['group_name'],
         timeCreated: DateTime.parse(parsedJson['time_created']),
