@@ -21,6 +21,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
   late SubtaskBloc subtaskBloc;
   late double unitHeightValue;
   late double height;
+  bool change = false;
 
   @override
   void initState() {
@@ -34,10 +35,15 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
     unitHeightValue = mediaQuery.height * 0.001;
     height = mediaQuery.height * 0.1;
 
+    if(change){
+     repository.updateTask(widget.task);
+    }
+
     return GestureDetector(
       key: UniqueKey(),
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task))),
+      onTap: (){
+               Navigator.push(context, MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task)));
+               },
 
       child: Container(
         height: height,
@@ -64,7 +70,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                       onChanged: (bool? newValue) {
                         setState(() {
                           widget.task.completed = newValue!;
-                          repository.updateTask(widget.task);
+                          change = true;
                         });
                       }),
                   Text(
@@ -74,14 +80,12 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  Text(
+                    widget.task.timeUpdated.toIso8601String(),
+                    style: toDoListTileStyle(unitHeightValue*0.7),
+                  ),
 
-                  PriorityPicker(selindex: widget.task.priority, onTap:(value){
-                  setState(() {
-                    widget.task.priority = value;
-                    repository.updateTask(widget.task);
-                    });
-                  }
-                )
+
                ],
               ),
              ),
@@ -89,19 +93,13 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                mainAxisAlignment: MainAxisAlignment.end,
                textDirection: TextDirection.ltr,
                children: <Widget>[
-                  widget.task.groupName.isNotEmpty
-                      ? Text(
-                          widget.task.groupName,
-                          style: toDoListSubtitleStyle(unitHeightValue),
-                          textAlign: TextAlign.right,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : Text(
-                          'group',
-                          style: toDoListSubtitleStyle(unitHeightValue),
-                          textAlign: TextAlign.right,
-                        ),
-                  SizedBox(height: 20 * unitHeightValue),
+                 PriorityPicker(selindex: widget.task.priority, onTap:(value){
+                   setState(() {
+                     widget.task.priority = value;
+                     change = true;
+                   });
+                 }
+                 )
               ],
             ),
           ],

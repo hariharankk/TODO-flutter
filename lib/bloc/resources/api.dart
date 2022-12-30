@@ -14,7 +14,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = 'ac9d-34-123-170-39.ngrok.io';
+  static String stageHost = '1e9e-34-125-224-38.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -413,7 +413,8 @@ class ApiProvider {
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
         "Access-Control-Allow-Methods": "POST, OPTIONS"},
-      body: jsonEncode({"completed": task.completed}),
+      body: jsonEncode({"completed": task.completed,
+                                "priority":task.priority}),
     );
     if (response.statusCode == 200) {
       //print("Task ${task.title} Updated");
