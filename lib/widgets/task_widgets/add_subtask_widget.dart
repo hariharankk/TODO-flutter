@@ -7,11 +7,10 @@ import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 class AddSubtask extends StatefulWidget {
   const AddSubtask({
     Key? key,
-    required this.length,
+
     required this.subtaskBloc,
   }) : super(key: key);
 
-  final int length;
   final SubtaskBloc subtaskBloc;
 
   @override

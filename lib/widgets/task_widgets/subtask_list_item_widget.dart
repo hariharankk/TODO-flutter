@@ -44,68 +44,6 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
     );
   }
 
-  Container primaryTile() {
-    return Container(
-      height: 120,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        color: darkerGreenBlue,
-        boxShadow: [
-          new BoxShadow(
-            color: Colors.white12,
-            blurRadius: 25.0,
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Checkbox(
-                value: widget.subtask.completed,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    widget.subtask.completed = newValue!;
-                    repository.updateSubtask(widget.subtask);
-                  });
-                }),
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: Text(
-                widget.subtask.title,
-                style: toDoListTileStyle(unitHeightValue),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: widget.subtask.note.isNotEmpty
-                      ? Text(
-                          widget.subtask.note,
-                          style: toDoListSubtitleStyle(unitHeightValue),
-                          textAlign: TextAlign.right,
-                          maxLines: 4,
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : SizedBox.shrink(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Container altTile() {
     return Container(
       height: listItemHeight,

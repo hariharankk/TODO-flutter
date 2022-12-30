@@ -81,7 +81,6 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                       TitleCard(title: 'To Do', child: _buildStreamBuilder()),
                 ),
                 AddSubtask(
-                  length: task.subtasks.length,
                   subtaskBloc: subtaskBloc,
                 ),
               ],
@@ -102,10 +101,6 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
           case ConnectionState.none:
             break;
           case ConnectionState.active:
-            print("Active Data: " +
-                snapshot.data.toString() +
-                " @" +
-                DateTime.now().toString());
             if (snapshot.hasData && !listEquals(task.subtasks, snapshot.data)) {
               task.subtasks = snapshot.data!;
             }
@@ -116,9 +111,6 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
           case ConnectionState.waiting:
             return Center(
                 child: CircularProgressIndicator(color: Colors.black54));
-          case ConnectionState.done:
-            print("Done Data: " + snapshot.toString());
-            break;
         }
         return CircularProgressIndicator();
       },
@@ -176,13 +168,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
     );
   }
 
-  void removeSubtask(Subtask subtask) {
-    if (task.subtasks.contains(subtask)) {
-      setState(() {
-        task.subtasks.remove(subtask);
-      });
-    }
-  }
+
 
   void reAddSubtask(Subtask subtask) async {
     await subtaskBloc.addSubtask(subtask.title);
@@ -299,5 +285,3 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
   }
 }
 
-class SubtaskListTabArguments {
-}

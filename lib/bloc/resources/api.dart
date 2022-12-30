@@ -14,7 +14,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '2305-104-155-222-175.ngrok.io';
+  static String stageHost = '4a55-34-141-156-211.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');

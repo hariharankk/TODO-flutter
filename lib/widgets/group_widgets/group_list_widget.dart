@@ -85,13 +85,6 @@ class _GroupListState extends State<GroupList> {
             }
             break;
 
-          case ConnectionState.done:
-            print("Done Data: " + snapshot.toString());
-            if (snapshot.hasData) {
-              groups = snapshot.data!;
-              return buildGroupListView();
-            }
-
         }
         return SizedBox.shrink();
       },
