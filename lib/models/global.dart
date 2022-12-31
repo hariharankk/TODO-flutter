@@ -105,6 +105,6 @@ TextStyle registerButtonStyle(double unitHeightValue) => new TextStyle(
     );
 
 
-List<int> index =[1,2,3];
-List<String> priorityText = ['Low', 'High', 'Very High'];
+List<int> index =[0,1,2];
+List<String> priorityText = ['Low', 'Mid', 'High'];
 List<Color> priorityColor = [Colors.green, Colors.lightGreen, Colors.red];

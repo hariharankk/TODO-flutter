@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/widgets/task_widgets/priority box.dart';
+import 'package:todolist/widgets/task_widgets/priority.dart';
 import 'package:todolist/UI/tabs/subtask_list_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
@@ -75,27 +75,33 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                     overflow: TextOverflow.ellipsis,
                   ),
 
-                  box(widget.task.priority)
-                ],
+                  PriorityPicker(selindex: widget.task.priority, onTap:(value){
+                  setState(() {
+                    widget.task.priority = value;
+                    repository.updateTask(widget.task);
+                    });
+                  }
+                )
+               ],
               ),
-            ),
+             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              textDirection: TextDirection.ltr,
-              children: <Widget>[
-                widget.task.groupName.isNotEmpty
-                    ? Text(
-                        widget.task.groupName,
-                        style: toDoListSubtitleStyle(unitHeightValue),
-                        textAlign: TextAlign.right,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : Text(
-                        'group',
-                        style: toDoListSubtitleStyle(unitHeightValue),
-                        textAlign: TextAlign.right,
-                      ),
-                SizedBox(height: 20 * unitHeightValue),
+               mainAxisAlignment: MainAxisAlignment.end,
+               textDirection: TextDirection.ltr,
+               children: <Widget>[
+                  widget.task.groupName.isNotEmpty
+                      ? Text(
+                          widget.task.groupName,
+                          style: toDoListSubtitleStyle(unitHeightValue),
+                          textAlign: TextAlign.right,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Text(
+                          'group',
+                          style: toDoListSubtitleStyle(unitHeightValue),
+                          textAlign: TextAlign.right,
+                        ),
+                  SizedBox(height: 20 * unitHeightValue),
               ],
             ),
           ],
@@ -104,3 +110,4 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
     );
   }
 }
+

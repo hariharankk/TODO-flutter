@@ -3,7 +3,6 @@ import 'package:todolist/models/global.dart';
 
 
 Container box(int index) {
-  print(index);
   return Container(
     padding: const EdgeInsets.all(8.0),
     height: 50,
