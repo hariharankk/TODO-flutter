@@ -73,32 +73,42 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                           change = true;
                         });
                       }),
-                  Text(
-                    widget.task.title,
-                    style: toDoListTileStyle(unitHeightValue),
-                    maxLines: 3,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    widget.task.timeUpdated.toIso8601String(),
-                    style: toDoListTileStyle(unitHeightValue*0.7),
-                  ),
+                  SizedBox(width: 5,),
 
-
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.task.title,
+                        style: toDoListTileStyle(unitHeightValue),
+                        maxLines: 3,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        widget.task.time_diff,
+                        style: toDoListTileStyle(unitHeightValue*0.7),
+                      ),
+                    ],
+                  ),
                ],
               ),
              ),
             Column(
-               mainAxisAlignment: MainAxisAlignment.end,
+               mainAxisAlignment: MainAxisAlignment.center,
+               crossAxisAlignment: CrossAxisAlignment.center,
                textDirection: TextDirection.ltr,
                children: <Widget>[
-                 PriorityPicker(selindex: widget.task.priority, onTap:(value){
-                   setState(() {
-                     widget.task.priority = value;
-                     change = true;
-                   });
-                 }
+                 Padding(
+                   padding: const EdgeInsets.only(left: 100.0),
+                   child: PriorityPicker(selindex: widget.task.priority,color: darkGreenBlue, onTap:(value){
+                     setState(() {
+                       widget.task.priority = value;
+                       change = true;
+                     });
+                   }
+                   ),
                  )
               ],
             ),

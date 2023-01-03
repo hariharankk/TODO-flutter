@@ -5,6 +5,7 @@ import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/models/global.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/subtasks.dart';
+import 'package:todolist/widgets/task_widgets/priority.dart';
 
 class SubtaskListItemWidget extends StatefulWidget {
   final Subtask subtask;
@@ -21,6 +22,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
   late double listItemWidth;
   late Size mediaQuery;
   late double listItemHeight;
+  bool change = false;
   late double unitHeightValue, unitWidthValue;
 
   @override
@@ -30,6 +32,10 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
     mediaQuery = MediaQuery.of(context).size;
     listItemWidth = mediaQuery.width * 0.85;
     listItemHeight = mediaQuery.height * 0.13;
+
+    if(change){
+      repository.updateSubtask(widget.subtask);
+    }
     return GestureDetector(
       key: UniqueKey(),
       onTap: () => Navigator.push(context,
@@ -76,7 +82,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                       onChanged: (bool? newValue) {
                         setState(() {
                           widget.subtask.completed = newValue!;
-                          repository.updateSubtask(widget.subtask);
+                          change = true;
                         });
                       }),
                 ),
@@ -126,19 +132,23 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.grey,
-                  size: 24 * unitHeightValue,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            textDirection: TextDirection.ltr,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 100.0),
+                child: PriorityPicker(selindex: widget.subtask.priority,color: darkerGreenBlue, onTap:(value){
+                  setState(() {
+                    widget.subtask.priority = value;
+                    change = true;
+                  });
+                }
                 ),
-              ],
-            ),
-          )
+              )
+            ],
+          ),
         ],
       ),
     );

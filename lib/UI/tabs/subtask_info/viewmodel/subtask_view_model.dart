@@ -66,8 +66,6 @@ class SubtaskViewModel {
     } catch (e) {
       throw e;
     }
-    //selected(members[index], true);
-    //subtask.assignedTo.add(members[index]);
   }
 
   Future<void> unassignSubtaskToUser(int index) async {
@@ -77,28 +75,11 @@ class SubtaskViewModel {
     } catch (e) {
       throw e;
     }
-    //selected(members[index], false);
-    //subtask.assignedTo.remove(members[index]);
+
   }
 
-  /* Future<void> assignMembersUpdate() async {
-    for (GroupMember member in subtask.assignedTo) {
-      if (!initialAssignedMembers!.contains(member)) {
-        repository.assignSubtaskToUser(subtask.subtaskKey, member.username);
-      }
-    }
-  }
-
-  Future<void> unassignMembersUpdate() async {
-    for (GroupMember member in initialAssignedMembers!) {
-      if (!subtask.assignedTo.contains(member)) {
-        repository.assignSubtaskToUser(subtask.subtaskKey, member.username);
-      }
-    }
-  } */
 
   Future<void> updateSubtaskInfo() async {
-    //Future.wait([assignMembersUpdate(), unassignMembersUpdate()]);
     await subtaskBloc.updateSubtaskInfo(this.subtask);
   }
 }

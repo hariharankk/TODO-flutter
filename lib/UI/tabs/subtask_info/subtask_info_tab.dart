@@ -116,7 +116,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
 
   Center _buildProgressIndicator() {
     return Center(
-      child: CircularProgressIndicator(color: lightGreenBlue),
+      child: CircularProgressIndicator(color: Colors.blue),
     );
   }
 
@@ -244,9 +244,6 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                     ? await viewmodel.unassignSubtaskToUser(index)
                     : await viewmodel.assignSubtaskToUser(index);
                 setState(() {});
-                print(viewmodel.members[index].firstname +
-                    " " +
-                    viewmodel.members[index].selectedForAssignment.toString());
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("$e"), backgroundColor: Colors.red),

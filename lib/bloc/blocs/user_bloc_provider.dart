@@ -181,8 +181,7 @@ class SubtaskBloc {
         _updateSubtasks(),
       ],
     );
-    //await repository.updateSubtask(subtask);
-    //await _updateSubtasks();
+
   }
 
   Future<void> _updateSubtasks({bool wait = false}) async {

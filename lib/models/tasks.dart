@@ -32,6 +32,8 @@ class Task extends Equatable {
   /// Time Updated
   DateTime timeUpdated;
 
+  String time_diff;
+
   Task(
       {required this.title,
       required this.groupKey,
@@ -41,7 +43,8 @@ class Task extends Equatable {
       required this.priority,
       required this.taskKey,
       required this.timeCreated,
-      required this.timeUpdated});
+      required this.timeUpdated,
+      required this.time_diff});
 
   factory Task.fromJson(Map<String, dynamic> parsedJson) {
     return Task(
@@ -53,7 +56,8 @@ class Task extends Equatable {
         groupKey: parsedJson['group_key'],
         groupName: parsedJson['group_name'],
         timeCreated: DateTime.parse(parsedJson['time_created']),
-        timeUpdated: DateTime.parse(parsedJson['time_updated']));
+        timeUpdated: DateTime.parse(parsedJson['time_updated']),
+        time_diff : parsedJson['time_diff']);
   }
 
   @override

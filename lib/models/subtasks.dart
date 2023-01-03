@@ -9,6 +9,7 @@ class Subtask extends Equatable {
 
   /// Subtask ID
   int subtaskId;
+  int priority;
 
   /// Subtask Key
   String subtaskKey;
@@ -35,7 +36,7 @@ class Subtask extends Equatable {
   late List<GroupMember> allGroupMembers;
 
   Subtask(this.title, this.completed, this.subtaskId, this.note,
-      this.subtaskKey, this.timeCreated, this.timeUpdated) {
+      this.subtaskKey, this.timeCreated, this.timeUpdated,this.priority) {
     deadline = DateTime(now.year, 12, 31);
   }
 
@@ -48,6 +49,7 @@ class Subtask extends Equatable {
       parsedJson['subtask_key'],
       DateTime.parse(parsedJson['time_created']),
       DateTime.parse(parsedJson['time_updated']),
+      parsedJson['priority'],
     );
   }
 
