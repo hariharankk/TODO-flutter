@@ -27,7 +27,7 @@ class TitleCard extends StatelessWidget {
       height: height,
       width: double.infinity,
       decoration: new BoxDecoration(
-        color: Colors.white,
+        color: Colors.blue,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
           bottomRight: Radius.circular(40),

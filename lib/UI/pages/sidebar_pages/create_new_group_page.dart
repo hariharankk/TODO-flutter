@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:todolist/UI/pages/sidebar_pages/add_members.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
-import 'package:todolist/models/global.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
@@ -19,7 +18,7 @@ class CreateGroupPage extends StatefulWidget {
 class _CreateGroupPageState extends State<CreateGroupPage> {
   Group newGroup = Group.blank();
   int membersLength = 0;
-  bool isPrivate = true;
+  bool isPrivate = false;
   TextEditingController groupName = new TextEditingController();
   late double unitHeightValue, unitWidthValue;
   bool saving = true;
@@ -53,6 +52,10 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
           child: Scaffold(
             appBar: CustomAppBar(
               "",
+              leading: GestureDetector(
+                child: Icon(Icons.arrow_back_outlined,color: Colors.white,),
+                onTap: ()=> Navigator.pop(context),
+              ),
               actions: <Widget>[
                 TextButton(
                   onPressed: saveGroup,
@@ -67,7 +70,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               ],
               fontSize: 24 * unitHeightValue,
             ),
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.blue,
             body: Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: _buildStack(),
@@ -91,7 +94,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       setState(() {
         saving=false;
       });
-      String groupKey = await groupBloc.addGroup(groupName.text, !isPrivate);
+      String groupKey = await groupBloc.addGroup(groupName.text, isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
           await repository.addGroupMember(groupKey, member.username);
@@ -131,9 +134,11 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   CircleAvatar _buildAvatar() {
     return CircleAvatar(
       radius: 50.0 * unitHeightValue,
+      backgroundColor: Colors.white,
       child: Icon(
         Icons.group,
         size: 62.0 * unitHeightValue,
+        color: Colors.blue,
       ),
     );
   }
@@ -160,7 +165,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         hintText: "Group Name",
         hintStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: Colors.blue,
           fontSize: 24 * unitHeightValue,
         ),
         suffixIcon: Icon(
@@ -172,7 +177,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       ),
       style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: Colors.blue,
           fontSize: 30 * unitHeightValue),
       onChanged: (groupName) => newGroup.name = groupName,
     );
@@ -206,7 +211,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         "MEMBERS",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: Colors.blue,
           fontSize: 22 * unitHeightValue,
         ),
       ),

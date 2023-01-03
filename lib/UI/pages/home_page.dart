@@ -23,13 +23,13 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text("TODO List", style: appTitleStyle(unitHeightValue)),
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.blue,
           elevation: 0,
           actions: [
             IconButton(
               icon: Icon(
                 Icons.group_add,
-                color: Colors.blue,
+                color: Colors.white,
                 size: 32 * unitHeightValue,
 
               ),

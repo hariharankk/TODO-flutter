@@ -29,7 +29,6 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontFamily: "Segoe UI",
           fontSize: fontSize * unitHeightValue,
         ),
       ),
@@ -40,7 +39,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       toolbarHeight: 100.0,
       actions: actions,
       iconTheme: IconThemeData(color: Colors.black, size: 32.0 * unitHeightValue, opacity: 1.0),
-      automaticallyImplyLeading: true,
+      automaticallyImplyLeading: false,
     );
   }
 }

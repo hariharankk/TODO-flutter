@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todolist/UI/tabs/todo_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
-import 'package:todolist/models/global.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 
