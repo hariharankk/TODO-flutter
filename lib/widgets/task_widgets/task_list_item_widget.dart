@@ -10,8 +10,9 @@ import 'package:todolist/models/tasks.dart';
 class TaskListItemWidget extends StatefulWidget {
   final Task task;
   final Group group;
+  final TaskBloc taskbloc;
 
-  TaskListItemWidget({required this.group, required this.task});
+  TaskListItemWidget({required this.group, required this.task, required this.taskbloc});
 
   @override
   _TaskListItemWidgetState createState() => _TaskListItemWidgetState();
@@ -36,7 +37,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
     height = mediaQuery.height * 0.1;
 
     if(change){
-     repository.updateTask(widget.task);
+     widget.taskbloc.updateTask(widget.task);
     }
 
     return GestureDetector(

@@ -143,11 +143,16 @@ class TaskBloc {
     await updateTasks();
   }
 
+  Future<void> updateTask(Task task) async {
+    await repository.updateTask(task);
+  }
+
   Future<void> updateTasks() async {
     await Future<void>.delayed(const Duration(milliseconds: 400));
     List<Task> tasks = await repository.getTasks(this._groupKey);
     _taskSubject.add(tasks);
   }
+
 }
 
 class SubtaskBloc {

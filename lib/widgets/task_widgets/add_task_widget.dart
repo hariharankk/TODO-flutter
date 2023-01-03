@@ -4,9 +4,8 @@ import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({
-    Key? key,
     required this.taskbloc,
-  }) : super(key: key);
+  }) ;
 
   final TaskBloc taskbloc;
 
