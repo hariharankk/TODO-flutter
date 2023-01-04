@@ -28,7 +28,7 @@ class _DueDateRowState extends State<DueDateRow> {
         IconButton(
             onPressed: () => _showDatePicker(context),
             icon: Icon(Icons.calendar_today,
-                color: lightBlue, size: 20 * unitHeightValue))
+                color: Colors.blue, size: 20 * unitHeightValue))
       ],
     );
   }
@@ -59,9 +59,8 @@ class _DueDateRowState extends State<DueDateRow> {
               child: Text(
                 'Done',
                 style: TextStyle(
-                    color: darkGreenBlue,
+                    color: Colors.blue,
                     fontSize: 20 * unitHeightValue,
-                    fontFamily: 'Segoe UI',
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {

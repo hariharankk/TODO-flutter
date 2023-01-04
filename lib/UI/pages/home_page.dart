@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: Icon(
                 Icons.group_add,
-                color: darkBlueGradient,
+                color: Colors.blue,
                 size: 32 * unitHeightValue,
 
               ),

@@ -40,8 +40,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
     return saving ? SafeArea(
       child: BackgroundColorContainer(
-        startColor: lightBlue,
-        endColor: lightBlueGradient,
+        startColor: Colors.white,
+        endColor: Colors.white,
         widget: GestureDetector(
           onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
@@ -59,8 +59,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                   child: Text(
                     "Save",
                     style: TextStyle(
-                        color: Colors.lightBlue,
-                        fontFamily: "Segoe UI",
+                        color: Colors.white,
                         fontSize: 20 * unitHeightValue,
                         fontWeight: FontWeight.bold),
                   ),
@@ -146,7 +145,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       padding: EdgeInsets.only(left: 20),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: darkBlue, borderRadius: BorderRadius.circular(25)),
+          color: Colors.white, borderRadius: BorderRadius.circular(25)),
       child: _buildGroupNameTF(),
     );
   }
@@ -160,22 +159,20 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         border: InputBorder.none,
         hintText: "Group Name",
         hintStyle: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
-          color: lightBlue,
+          color: Colors.white,
           fontSize: 24 * unitHeightValue,
         ),
         suffixIcon: Icon(
           Icons.edit,
-          color: lightBlue,
+          color: Colors.blue,
           size: 24 * unitHeightValue,
         ),
         isDense: true,
       ),
       style: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
-          color: lightBlue,
+          color: Colors.white,
           fontSize: 30 * unitHeightValue),
       onChanged: (groupName) => newGroup.name = groupName,
     );
@@ -208,21 +205,19 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       Text(
         "MEMBERS",
         style: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
-          color: darkBlue,
+          color: Colors.white,
           fontSize: 22 * unitHeightValue,
         ),
       ),
       SizedBox(width: 15 * unitWidthValue),
       CircleAvatar(
         radius: 16 * unitHeightValue,
-        backgroundColor: darkBlue,
+        backgroundColor: Colors.blueAccent,
         child: Text(
           "${newGroup.members.length}",
           style: TextStyle(
             color: Colors.white,
-            fontFamily: 'Segoe UI',
             fontWeight: FontWeight.bold,
             fontSize: 16 * unitHeightValue,
           ),
@@ -232,7 +227,6 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       Text(
         "Personal",
         style: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
           color: Colors.black54,
           fontSize: 20 * unitHeightValue,
@@ -272,7 +266,6 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               newGroup.members[index].firstname,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontFamily: 'Segoe UI',
                 fontWeight: FontWeight.bold,
                 fontSize: 16 * unitHeightValue,
               ),

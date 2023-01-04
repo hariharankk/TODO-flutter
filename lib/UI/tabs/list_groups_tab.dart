@@ -15,8 +15,8 @@ class ListGroupsTab extends StatelessWidget {
     double height = mediaQuery.height * 0.17;
     return Stack(children: [
       BackgroundColorContainer(
-        startColor: lightBlue,
-        endColor: lightBlueGradient,
+        startColor: Colors.white,
+        endColor: Colors.white,
         widget: TitleCard(
             title: "Groups",
             child: GroupList(top: height)),

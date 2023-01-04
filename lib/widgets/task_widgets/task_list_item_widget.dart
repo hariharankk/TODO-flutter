@@ -51,7 +51,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: darkGreenBlue,
+          color: Colors.white,
           boxShadow: [
             new BoxShadow(
               color: Colors.black.withOpacity(0.5),
@@ -103,7 +103,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                children: <Widget>[
                  Padding(
                    padding: const EdgeInsets.only(left: 100.0),
-                   child: PriorityPicker(selindex: widget.task.priority,color: darkGreenBlue, onTap:(value){
+                   child: PriorityPicker(selindex: widget.task.priority,color: Colors.white, onTap:(value){
                      setState(() {
                        widget.task.priority = value;
                        change = true;

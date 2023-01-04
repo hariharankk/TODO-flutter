@@ -37,8 +37,8 @@ class _AddMembersPageState extends State<AddMembersPage> {
     unitHeightValue = size.height * 0.001;
     return SafeArea(
       child: BackgroundColorContainer(
-        startColor: lightBlue,
-        endColor: lightBlueGradient,
+        startColor: Colors.white,
+        endColor: Colors.white,
         widget: GestureDetector(
           onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
@@ -85,7 +85,6 @@ class _AddMembersPageState extends State<AddMembersPage> {
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontFamily: "Segoe UI",
         fontSize: 32.0 * unitHeightValue,
       ),
     );
@@ -100,13 +99,12 @@ class _AddMembersPageState extends State<AddMembersPage> {
         border: InputBorder.none,
         hintStyle: TextStyle(
             color: Colors.white,
-            fontFamily: "Segoe UI",
             fontSize: 24.0 * unitHeightValue),
       ),
       style: TextStyle(
         color: Colors.white,
         fontSize: 24.0 * unitHeightValue,
-        fontFamily: "Segoe UI",
+
       ),
       onChanged: (query) {
         if (query.length >= 2) {
@@ -230,9 +228,8 @@ class _AddMembersPageState extends State<AddMembersPage> {
           Text(
             "USERS",
             style: TextStyle(
-              fontFamily: 'Segoe UI',
               fontWeight: FontWeight.bold,
-              color: darkBlue,
+              color: Colors.white,
               fontSize: 30 * unitHeightValue,
             ),
           ),

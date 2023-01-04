@@ -66,7 +66,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
               elevation: 0,
               leading: IconButton(
                 icon: Icon(Icons.arrow_back,
-                    size: 32.0 * unitHeightValue, color: darkBlueGradient),
+                    size: 32.0 * unitHeightValue, color: Colors.blue),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -80,8 +80,8 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
             body: Stack(
               children: <Widget>[
                 BackgroundColorContainer(
-                  startColor: lightGreenBlue,
-                  endColor: darkGreenBlue,
+                  startColor: Colors.white,
+                  endColor: Colors.blue,
                   widget:
                       TitleCard(title: 'To Do', child: _buildStreamBuilder()),
                 ),
@@ -150,10 +150,10 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
       ),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
-        color: darkRed,
+        color: Colors.red,
         child: Icon(
           Icons.delete,
-          color: lightGreenBlue,
+          color: Colors.black,
           size: 28 * unitHeightValue,
         ),
       ),
@@ -190,8 +190,8 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
       padding: EdgeInsets.symmetric(
           vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
       icon: Icon(Icons.sort,
-          size: 32.0 * unitHeightValue, color: darkBlueGradient),
-      color: darkGreenBlue,
+          size: 32.0 * unitHeightValue, color: Colors.blue),
+      color: Colors.blue,
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

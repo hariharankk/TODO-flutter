@@ -37,8 +37,8 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
     return saving ?SafeArea(
       child: BackgroundColorContainer(
-        startColor: lightBlue,
-        endColor: lightBlueGradient,
+        startColor: Colors.white,
+        endColor: Colors.white,
         widget: Scaffold(
           key: _scaffoldKey,
           appBar: CustomAppBar(
@@ -50,7 +50,6 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                   "update",
                   style: TextStyle(
                       color: Colors.lightBlue,
-                      fontFamily: "Segoe UI",
                       fontSize: 20 * unitHeightValue,
                       fontWeight: FontWeight.bold),
                 ),
@@ -137,9 +136,8 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         group.name,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
-          color: darkBlue,
+          color: Colors.white,
           fontSize: 30 * unitHeightValue,
         ),
       ),
@@ -173,21 +171,19 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
       Text(
         "MEMBERS",
         style: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
-          color: darkBlue,
+          color: Colors.black,
           fontSize: 22 * unitHeightValue,
         ),
       ),
       SizedBox(width: 15 * unitWidthValue),
       CircleAvatar(
         radius: 16 * unitHeightValue,
-        backgroundColor: darkBlue,
+        backgroundColor: Colors.blue,
         child: Text(
           "${group.members.length}",
           style: TextStyle(
             color: Colors.white,
-            fontFamily: 'Segoe UI',
             fontWeight: FontWeight.bold,
             fontSize: 16 * unitHeightValue,
           ),
@@ -197,7 +193,6 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
       Text(
         "Personal",
         style: TextStyle(
-          fontFamily: 'Segoe UI',
           fontWeight: FontWeight.bold,
           color: Colors.black54,
           fontSize: 20 * unitHeightValue,

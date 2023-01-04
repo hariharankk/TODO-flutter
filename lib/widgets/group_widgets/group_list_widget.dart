@@ -119,9 +119,9 @@ class _GroupListState extends State<GroupList> {
       key: Key(group.groupKey),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
-        color: darkRed,
+        color: Colors.red,
         child: Icon(Icons.delete,
-            color: lightBlueGradient, size: 28 * unitHeightValue),
+            color: Colors.black, size: 28 * unitHeightValue),
       ),
       onDismissed: (direction) async {
         if (group.members.length == 1) {
@@ -216,7 +216,7 @@ class _GroupListState extends State<GroupList> {
       style: TextStyle(
           fontSize: 25 * unitHeightValue,
           fontWeight: FontWeight.bold,
-          color: darkBlueGradient),
+          color: Colors.blue),
     );
   }
 

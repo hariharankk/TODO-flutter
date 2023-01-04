@@ -65,7 +65,7 @@ class _ToDoTabState extends State<ToDoTab> {
               leading: IconButton(
                 tooltip: 'back',
                 icon: Icon(Icons.arrow_back,
-                    size: 32.0 * unitHeightValue, color: darkBlueGradient),
+                    size: 32.0 * unitHeightValue, color: Colors.blue),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -77,7 +77,7 @@ class _ToDoTabState extends State<ToDoTab> {
                         tooltip:  'Edit Group',
                         icon: Icon(
                             Icons.group_add_outlined,
-                        size: 32.0 * unitHeightValue, color: darkBlueGradient),
+                        size: 32.0 * unitHeightValue, color:Colors.blue),
                         onPressed: () {
                                   Navigator.push(context,
                                         MaterialPageRoute(builder: (context) => GroupInfoPage(group: widget.group)));
@@ -90,8 +90,8 @@ class _ToDoTabState extends State<ToDoTab> {
             body: Stack(
               children: <Widget>[
                 BackgroundColorContainer(
-                  startColor: lightBlue,
-                  endColor: lightBlueGradient,
+                  startColor: Colors.white,
+                  endColor: Colors.white,
                   widget: TitleCard(
                     title: 'Projects/Tasks',
                     child: _buildStreamBuilder(),
@@ -164,10 +164,10 @@ class _ToDoTabState extends State<ToDoTab> {
       ),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
-        color: darkRed,
+        color: Colors.red,
         child: Icon(
           Icons.delete,
-          color: lightBlueGradient,
+          color: Colors.blue,
           size: 28 * unitHeightValue,
         ),
       ),
@@ -206,8 +206,8 @@ class _ToDoTabState extends State<ToDoTab> {
       padding: EdgeInsets.symmetric(
           vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
       icon: Icon(Icons.sort,
-          size: 32.0 * unitHeightValue, color: darkBlueGradient),
-      color: darkGreenBlue,
+          size: 32.0 * unitHeightValue, color: Colors.blue),
+      color: Colors.blue,
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

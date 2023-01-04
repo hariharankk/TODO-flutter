@@ -4,11 +4,8 @@ import 'package:todolist/UI/pages/home_page.dart';
 import 'package:flutter/services.dart';
 import 'package:todolist/UI/pages/authenticate/login_page.dart';
 import 'package:todolist/UI/pages/sidebar_pages/create_new_group_page.dart';
-import 'package:todolist/UI/tabs/list_groups_tab.dart';
-import 'package:todolist/UI/tabs/subtask_list_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
-import 'package:todolist/models/global.dart';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +20,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'To Do List',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColorLight: lightBlue,
-          primaryColorDark: darkBlue,
-          fontFamily: 'Segoe UI'),
       initialRoute: Splash.routeName,
       routes: <String, WidgetBuilder>{
         Splash.routeName: (BuildContext context) => Splash(),
@@ -87,7 +80,7 @@ class _SplashState extends State<Splash> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [lightBlue, lightBlueGradient],
+                colors: [Colors.white, Colors.white],
               ),
             ),
           ),

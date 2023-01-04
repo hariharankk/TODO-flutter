@@ -1,34 +1,20 @@
 import 'package:flutter/material.dart';
 
-const Color loginBlue = Color(0xff56C7F1);
-const Color lightBlue = Color(0xffceecf2);
-const Color lightBlueGradient = Color(0xff00D4FF);
-const Color lightGreenBlue = Color(0xff4AD2EE);
-const Color darkGreenBlue = Color(0xff006F85);
-const Color darkerGreenBlue = Color(0xff006175);
-const Color darkBlue = Color(0xff023059);
-const Color darkBlueGradient = Color(0xff0087FF);
-const Color red = Color(0xfff20f38);
-const Color darkRed = Color(0xffc70000);
-const Color brownRed = Color(0xff590209);
 
 TextStyle appTitleStyle(double unitHeightValue) => TextStyle(
-      color: darkBlueGradient,
+      color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontFamily: "Segoe UI",
       fontSize: 36.0 * unitHeightValue,
     );
 
 TextStyle hintTextStyle(double unitHeightValue) => TextStyle(
       color: Colors.white70,
-      fontFamily: 'Segoe UI',
       fontSize: 18 * unitHeightValue,
     );
 
 TextStyle labelStyle(double unitHeightValue) => TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Segoe UI',
       fontSize: 18 * unitHeightValue,
     );
 
@@ -57,50 +43,43 @@ BoxDecoration profileBoxDecorationStyle() => BoxDecoration(
     );
 
 TextStyle cardTitleStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.bold,
-      color: darkRed,
+      color: Colors.white,
       fontSize: 50 * unitHeightValue,
     );
 
 TextStyle toDoListTileStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.bold,
       color: Colors.white,
       fontSize: 25 * unitHeightValue,
     );
 
 TextStyle toDoListSubtitleStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.w300,
       color: Colors.white,
       fontSize: 17 * unitHeightValue,
     );
 
 TextStyle taskListTitleStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.bold,
-      color: darkBlue,
+      color: Colors.white,
       fontSize: 50 * unitHeightValue,
     );
 
 TextStyle loginTitleStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.bold,
-      color: darkBlueGradient,
+      color: Colors.white,
       fontSize: 36 * unitHeightValue,
     );
 TextStyle loginButtonStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.w700,
-      color: lightBlue,
+      color: Colors.white,
       fontSize: 26 * unitHeightValue,
     );
 
 TextStyle registerButtonStyle(double unitHeightValue) => new TextStyle(
-      fontFamily: 'Segoe UI',
       fontWeight: FontWeight.bold,
-      color: red,
+      color: Colors.blue,
       fontSize: 26 * unitHeightValue,
     );
 

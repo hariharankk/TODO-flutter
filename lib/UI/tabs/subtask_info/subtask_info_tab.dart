@@ -55,8 +55,8 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
           }
         },
         child: BackgroundColorContainer(
-          startColor: lightGreenBlue,
-          endColor: darkGreenBlue,
+          startColor: Colors.white,
+          endColor: Colors.white,
           widget: Scaffold(
             appBar: CustomAppBar(
               widget.subtask.title,
@@ -88,8 +88,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                         : Text(
                             "Update",
                             style: TextStyle(
-                                color: lightGreenBlue,
-                                fontFamily: "Segoe UI",
+                                color: Colors.blue,
                                 fontSize: 24 * unitHeightValue,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -157,7 +156,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
       height: 150,
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.blue,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: TextField(
@@ -204,20 +203,18 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
       Text(
         "Assigned To: (1 or More)",
         style: TextStyle(
-            fontFamily: 'Segoe UI',
             fontWeight: FontWeight.bold,
-            color: darkerGreenBlue,
+            color: Colors.blue,
             fontSize: 22 * unitHeightValue),
       ),
       SizedBox(width: 15 * unitWidthValue),
       CircleAvatar(
         radius: 20 * unitHeightValue,
-        backgroundColor: darkerGreenBlue,
+        backgroundColor: Colors.blueAccent,
         child: Text(
           "${viewmodel.subtask.assignedTo.length}",
           style: TextStyle(
               color: Colors.white,
-              fontFamily: 'Segoe UI',
               fontWeight: FontWeight.bold,
               fontSize: 16 * unitHeightValue),
         ),
@@ -254,13 +251,12 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               children: [
                 viewmodel.members[index].cAvatar(
                     radius: 34,
-                    color: darkerGreenBlue,
+                    color: Colors.blueAccent,
                     unitHeightValue: unitHeightValue),
                 Text(
                   viewmodel.members[index].firstname,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: 'Segoe UI',
                     fontWeight: FontWeight.bold,
                     fontSize: 16 * unitHeightValue,
                   ),

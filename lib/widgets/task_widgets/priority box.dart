@@ -5,9 +5,8 @@ import 'package:todolist/models/global.dart';
 Container box(int index) {
   return Container(
     padding: const EdgeInsets.all(8.0),
-    height: 50,
-    width: 80,
     child: Container(
+        padding: const EdgeInsets.only(left: 6, right: 6),
       child: Center(
         child: Text(priorityText[index],
             style: TextStyle(

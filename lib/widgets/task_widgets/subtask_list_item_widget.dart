@@ -55,7 +55,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
       height: listItemHeight,
       width: listItemWidth,
       decoration: BoxDecoration(
-          color: darkerGreenBlue,
+          color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(28),
           ),
@@ -139,7 +139,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 100.0),
-                child: PriorityPicker(selindex: widget.subtask.priority,color: darkerGreenBlue, onTap:(value){
+                child: PriorityPicker(selindex: widget.subtask.priority,color: Colors.white, onTap:(value){
                   setState(() {
                     widget.subtask.priority = value;
                     change = true;
