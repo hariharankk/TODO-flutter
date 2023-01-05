@@ -3,36 +3,41 @@ import 'package:todolist/models/global.dart';
 import 'package:todolist/widgets/task_widgets/priority box.dart';
 
 class PriorityPicker extends StatefulWidget {
-  int selindex;
-  Color color;
   final void Function(int) onTap;
-  PriorityPicker({required this.selindex, required this.onTap, required this.color});
+  PriorityPicker({required this.onTap});
   @override
   _PriorityPickerState createState() => _PriorityPickerState();
 }
 
 class _PriorityPickerState extends State<PriorityPicker> {
-  late int currentSelectedValue;
+  late double unitHeightValue, unitWidthValue;
+
   // Array list of items
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<dynamic>(
-        value: widget.selindex,
-        icon: Icon(Icons.arrow_downward,color:widget.color ),//darkGreenBlue,),
-        iconSize: 26,
-        underline: Container(
-          height: 2,
-          color: widget.color,
+    unitHeightValue = MediaQuery.of(context).size.height * 0.001;
+    unitWidthValue = MediaQuery.of(context).size.width * 0.001;
+
+    return PopupMenuButton<dynamic>(
+        tooltip: 'task priority',
+        padding: EdgeInsets.symmetric(
+            vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
+        icon: Icon(Icons.priority_high,
+            size: 32.0 * unitHeightValue, color: Colors.white),
+        color: Colors.white,
+        offset: Offset(0, 70 * unitHeightValue),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.0),
+          ),
         ),
-        items: index.map((int index) {
-          return DropdownMenuItem<dynamic>(value: index, child: box(index));
+        onSelected: (value) {
+          widget.onTap(value);
+        },
+        itemBuilder: (context) => index.map((int index) {
+          return PopupMenuItem<dynamic>(value: index, child: box(index));
         }).toList(),
-        onChanged: (newValue) {
-          setState(() {
-            currentSelectedValue = newValue;
-          });
-            widget.onTap(currentSelectedValue);
-        });
+        );
  }
 }
 

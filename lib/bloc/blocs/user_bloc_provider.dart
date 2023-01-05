@@ -145,6 +145,7 @@ class TaskBloc {
 
   Future<void> updateTask(Task task) async {
     await repository.updateTask(task);
+    await updateTasks();
   }
 
   Future<void> updateTasks() async {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/widgets/task_widgets/priority.dart';
+import 'package:todolist/widgets/task_widgets/priority box.dart';
 import 'package:todolist/UI/tabs/subtask_list_tab.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
@@ -22,7 +22,6 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
   late SubtaskBloc subtaskBloc;
   late double unitHeightValue;
   late double height;
-  bool change = false;
 
   @override
   void initState() {
@@ -36,14 +35,11 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
     unitHeightValue = mediaQuery.height * 0.001;
     height = mediaQuery.height * 0.1;
 
-    if(change){
-     widget.taskbloc.updateTask(widget.task);
-    }
 
     return GestureDetector(
       key: UniqueKey(),
       onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task)));
+               Navigator.push(context, MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task, taskBloc:widget.taskbloc,)));
                },
 
       child: Container(
@@ -71,7 +67,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                       onChanged: (bool? newValue) {
                         setState(() {
                           widget.task.completed = newValue!;
-                          change = true;
+                          repository.updateTask(widget.task);
                         });
                       }),
                   SizedBox(width: 5,),
@@ -88,7 +84,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        widget.task.time_diff,
+                        widget.task.timeCreated.toString(),
                         style: toDoListTiletimeStyle(unitHeightValue*0.7),
                       ),
                     ],
@@ -103,13 +99,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                children: <Widget>[
                  Padding(
                    padding: const EdgeInsets.only(left: 100.0),
-                   child: PriorityPicker(selindex: widget.task.priority,color: Colors.white, onTap:(value){
-                     setState(() {
-                       widget.task.priority = value;
-                       change = true;
-                     });
-                   }
-                   ),
+                   child: box(widget.task.priority),
                  )
               ],
             ),

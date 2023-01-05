@@ -93,7 +93,7 @@ class _ToDoTabState extends State<ToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'Projects/Tasks',
+                    title: ' Tasks',
                     child: _buildStreamBuilder(),
                   ),
                 ),

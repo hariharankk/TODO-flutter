@@ -12,19 +12,21 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/task_widgets/add_subtask_widget.dart';
 import 'package:todolist/widgets/task_widgets/subtask_list_item_widget.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
-import 'package:todolist/bloc/resources/repository.dart';
+import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
 class SubtaskListTab extends StatefulWidget {
   final Group group;
   final Task task;
-  SubtaskListTab({required this.group, required this.task});
+  final TaskBloc taskBloc;
+
+  SubtaskListTab({required this.group, required this.task, required this.taskBloc});
 
   @override
   _SubtaskListTabState createState() => _SubtaskListTabState();
 }
 
 class _SubtaskListTabState extends State<SubtaskListTab> {
-  //List<Subtask> subtasks;
+
   late SubtaskBloc subtaskBloc;
   late Group group;
   late Task task;
@@ -73,7 +75,11 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
-
+                PriorityPicker(onTap: (int value){
+                  widget.task.priority = value;
+                  widget.taskBloc.updateTask(widget.task);
+                  setState(() {});
+                } ),
                 _popupMenuButton()
               ],
             ),

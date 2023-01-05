@@ -6,6 +6,7 @@ import 'package:todolist/models/global.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
+import 'package:todolist/widgets/task_widgets/priority box.dart';
 
 class SubtaskListItemWidget extends StatefulWidget {
   final Subtask subtask;
@@ -33,9 +34,6 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
     listItemWidth = mediaQuery.width * 0.85;
     listItemHeight = mediaQuery.height * 0.13;
 
-    if(change){
-      repository.updateSubtask(widget.subtask);
-    }
     return GestureDetector(
       key: UniqueKey(),
       onTap: () => Navigator.push(context,
@@ -82,7 +80,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                       onChanged: (bool? newValue) {
                         setState(() {
                           widget.subtask.completed = newValue!;
-                          change = true;
+                          repository.updateSubtask(widget.subtask);
                         });
                       }),
                 ),
@@ -131,13 +129,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 100.0),
-                child: PriorityPicker(selindex: widget.subtask.priority,color: Colors.white, onTap:(value){
-                  setState(() {
-                    widget.subtask.priority = value;
-                    change = true;
-                  });
-                }
-                ),
+                child: box(widget.subtask.priority),
               )
             ],
           ),
