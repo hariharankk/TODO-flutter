@@ -50,13 +50,13 @@ class _AddMembersPageState extends State<AddMembersPage> {
           child: Scaffold(
             appBar: AppBar(
               title: _isSearching ? _buildSearchField() : _buildTitle(),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.blue,
               centerTitle: true,
               elevation: 0.0,
               toolbarHeight: 100.0,
               actions: _buildActions(),
               iconTheme: IconThemeData(
-                  color: Colors.black,
+                  color: Colors.white,
                   size: 32.0 * unitHeightValue,
                   opacity: 1.0),
               leading: _isSearching
@@ -119,7 +119,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
       return <Widget>[
         IconButton(
           icon:
-              Icon(Icons.clear, color: Colors.red, size: 30 * unitHeightValue),
+              Icon(Icons.clear, color: Colors.white, size: 30 * unitHeightValue),
           onPressed: () {
             Navigator.pop(context);
             _clearSearchQuery();
@@ -165,6 +165,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
       Container(
           height: size.height * 0.12,
           width: size.width,
+          padding: EdgeInsets.only(top: 20),
           child: _addedMembersListView()),
       _expandedCard(),
     ]);
@@ -229,7 +230,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
             "USERS",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Colors.blue,
               fontSize: 30 * unitHeightValue,
             ),
           ),

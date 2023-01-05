@@ -50,9 +50,14 @@ TextStyle cardTitleStyle(double unitHeightValue) => new TextStyle(
 
 TextStyle toDoListTileStyle(double unitHeightValue) => new TextStyle(
       fontWeight: FontWeight.bold,
-      color: Colors.white,
+      color: Colors.blue,
       fontSize: 25 * unitHeightValue,
     );
+
+TextStyle toDoListTiletimeStyle(double unitHeightValue) => new TextStyle(
+  color: Colors.blue,
+  fontSize: 25 * unitHeightValue,
+);
 
 TextStyle toDoListSubtitleStyle(double unitHeightValue) => new TextStyle(
       fontWeight: FontWeight.w300,

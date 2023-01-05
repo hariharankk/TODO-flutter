@@ -46,8 +46,8 @@ class _AddTaskState extends State<AddTask> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
-                blurRadius: 12.0,
-                offset: Offset(0, 4),
+                blurRadius: 15.0,
+                offset: Offset(0, 10),
               ),
             ],
           ),

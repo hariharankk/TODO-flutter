@@ -164,20 +164,19 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         border: InputBorder.none,
         hintText: "Group Name",
         hintStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.blue,
+          color: Colors.black54,
           fontSize: 24 * unitHeightValue,
         ),
         suffixIcon: Icon(
           Icons.edit,
-          color: Colors.blue,
+          color: Colors.black54,
           size: 24 * unitHeightValue,
         ),
         isDense: true,
       ),
       style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.blue,
+          color: Colors.black54,
           fontSize: 30 * unitHeightValue),
       onChanged: (groupName) => newGroup.name = groupName,
     );
@@ -218,7 +217,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       SizedBox(width: 15 * unitWidthValue),
       CircleAvatar(
         radius: 16 * unitHeightValue,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blue,
         child: Text(
           "${newGroup.members.length}",
           style: TextStyle(

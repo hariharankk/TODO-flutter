@@ -50,8 +50,8 @@ class _AddSubtaskState extends State<AddSubtask> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
-                blurRadius: 12.0,
-                offset: Offset(0, 4),
+                blurRadius: 15.0,
+                offset: Offset(0, 12),
               ),
             ],
           ),

@@ -60,16 +60,16 @@ class _ToDoTabState extends State<ToDoTab> {
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.blue,
               elevation: 0,
               leading: IconButton(
                 tooltip: 'back',
                 icon: Icon(Icons.arrow_back,
-                    size: 32.0 * unitHeightValue, color: Colors.blue),
+                    size: 32.0 * unitHeightValue, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                color: Colors.blueGrey,
+                color: Colors.white,
               ),
 
               actions: [
@@ -77,12 +77,12 @@ class _ToDoTabState extends State<ToDoTab> {
                         tooltip:  'Edit Group',
                         icon: Icon(
                             Icons.group_add_outlined,
-                        size: 32.0 * unitHeightValue, color:Colors.blue),
+                        size: 32.0 * unitHeightValue, color:Colors.white),
                         onPressed: () {
                                   Navigator.push(context,
                                         MaterialPageRoute(builder: (context) => GroupInfoPage(group: widget.group)));
                                   },
-                        color: Colors.blueGrey,
+                        color: Colors.white,
                 ),
                 _popupMenuButton(),
               ],
@@ -206,8 +206,8 @@ class _ToDoTabState extends State<ToDoTab> {
       padding: EdgeInsets.symmetric(
           vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
       icon: Icon(Icons.sort,
-          size: 32.0 * unitHeightValue, color: Colors.blue),
-      color: Colors.blue,
+          size: 32.0 * unitHeightValue, color: Colors.white),
+      color: Colors.white,
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -224,36 +224,36 @@ class _ToDoTabState extends State<ToDoTab> {
         PopupMenuItem<String>(
           value: "Alphabetical",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha, size: 24 * unitHeightValue),
+            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 24 * unitHeightValue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Alphabetical",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "Recent-Oldest",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue),
+            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Recent-Oldest",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "Oldest-Recent",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue),
+            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Oldest-Recent",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),

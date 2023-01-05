@@ -62,15 +62,15 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.blue,
               elevation: 0,
               leading: IconButton(
                 icon: Icon(Icons.arrow_back,
-                    size: 32.0 * unitHeightValue, color: Colors.blue),
+                    size: 32.0 * unitHeightValue, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                color: Colors.blueGrey,
+                color: Colors.white,
               ),
               actions: [
 
@@ -81,7 +81,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
               children: <Widget>[
                 BackgroundColorContainer(
                   startColor: Colors.white,
-                  endColor: Colors.blue,
+                  endColor: Colors.white,
                   widget:
                       TitleCard(title: 'To Do', child: _buildStreamBuilder()),
                 ),
@@ -115,7 +115,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
             return _buildList();
           case ConnectionState.waiting:
             return Center(
-                child: CircularProgressIndicator(color: Colors.black54));
+                child: CircularProgressIndicator(color: Colors.blue));
         }
         return CircularProgressIndicator();
       },
@@ -190,8 +190,8 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
       padding: EdgeInsets.symmetric(
           vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
       icon: Icon(Icons.sort,
-          size: 32.0 * unitHeightValue, color: Colors.blue),
-      color: Colors.blue,
+          size: 32.0 * unitHeightValue, color: Colors.white),
+      color: Colors.white,
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -208,48 +208,48 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
         PopupMenuItem<String>(
           value: "Alphabetical",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha, size: 24 * unitHeightValue),
+            Icon(Icons.sort_by_alpha, size: 24 * unitHeightValue, color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Alphabetical",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "Recent-Oldest",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue),
+            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Recent-Oldest",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "Oldest-Recent",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue),
+            Icon(Icons.date_range,color: Colors.blue,  size: 24 * unitHeightValue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Oldest-Recent",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "Due Date",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue),
+            Icon(Icons.date_range,color: Colors.blue, size: 24 * unitHeightValue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
               "Due Date",
               style: TextStyle(
-                  color: Colors.white, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 24 * unitHeightValue),
             )
           ]),
         ),

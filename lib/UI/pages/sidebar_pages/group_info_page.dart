@@ -43,13 +43,17 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           key: _scaffoldKey,
           appBar: CustomAppBar(
             '',
+            leading: GestureDetector(
+              child: Icon(Icons.arrow_back_outlined,color: Colors.white,),
+              onTap: ()=> Navigator.pop(context),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: updateGroup,
                 child: Text(
                   "update",
                   style: TextStyle(
-                      color: Colors.lightBlue,
+                      color: Colors.white,
                       fontSize: 20 * unitHeightValue,
                       fontWeight: FontWeight.bold),
                 ),
@@ -57,7 +61,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
             ],
             fontSize: 24 * unitHeightValue,
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.blue,
           body: Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: _buildStack(),
@@ -121,8 +125,10 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   CircleAvatar _buildAvatar() {
     return CircleAvatar(
       radius: 50.0,
+      backgroundColor: Colors.white,
       child: Icon(
         Icons.group,
+        color: Colors.blue,
         size: 62.0,
       ),
     );
@@ -172,7 +178,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         "MEMBERS",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: Colors.blue,
           fontSize: 22 * unitHeightValue,
         ),
       ),

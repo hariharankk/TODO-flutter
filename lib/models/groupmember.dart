@@ -53,7 +53,7 @@ class GroupMember extends Equatable {
   /// Create CircleAvatar
   CircleAvatar cAvatar({
     double radius = 16,
-    Color color = Colors.blueAccent,
+    Color color = Colors.blue,
     required double unitHeightValue,
   }) {
     return CircleAvatar(

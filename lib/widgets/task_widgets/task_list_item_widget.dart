@@ -89,7 +89,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                       ),
                       Text(
                         widget.task.time_diff,
-                        style: toDoListTileStyle(unitHeightValue*0.7),
+                        style: toDoListTiletimeStyle(unitHeightValue*0.7),
                       ),
                     ],
                   ),

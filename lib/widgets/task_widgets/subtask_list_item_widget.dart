@@ -103,28 +103,20 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                       widget.subtask.note.isNotEmpty
                           ? Text(
                               widget.subtask.note,
-                              style: toDoListSubtitleStyle(unitHeightValue),
+                              style: toDoListTiletimeStyle(unitHeightValue),
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                               maxLines: 2,
                             )
                           : Text(
                               "No Notes",
-                              style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.white,
-                                  fontSize: 20 * unitHeightValue),
+                              style: toDoListTiletimeStyle(unitHeightValue)
                             ),
                       widget.subtask.assignedTo.length > 0
                           ? _buildAssignedMemberAvatars()
                           : Text(
                               "No Assigned Members",
-                              style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.white,
-                                  fontSize: 20 * unitHeightValue),
+                              style: toDoListTiletimeStyle(unitHeightValue),
                             ),
                     ],
                   ),
