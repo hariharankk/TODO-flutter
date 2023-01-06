@@ -84,7 +84,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        widget.task.timeCreated.toString(),
+                        widget.task.timeCreated.toString().substring(0,11),
                         style: toDoListTiletimeStyle(unitHeightValue*0.7),
                       ),
                     ],

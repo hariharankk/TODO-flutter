@@ -12,7 +12,6 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/task_widgets/add_subtask_widget.dart';
 import 'package:todolist/widgets/task_widgets/subtask_list_item_widget.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
-import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
 class SubtaskListTab extends StatefulWidget {
   final Group group;

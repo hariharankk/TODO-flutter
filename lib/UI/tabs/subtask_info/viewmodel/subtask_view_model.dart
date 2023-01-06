@@ -17,6 +17,10 @@ class SubtaskViewModel {
     return this.subtask.title;
   }
 
+set priority(int index){
+    subtask.priority=index;
+}
+
   String get note {
     return this.subtask.note;
   }

@@ -65,6 +65,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
           ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Container(
             height: listItemHeight,

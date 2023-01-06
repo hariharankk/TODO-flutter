@@ -8,6 +8,9 @@ import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
+import 'package:todolist/widgets/task_widgets/priority.dart';
+
+
 
 class SubtaskInfo extends StatefulWidget {
   final SubtaskBloc subtaskBloc;
@@ -70,6 +73,12 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                 color: Colors.white,
               ),
               actions: <Widget>[
+                PriorityPicker(onTap: (int value){
+                  viewmodel.priority = value;
+                  viewmodel.updateSubtaskInfo();
+                  setState(() {});
+                } ),
+
                 Padding(
                   padding: EdgeInsets.only(
                       top: 40.0 * unitHeightValue,
