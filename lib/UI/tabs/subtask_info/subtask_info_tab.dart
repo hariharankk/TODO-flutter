@@ -60,6 +60,15 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
           widget: Scaffold(
             appBar: CustomAppBar(
               widget.subtask.title,
+              leading: IconButton(
+                tooltip: 'back',
+                icon: Icon(Icons.arrow_back,
+                    size: 32.0 * unitHeightValue, color: Colors.white),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                color: Colors.white,
+              ),
               actions: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
@@ -96,7 +105,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                 ),
               ],
             ),
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.blue,
             body: FutureBuilder(
               future: viewmodel.getUsersAssignedtoSubtask(),
               builder: (context, snapshot) {
@@ -156,7 +165,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
       height: 150,
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: TextField(
@@ -168,7 +177,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
         maxLines: null,
         minLines: 4,
         decoration: InputDecoration(border: InputBorder.none),
-        style: TextStyle(fontSize: 16 * unitHeightValue),
+        style: TextStyle(fontSize: 16 * unitHeightValue,color: Colors.black),
       ),
     );
   }
@@ -210,7 +219,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
       SizedBox(width: 15 * unitWidthValue),
       CircleAvatar(
         radius: 20 * unitHeightValue,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blue,
         child: Text(
           "${viewmodel.subtask.assignedTo.length}",
           style: TextStyle(
@@ -251,7 +260,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               children: [
                 viewmodel.members[index].cAvatar(
                     radius: 34,
-                    color: Colors.blueAccent,
+                    color: Colors.blue,
                     unitHeightValue: unitHeightValue),
                 Text(
                   viewmodel.members[index].firstname,

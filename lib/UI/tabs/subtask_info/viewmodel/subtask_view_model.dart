@@ -41,9 +41,6 @@ class SubtaskViewModel {
     return this.subtask.assignedTo;
   }
 
-  List<GroupMember> get allGroupMembers {
-    return this.subtask.allGroupMembers;
-  }
 
   Future<void> getUsersAssignedtoSubtask() async {
     subtask.assignedTo =
