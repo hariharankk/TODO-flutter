@@ -14,7 +14,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = 'd9b0-35-196-29-72.ngrok.io';
+  static String stageHost = '0ba9-35-245-135-43.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -109,44 +109,7 @@ class ApiProvider {
   }
 
   /// Edit Profile
-  Future updateUserProfile(
-      String currentPassword,
-      String newPassword,
-      String email,
-      String username,
-      String firstname,
-      String lastname,
-      String phonenumber,
-      avatar) async {
-    final response = await client.post(
-      userupdateURL,
-      headers: {"Authorization": apiKey,
-        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
-        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-        "Access-Control-Allow-Methods": "POST, OPTIONS"
-      },
-      body: jsonEncode({
-        "currentPassword": currentPassword,
-        "newPassword": newPassword,
-        "email": email,
-        "username": username,
-        "firstname": firstname,
-        "lastname": lastname,
-        "phonenumber": phonenumber,
-        "avatar": avatar,
-      }),
-    );
-    final Map result = json.decode(response.body);
-    if (response.statusCode == 200) {
-      //print("User Profile Updated");
-      return User.fromJson(result["data"]);
-    } else {
-      // If that call was not successful, throw an error.
-      print(json.decode(response.body));
-      throw Exception(result["status"]);
-    }
-  }
+
 
   /// Group CRUD Functions
   /// Get a list of the User's Groups

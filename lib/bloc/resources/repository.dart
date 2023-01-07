@@ -18,17 +18,6 @@ class Repository {
   Future signinUser(String username, String password, String apiKey) =>
       apiProvider.signinUser(username, password, apiKey);
 
-  Future updateUserProfile(
-          String currentPassword,
-          String newPassword,
-          String email,
-          String username,
-          String firstname,
-          String lastname,
-          String phonenumber,
-          avatar) =>
-      apiProvider.updateUserProfile(currentPassword, newPassword, email,
-          username, firstname, lastname, phonenumber, avatar);
 
   Future<String> getApiKey() => apiProvider.getApiKey();
 

@@ -46,23 +46,7 @@ class UserBloc {
     }
   }
 
-  Future<void> updateUserProfile(
-      String currentPassword,
-      String newPassword,
-      String email,
-      String username,
-      String firstname,
-      String lastname,
-      String phonenumber,
-      avatar) async {
-    try {
-      _user = await repository.updateUserProfile(currentPassword, newPassword,
-          email, username, firstname, lastname, phonenumber, avatar);
-      _userGetter.sink.add(_user);
-    } catch (e) {
-      throw e;
-    }
-  }
+
 
   dispose() {
     _userGetter.close();
