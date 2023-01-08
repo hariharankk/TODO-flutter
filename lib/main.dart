@@ -59,7 +59,6 @@ class _SplashState extends State<Splash> {
       try {
         userBloc.signinUser("", "", apiKey);
         // <fetch data from server. ex. login>
-        await groupBloc.updateGroups();
       } catch (e) {
         print(e);
       }

@@ -7,7 +7,6 @@ class Task extends Equatable {
   String title;
 
   /// Task ID
-  int id;
 
   /// Task Key
   String taskKey;
@@ -19,7 +18,7 @@ class Task extends Equatable {
   String groupKey;
 
   /// Name of Group that added the task
-  String groupName;
+
 
   /// Has the Task been completed
   bool completed;
@@ -32,32 +31,27 @@ class Task extends Equatable {
   /// Time Updated
   DateTime timeUpdated;
 
-  String time_diff;
 
   Task(
       {required this.title,
       required this.groupKey,
-      required this.groupName,
       required this.completed,
-      required this.id,
       required this.priority,
       required this.taskKey,
       required this.timeCreated,
       required this.timeUpdated,
-      required this.time_diff});
+});
 
   factory Task.fromJson(Map<String, dynamic> parsedJson) {
     return Task(
-        id: parsedJson['id'],
         title: parsedJson['title'],
         taskKey: parsedJson['task_key'],
         completed: parsedJson['completed'],
         priority: parsedJson['priority'],
         groupKey: parsedJson['group_key'],
-        groupName: parsedJson['group_name'],
         timeCreated: DateTime.parse(parsedJson['time_created']),
         timeUpdated: DateTime.parse(parsedJson['time_updated']),
-        time_diff : parsedJson['time_diff']);
+        );
   }
 
   @override
