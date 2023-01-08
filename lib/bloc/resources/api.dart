@@ -14,7 +14,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '0ba9-35-245-135-43.ngrok.io';
+  static String stageHost = '2a4d-34-170-156-57.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -24,17 +24,12 @@ class ApiProvider {
   Uri taskaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-add');
   Uri taskupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-update');
 
-  Uri subtaskURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-get');
   Uri subtaskaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-add');
-  Uri subtaskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-delete');
   Uri subtaskupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-update');
 
-  Uri groupURL = Uri(scheme: 'http', host: stageHost, path: '/api/group');
   Uri groupaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-add');
   Uri groupupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-update');
-  Uri groupdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-delete');
 
-  Uri groupmemberdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-delete');
   Uri groupmemberaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-add');
 
   Uri searchURL = Uri(scheme: 'http', host: stageHost, path: '/api/search');
@@ -110,17 +105,17 @@ class ApiProvider {
   /// Get a list of the User's Groups
   Future<List<Group>> getUserGroups() async {
     final _apiKey = await getApiKey();
-
+    final queryParameters = {'apiKey':apiKey};
+    Uri groupURL = Uri(scheme: 'http', host: stageHost, path: '/api/group',queryParameters: queryParameters);
     List<Group> groups = [];
     if (_apiKey.isNotEmpty) {
-      final response = await client.post(
+      final response = await client.get(
         groupURL,
         headers: {
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
           "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
           "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
         },
-          body: jsonEncode({'apiKey':apiKey}),
           );
       final Map result = json.decode(response.body);
       print('group ${result["data"]}');
@@ -176,7 +171,7 @@ class ApiProvider {
 
   /// Update Group Info
   Future<bool> updateGroup(Group group) async {
-    final response = await client.post(
+    final response = await client.patch(
       groupupdateURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -195,16 +190,17 @@ class ApiProvider {
 
   /// Delete a Group
   Future deleteGroup(String groupKey) async {
-    final response = await client.post(
+    final queryParameters = {
+      "group_key": groupKey,
+    };
+    Uri groupdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-delete',queryParameters: queryParameters);
+    final response = await client.delete(
       groupdeleteURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
         "Access-Control-Allow-Methods": "GET, OPTIONS"},
-      body: jsonEncode({
-        "group_key": groupKey,
-      }),
     );
     if (response.statusCode == 200) {
     } else {
@@ -354,7 +350,7 @@ class ApiProvider {
 
   /// Update Task Info
   Future updateTask(Task task) async {
-    final response = await client.post(
+    final response = await client.patch(
       taskupdateURL,
       headers: {
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -392,16 +388,19 @@ class ApiProvider {
 //Subtask CRUD Functions
   //Get Subtasks
   Future<List<Subtask>> getSubtasks(Task task) async {
-    final response = await client.post(
+    final queryParameters = {
+      'taskKey':task.taskKey,
+    };
+    Uri subtaskURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-get',queryParameters: queryParameters);
+
+    final response = await client.get(
       subtaskURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
       },
-      body: jsonEncode({
-        'taskKey':task.taskKey,
-      }),
+
     );
     final Map result = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -451,7 +450,7 @@ class ApiProvider {
 
   //Update Subtask
   Future updateSubtask(Subtask subtask) async {
-    final response = await client.post(
+    final response = await client.patch(
       subtaskupdateURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -474,16 +473,17 @@ class ApiProvider {
 
   //Delete Subtask
   Future deleteSubtask(String subtaskKey) async {
-    final response = await client.post(
+    final queryParameters = {
+      "subtask_key": subtaskKey,
+    };
+    Uri subtaskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-delete',queryParameters: queryParameters);
+    final response = await client.delete(
       subtaskdeleteURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
       },
-        body: jsonEncode({
-          "subtask_key": subtaskKey,
-        }),
         );
     if (response.statusCode == 200) {
     } else {

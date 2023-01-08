@@ -18,7 +18,7 @@ class CreateGroupPage extends StatefulWidget {
 class _CreateGroupPageState extends State<CreateGroupPage> {
   Group newGroup = Group.blank();
   int membersLength = 0;
-  bool isPrivate = false;
+  bool isPrivate = true;
   TextEditingController groupName = new TextEditingController();
   late double unitHeightValue, unitWidthValue;
   bool saving = true;
@@ -282,7 +282,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   }
 
   Widget _addMembers() {
-    return this.isPrivate
+    return !this.isPrivate
         ? SizedBox.shrink()
         : Align(
             alignment: Alignment(0.9, 0.9),

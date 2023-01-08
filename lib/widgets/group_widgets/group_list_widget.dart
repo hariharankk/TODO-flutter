@@ -115,7 +115,7 @@ class _GroupListState extends State<GroupList> {
       }
     });
     return Dismissible(
-      key: Key(group.groupKey),
+      key: UniqueKey(),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
         color: Colors.red,
