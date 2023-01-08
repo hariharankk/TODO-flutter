@@ -21,9 +21,7 @@ class ApiProvider {
   Uri userURL = Uri(scheme: 'http', host: stageHost, path: '/api/user');
   Uri userupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/userupdate');
 
-  Uri taskURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-get');
   Uri taskaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-add');
-  Uri taskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-delete');
   Uri taskupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-update');
 
   Uri subtaskURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-get');
@@ -36,15 +34,12 @@ class ApiProvider {
   Uri groupupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-update');
   Uri groupdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-delete');
 
-  Uri groupmemberURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-get');
   Uri groupmemberdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-delete');
   Uri groupmemberaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-add');
 
   Uri searchURL = Uri(scheme: 'http', host: stageHost, path: '/api/search');
 
   Uri assignedtouserhaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-add');
-  Uri assignedtouserhdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-delete');
-  Uri assignedtouserhgetURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-get');
 
   String apiKey = '';
 
@@ -221,17 +216,17 @@ class ApiProvider {
 // GroupMember CRUD Functions
   /// Get a list of the Group's Members.
   Future<List<GroupMember>> getGroupMembers(String groupKey) async {
-    final response = await client.post(
+    final queryParameters = {
+      "groupKey":groupKey,
+    };
+    Uri groupmemberURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-get',queryParameters: queryParameters);
+    final response = await client.get(
       groupmemberURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
       },
-      body: jsonEncode({
-        "groupKey":groupKey,
-      }),
-
     );
     final Map result = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -280,17 +275,18 @@ class ApiProvider {
   /// * GroupKey: Unique Group Identifier
   /// * Username: Group Member's Username to be added
   Future deleteGroupMember(String groupKey, String username) async {
-    final response = await client.post(
+    final queryParameters = {
+      "groupKey":groupKey,
+    "username": username,
+    };
+    Uri groupmemberdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-delete',queryParameters: queryParameters);
+    final response = await client.delete(
       groupmemberdeleteURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
         "Access-Control-Allow-Methods": "GET, OPTIONS"},
-      body: jsonEncode({
-        "groupKey":groupKey,
-        "username": username,
-      }),
     );
 
     if (response.statusCode == 200) {
@@ -306,14 +302,15 @@ class ApiProvider {
   /// Get a list of the Group's Tasks
   /// * GroupKey: Unique group identifier
   Future<List<Task>> getTasks(String groupKey) async {
-    final response = await client.post(
+    final queryParameters = {"group_key": groupKey};
+    Uri taskURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-get',queryParameters: queryParameters);
+    final response = await client.get(
       taskURL,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": 'true',
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
       },
-      body: jsonEncode({"group_key": groupKey}),
     );
     final Map result = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -375,14 +372,15 @@ class ApiProvider {
   }
 
   Future deleteTask(String taskKey) async {
-    final response = await client.post(
+    final queryParameters = {"task_key":taskKey};
+    Uri taskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-delete',queryParameters: queryParameters);
+    final response = await client.delete(
       taskdeleteURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
       },
-      body: jsonEncode({"task_key":taskKey}),
     );
     if (response.statusCode == 200) {
     } else {
@@ -529,21 +527,19 @@ class ApiProvider {
   ///AssignedToUser API Calls
   ///GET
   Future<List<GroupMember>> getUsersAssignedToSubtask(String subtaskKey) async {
-    final response = await client.post(
+    final queryParameters = {
+      "subtask_key": subtaskKey,};
+    Uri assignedtouserhgetURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-get', queryParameters: queryParameters);
+    final response = await client.get(
       assignedtouserhgetURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
     },
-      body: jsonEncode({
-        "subtask_key": subtaskKey,
-      }),
-
     );
     final Map result = json.decode(response.body);
     if (response.statusCode == 200) {
-      // If the call to the server was successful, parse the JSON
       List<GroupMember> groupMembers = [];
       for (Map<String, dynamic> json_ in result["data"]) {
         try {
@@ -553,7 +549,6 @@ class ApiProvider {
           //throw Exception;
         }
       }
-      //print("getGroupMembers: " +groupMembers.toString() +" @" +DateTime.now().toString());
       return groupMembers;
     } else {
       // If that call was not successful, throw an error.
@@ -590,26 +585,23 @@ class ApiProvider {
   /// * SubtaskKey: Unique Subtask Identifier
   /// * Username: Group Member's Username to be added
   Future unassignSubtaskToUser(String subtaskKey, String username) async {
-    final response = await client.post(
+    final queryParameters ={
+      "subtask_key": subtaskKey,
+    "username":username,
+    };
+    Uri assignedtouserhdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-delete',queryParameters: queryParameters);
+    final response = await client.delete(
       assignedtouserhdeleteURL,
       headers: {"Authorization": subtaskKey,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
       },
-      body: jsonEncode({
-        "subtask_key": subtaskKey,
-        "username":username,
-      }),
-
     );
     if (response.statusCode == 200) {
-      // If the call to the server was successful
-      //print("Group Member $username deleted");
     } else if (response.statusCode == 400 ||
         response.statusCode == 401 ||
         response.statusCode == 404) {
-      // If that call was not successful, throw an error.
       final Map result = json.decode(response.body);
       throw Exception(result["status"]);
     }
