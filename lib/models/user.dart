@@ -14,12 +14,10 @@ class User extends GroupMember {
   User(this.id, this.password, this.apiKey,
       {username, firstname, lastname, emailaddress, phonenumber, avatar})
       : super(
-            firstname: firstname,
-            lastname: lastname,
             username: username,
             emailaddress: emailaddress,
             phonenumber: phonenumber,
-            avatar: avatar);
+  );
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     return User(
@@ -31,7 +29,6 @@ class User extends GroupMember {
       firstname: parsedJson['firstname'],
       lastname: parsedJson['lastname'],
       phonenumber: parsedJson['phonenumber'],
-      avatar: parsedJson['avatar'],
     );
   }
   @override

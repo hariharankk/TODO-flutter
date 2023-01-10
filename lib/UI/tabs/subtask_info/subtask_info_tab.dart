@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import  'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/UI/tabs/subtask_info/viewmodel/subtask_view_model.dart';
 import 'package:todolist/UI/tabs/subtask_info/widgets/due_date_row.dart';
@@ -272,7 +272,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                     color: Colors.blue,
                     unitHeightValue: unitHeightValue),
                 Text(
-                  viewmodel.members[index].firstname,
+                  viewmodel.members[index].username,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

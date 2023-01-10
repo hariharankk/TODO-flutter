@@ -197,7 +197,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
       ),
       Spacer(),
       Text(
-        "Personal",
+        "Public",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black54,
@@ -205,12 +205,12 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         ),
       ),
       Switch(
-          value: !group.isPublic,
+          value: group.isPublic,
           onChanged: (newValue) {
             if (!group.isPublic || group.members.length == 1) {
               setState(
                 () {
-                  group.isPublic = !newValue;
+                  group.isPublic = newValue;
                   repository.updateGroup(group).catchError(
                     (e) {
                       ScaffoldMessenger.of(context)
@@ -250,7 +250,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
             group.members[index]
                 .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
             Text(
-              group.members[index].firstname,
+              group.members[index].username,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontFamily: 'Segoe UI',

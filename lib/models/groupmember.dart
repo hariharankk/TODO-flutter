@@ -5,10 +5,6 @@ import 'package:todolist/models/global.dart';
 // ignore: must_be_immutable
 class GroupMember extends Equatable {
   /// Member's First name
-  late String firstname;
-
-  /// Member's Last name
-  late String lastname;
 
   /// Member's Username
   late String username;
@@ -19,28 +15,22 @@ class GroupMember extends Equatable {
   /// Member's Phone Number
   late String phonenumber;
 
-  /// Avatar Image
-  late var avatar;
 
   bool selectedForAssignment = false;
 
   GroupMember.blank();
   GroupMember(
-      {required this.firstname,
-      required this.lastname,
+      {
       required this.emailaddress,
       required this.username,
       required this.phonenumber,
-      required this.avatar});
+      });
 
   factory GroupMember.fromJson(Map<String, dynamic> parsedJson) {
     return GroupMember(
-      firstname: parsedJson["firstname"],
-      lastname: parsedJson["lastname"],
       username: parsedJson["username"],
       emailaddress: parsedJson["emailaddress"],
       phonenumber: parsedJson["phonenumber"],
-      avatar: parsedJson["avatar"],
     );
   }
 
@@ -48,7 +38,7 @@ class GroupMember extends Equatable {
   List<Object> get props => [username];
 
   /// Get Group Member's Initials
-  String initials() => firstname[0].toUpperCase() + lastname[0].toUpperCase();
+  String initials() => username[0].toUpperCase() + username[1].toUpperCase();
 
   /// Create CircleAvatar
   CircleAvatar cAvatar({

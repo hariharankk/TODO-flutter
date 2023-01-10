@@ -3,7 +3,6 @@ import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/models/tasks.dart';
 
 class Group extends ChangeNotifier {
-  late int id;
   late String _name;
   late String groupKey;
   late bool isPublic;
@@ -18,12 +17,11 @@ class Group extends ChangeNotifier {
 
   Group.blank();
 
-  Group(this.id, this._name, this.groupKey, this.isPublic, this.timeCreated,
+  Group(this._name, this.groupKey, this.isPublic, this.timeCreated,
       this.timeUpdated);
 
   factory Group.fromJson(Map<String, dynamic> parsedJson) {
     return Group(
-        parsedJson['id'],
         parsedJson['name'],
         //parsedJson['members'],
         parsedJson['group_key'],

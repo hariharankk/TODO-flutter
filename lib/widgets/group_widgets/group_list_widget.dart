@@ -124,7 +124,7 @@ class _GroupListState extends State<GroupList> {
       ),
       onDismissed: (direction) async {
         if (group.members.length == 1) {
-          await groupBloc.deleteGroup(group.groupKey);
+          await repository.deleteGroup(group.groupKey);
         } else if (group.members.length > 1) {
           try {
             await repository.deleteGroupMember(
@@ -142,7 +142,6 @@ class _GroupListState extends State<GroupList> {
         },
         child: Container(
           height: groupListItemHeight,
-          //width: groupListItemWidth,
           decoration: _tileDecoration(),
           child: _buildTilePadding(group),
         ),

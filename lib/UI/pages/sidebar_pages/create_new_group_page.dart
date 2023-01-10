@@ -94,7 +94,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       setState(() {
         saving=false;
       });
-      String groupKey = await groupBloc.addGroup(groupName.text, isPrivate);
+      String groupKey = await repository.addGroup(groupName.text, isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
           await repository.addGroupMember(groupKey, member.username);
@@ -229,7 +229,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       ),
       Spacer(),
       Text(
-        "Personal",
+        "Public",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black54,
@@ -267,7 +267,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             newGroup.members[index]
                 .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
             Text(
-              newGroup.members[index].firstname,
+              newGroup.members[index].username,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.bold,

@@ -91,31 +91,20 @@ class GroupBloc {
   }
 }
 
-class GroupMemberBloc {
-  final _groupMemberSubject = BehaviorSubject<List<GroupMember>>();
-  String groupKey;
-  var _groupMembers = <GroupMember>[];
 
-  GroupMemberBloc(String groupKey) : this.groupKey = groupKey {
-    _updateGroupMembers(groupKey);
-  }
-
-  Stream<List<GroupMember>> get getGroupMembers => _groupMemberSubject.stream;
-  Future<void> _updateGroupMembers(String groupKey) async {
-    _groupMembers = await repository.getGroupMembers(groupKey);
-    _groupMemberSubject.add(_groupMembers);
-  }
-}
 
 class TaskBloc {
   final _taskSubject = BehaviorSubject<List<Task>>();
   String _groupKey;
 
   TaskBloc(String groupKey) : this._groupKey = groupKey{
-    updateTasks();
+
   }
 
-  Stream<List<Task>> get getTasks => _taskSubject.stream;
+  Stream<List<Task>> get getTasks {
+    updateTasks();
+   return _taskSubject.stream;
+  }
 
   Future<void> addTask(String taskName) async {
     await repository.addTask(taskName, this._groupKey);

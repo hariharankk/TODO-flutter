@@ -4,7 +4,7 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/group_widgets/group_list_widget.dart';
 
 class ListGroupsTab extends StatelessWidget {
-  static const routeName = '/listGroupsTab';
+
 
   @override
   Widget build(BuildContext context) {
