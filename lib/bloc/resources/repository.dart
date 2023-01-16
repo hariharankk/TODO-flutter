@@ -3,6 +3,7 @@ import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/models/tasks.dart';
+import 'package:todolist/models/message.dart';
 
 import 'api.dart';
 import 'package:todolist/models/user.dart';
@@ -87,6 +88,10 @@ class Repository {
 
   Future<void> unassignSubtaskToUser(String subtaskKey, String username) =>
       apiProvider.unassignSubtaskToUser(subtaskKey, username);
+
+  Future send_message(String message, String sender,String subtaskKey) => apiProvider.send_message(message, sender,subtaskKey);
+
+  Future<List<Message>> get_message(String subtaskKey) => apiProvider.getMessages(subtaskKey);
 }
 
 final repository = Repository();

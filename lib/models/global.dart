@@ -92,3 +92,22 @@ TextStyle registerButtonStyle(double unitHeightValue) => new TextStyle(
 List<int> index =[0,1,2];
 List<String> priorityText = ['Low', 'Mid', 'High'];
 List<Color> priorityColor = [Colors.green, Colors.lightGreen, Colors.red];
+
+
+const kMessageContainerDecoration = BoxDecoration(
+  border: Border(
+    top: BorderSide(color: Colors.white, width: 2.0),
+  ),
+);
+
+const kMessageTextFieldDecoration = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  hintText: 'Type your message here...',
+  border: InputBorder.none,
+);
+
+const kSendButtonTextStyle = TextStyle(
+  color: Colors.lightBlueAccent,
+  fontWeight: FontWeight.bold,
+  fontSize: 18.0,
+);

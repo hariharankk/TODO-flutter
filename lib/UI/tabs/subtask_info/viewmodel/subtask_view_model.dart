@@ -29,9 +29,6 @@ set priority(int index){
     subtask.note = note;
   }
 
-  void selected(GroupMember groupMember, bool selected) {
-    groupMember.selectedForAssignment = selected;
-  }
 
   DateTime get deadline {
     return this.subtask.deadline;
@@ -41,9 +38,6 @@ set priority(int index){
     subtask.deadline = deadline;
   }
 
-  List<GroupMember> get assignedTo {
-    return this.subtask.assignedTo;
-  }
 
 
   Future<void> getUsersAssignedtoSubtask() async {
@@ -56,6 +50,9 @@ set priority(int index){
       } else
         selected(user, false);
     }
+  }
+  void selected(GroupMember groupMember, bool selected) {
+    groupMember.selectedForAssignment = selected;
   }
 
   bool alreadySelected(int index) => members[index].selectedForAssignment;

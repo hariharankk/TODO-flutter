@@ -3,6 +3,7 @@ import 'package:http/http.dart' show Client;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
+import 'package:todolist/models/message.dart';
 import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/models/tasks.dart';
 import 'dart:convert';
@@ -14,7 +15,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = 'e367-34-125-149-2.ngrok.io';
+  static String stageHost = 'be33-34-86-10-5.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -35,6 +36,8 @@ class ApiProvider {
   Uri searchURL = Uri(scheme: 'http', host: stageHost, path: '/api/search');
 
   Uri assignedtouserhaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-add');
+
+  Uri sendmessage = Uri(scheme: 'http', host: stageHost, path: '/api/message_send');
 
   String apiKey = '';
 
@@ -592,7 +595,7 @@ class ApiProvider {
     Uri assignedtouserhdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-delete',queryParameters: queryParameters);
     final response = await client.delete(
       assignedtouserhdeleteURL,
-      headers: {"Authorization": subtaskKey,
+      headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -606,6 +609,58 @@ class ApiProvider {
       throw Exception(result["status"]);
     }
   }
+
+  Future send_message(String message,String sender,String subtaskKey) async{
+    final response = await client.post(
+      sendmessage,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+      },
+      body: jsonEncode({
+        "message": message,
+        "sender":sender,
+        "subtaskKey":subtaskKey
+      }),
+
+    );
+    final Map result = json.decode(response.body);
+    if (response.statusCode == 201) {
+    } else {
+      print(result["status"]);
+      throw Exception(result["status"]);
+    }
+  }
+
+  Future<List<Message>> getMessages(String subtaskKey) async {
+    final queryParameters = {"subtask_key": subtaskKey};
+    Uri messageURL = Uri(scheme: 'http', host: stageHost, path: '/api/message-get',queryParameters: queryParameters);
+    final response = await client.get(
+      messageURL,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": 'true',
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+      },
+    );
+    final Map result = json.decode(response.body);
+    if (response.statusCode == 200) {
+      List<Message> messages = [];
+      for (Map<String, dynamic> json_ in result["data"]) {
+        try {
+          Message message = Message.fromJson(json_);
+          messages.add(message);
+        } catch (Exception) {
+          print(Exception);
+        }
+      }
+      return messages;
+    } else {
+      throw Exception(result["status"]);
+    }
+  }
+
 
   /// Save API key to Device's persistant storage
   Future<void> saveApiKey(String apiKey) async {

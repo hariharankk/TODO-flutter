@@ -1,5 +1,6 @@
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
+import 'package:todolist/models/message.dart';
 import 'package:todolist/models/subtasks.dart';
 
 import '../resources/repository.dart';
@@ -45,8 +46,6 @@ class UserBloc {
       throw e;
     }
   }
-
-
 
   dispose() {
     _userGetter.close();
@@ -97,9 +96,7 @@ class TaskBloc {
   final _taskSubject = BehaviorSubject<List<Task>>();
   String _groupKey;
 
-  TaskBloc(String groupKey) : this._groupKey = groupKey{
-
-  }
+  TaskBloc(String groupKey) : this._groupKey = groupKey;
 
   Stream<List<Task>> get getTasks {
     updateTasks();
@@ -168,6 +165,30 @@ class SubtaskBloc {
 
     List<Subtask> subtasks = await repository.getSubtasks(_task);
     _subtaskSubject.add(subtasks);
+  }
+}
+
+class messageBloc{
+  final _messageSubject = BehaviorSubject<List<Message>>();
+  String _subtaskKey;
+
+  messageBloc(String subtaskKey) : this._subtaskKey = subtaskKey{
+    updatemessage();
+  }
+
+
+  Stream<List<Message>> get getmessages {
+    return _messageSubject.stream;
+  }
+
+  Future<void> addmessage(String message, String sender) async {
+    await repository.send_message(message,sender,_subtaskKey);
+    await updatemessage();
+  }
+  Future<void> updatemessage() async {
+    await Future<void>.delayed(const Duration(milliseconds: 400));
+    List<Message> messages = await repository.get_message(_subtaskKey);
+    _messageSubject.add(messages);
   }
 }
 

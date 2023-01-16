@@ -9,6 +9,7 @@ import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
+import 'package:todolist/widgets/messagepage.dart';
 
 
 
@@ -18,11 +19,10 @@ class SubtaskInfo extends StatefulWidget {
   final List<GroupMember> members;
 
   const SubtaskInfo({
-    Key? key,
     required this.subtaskBloc,
     required this.subtask,
     required this.members,
-  }) : super(key: key);
+  }) ;
 
   @override
   _SubtaskInfoState createState() => _SubtaskInfoState();
@@ -49,14 +49,6 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
     return SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
         child: BackgroundColorContainer(
           startColor: Colors.white,
           endColor: Colors.white,
@@ -78,7 +70,6 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                   viewmodel.updateSubtaskInfo();
                   setState(() {});
                 } ),
-
                 Padding(
                   padding: EdgeInsets.only(
                       top: 40.0 * unitHeightValue,
@@ -115,20 +106,22 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               ],
             ),
             backgroundColor: Colors.blue,
-            body: FutureBuilder(
-              future: viewmodel.getUsersAssignedtoSubtask(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
-                  buffering = true;
-                else
-                  buffering = false;
-                return _buildBody();
-              },
+            body:
+              SingleChildScrollView(
+                child: FutureBuilder(
+                  future: viewmodel.getUsersAssignedtoSubtask(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting)
+                      buffering = true;
+                    else
+                      buffering = false;
+                    return _buildBody();
+                  },
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Center _buildProgressIndicator() {
@@ -138,15 +131,17 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   }
 
   Column _buildBody() {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: _subtaskInfoColumn(),
-        ),
-        _buildExpandedCard()
-      ],
-    );
+    return
+      Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: _subtaskInfoColumn(),
+          ),
+          _buildExpandedCard(),
+          ChatScreen(subtaskKey: widget.subtask.subtaskKey),
+        ],
+      );
   }
 
   /// Column containing pertinent Subtask Info
@@ -191,8 +186,10 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     );
   }
 
-  Expanded _buildExpandedCard() {
-    return Expanded(
+  Container _buildExpandedCard() {
+    return Container(
+      height: MediaQuery.of(context).size.height/2.5,
+      width: MediaQuery.of(context).size.width,
       child: _buildMembersContainer(),
     );
   }
@@ -219,7 +216,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   Row _buildMembersLabelRow() {
     return Row(children: [
       Text(
-        "Assigned To: (1 or More)",
+        "Assigned To:",
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.blue,
@@ -237,6 +234,19 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               fontSize: 16 * unitHeightValue),
         ),
       ),
+      viewmodel.subtask.assignedTo.length > 1
+      ?Text("people",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+            fontSize: 22 * unitHeightValue),
+      )
+    :Text("person",
+    style: TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Colors.blue,
+    fontSize: 22 * unitHeightValue),
+      )
     ]);
   }
 
