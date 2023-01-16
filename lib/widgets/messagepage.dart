@@ -97,7 +97,6 @@ class MessagesStream extends StatelessWidget {
   MessagesStream({required this.loggedInUser, required this.data});
   @override
   Widget build(BuildContext context) {
-    unitHeightValue = MediaQuery.of(context).size.height/4;
     return StreamBuilder(
       stream: data,
       builder: (context, snapshot) {
@@ -124,17 +123,15 @@ class MessagesStream extends StatelessWidget {
         }).toList();
 
 
-        return Expanded(
-          child: SizedBox(
-            height: unitHeightValue,
-            child: ListView(
-              shrinkWrap: true,
+        return
+            ListView(
+              physics: NeverScrollableScrollPhysics(), ///
+              shrinkWrap: true, ///
+              scrollDirection: Axis.vertical,
               reverse: true,
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
               children: messageBubbles,
-            ),
-          ),
-        );
+            );
       },
     );
   }
