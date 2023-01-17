@@ -222,7 +222,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
             color: Colors.blue,
             fontSize: 22 * unitHeightValue),
       ),
-      SizedBox(width: 15 * unitWidthValue),
+      SizedBox(width: 5 * unitWidthValue),
       CircleAvatar(
         radius: 20 * unitHeightValue,
         backgroundColor: Colors.blue,
@@ -234,6 +234,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               fontSize: 16 * unitHeightValue),
         ),
       ),
+      SizedBox(width: 5 * unitWidthValue),
       viewmodel.subtask.assignedTo.length > 1
       ?Text("people",
         style: TextStyle(

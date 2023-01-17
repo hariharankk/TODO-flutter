@@ -69,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                   ),
 
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       messageTextController.clear();
                       message.addmessage(messageText, loggedInUser);
@@ -92,33 +92,35 @@ class MessagesStream extends StatelessWidget {
   final String loggedInUser;
   final Stream<List<dynamic>> data;
   late List<dynamic> messages;
-  late double unitHeightValue;
+
 
   MessagesStream({required this.loggedInUser, required this.data});
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: data,
+      initialData: [],
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.white,
             ),
           );
         }
         messages = snapshot.data as List<dynamic>;
         List<MessageBubble> messageBubbles = [];
         messageBubbles = messages.map((var message){
-
           final messageText = message.message;
           final messageSender = message.sender;
+          final currenttime = message.timeCreated;
           final currentUser = loggedInUser;
 
           return MessageBubble(
             sender: messageSender,
             text: messageText,
             isMe: currentUser == messageSender,
+            timeCreated: currenttime,
           );
         }).toList();
 
@@ -138,12 +140,12 @@ class MessagesStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({required this.sender, required this.text, required this.isMe});
+  MessageBubble({required this.sender, required this.text, required this.isMe, required this.timeCreated});
 
   final String sender;
   final String text;
   final bool isMe;
-
+  final DateTime timeCreated;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -153,12 +155,13 @@ class MessageBubble extends StatelessWidget {
         isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            sender,
+            sender.toUpperCase(),
             style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.black54,
+              fontSize: 15.0,
+              color: Colors.black,
             ),
           ),
+          SizedBox(height: 5.0),
           Material(
             borderRadius: isMe
                 ? BorderRadius.only(
@@ -177,12 +180,25 @@ class MessageBubble extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: isMe ? Colors.white : Colors.black54,
+                  color: isMe ? Colors.white : Colors.black,
                   fontSize: 15.0,
                 ),
               ),
             ),
           ),
+          SizedBox(height:5.0),
+          Padding(
+            padding: EdgeInsets.only(right: 5.0),
+            child: Text(
+                timeCreated.toString().substring(0,11),
+                style: TextStyle(
+                  fontSize: 13.0,
+                  color: Colors.black,
+                ),
+              ),
+          ),
+
+          //
         ],
       ),
     );
