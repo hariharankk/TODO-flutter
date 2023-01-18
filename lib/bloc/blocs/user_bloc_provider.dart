@@ -151,12 +151,8 @@ class SubtaskBloc {
   }
 
   Future<void> updateSubtaskInfo(Subtask subtask) async {
-    Future.wait(
-      [
-        repository.updateSubtask(subtask),
-        _updateSubtasks(),
-      ],
-    );
+        await repository.updateSubtask(subtask);
+        await _updateSubtasks();
 
   }
 

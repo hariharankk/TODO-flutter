@@ -35,9 +35,7 @@ class Repository {
   Future<dynamic> deleteGroup(String groupKey) =>
       apiProvider.deleteGroup(groupKey);
 
-  //Group Members: Get, Post, Delete
-  Future getGroupMembers(String groupKey) =>
-      apiProvider.getGroupMembers(groupKey);
+  //Group Members:  Post, Delete
 
   Future addGroupMember(String groupKey, String username) =>
       apiProvider.addGroupMember(groupKey, username);
