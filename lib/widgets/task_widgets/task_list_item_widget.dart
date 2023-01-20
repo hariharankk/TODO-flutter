@@ -19,13 +19,11 @@ class TaskListItemWidget extends StatefulWidget {
 }
 
 class _TaskListItemWidgetState extends State<TaskListItemWidget> {
-  late SubtaskBloc subtaskBloc;
   late double unitHeightValue;
   late double height;
 
   @override
   void initState() {
-    subtaskBloc = SubtaskBloc(widget.task);
     super.initState();
   }
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todolist/UI/pages/sidebar_pages/add_members.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
+import 'package:todolist/bloc/resources/injection.dart';
+import 'package:todolist/UI/pages/sidebar_pages/add _memebers.dart';
 
 class CreateGroupPage extends StatefulWidget {
   static const routeName = '/create_group';
@@ -16,7 +17,7 @@ class CreateGroupPage extends StatefulWidget {
 }
 
 class _CreateGroupPageState extends State<CreateGroupPage> {
-  Group newGroup = Group.blank();
+  Group newGroup = locator<Group>();
   int membersLength = 0;
   bool isPrivate = true;
   TextEditingController groupName = new TextEditingController();
@@ -292,9 +293,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddMembersPage(
-                      group: newGroup,
-                    ),
+                    builder: (context) => AddMembersPage(),
                   ),
                 );
               },

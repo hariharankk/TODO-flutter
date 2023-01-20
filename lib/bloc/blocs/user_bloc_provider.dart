@@ -96,10 +96,11 @@ class TaskBloc {
   final _taskSubject = BehaviorSubject<List<Task>>();
   String _groupKey;
 
-  TaskBloc(String groupKey) : this._groupKey = groupKey;
+  TaskBloc(String groupKey) : this._groupKey = groupKey{
+    updateTasks();
+  }
 
   Stream<List<Task>> get getTasks {
-    updateTasks();
    return _taskSubject.stream;
   }
 
