@@ -95,6 +95,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       setState(() {
         saving=false;
       });
+      
       String groupKey = await repository.addGroup(groupName.text, isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
