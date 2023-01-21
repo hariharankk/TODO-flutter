@@ -22,7 +22,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
-  Group group = locator<Group>();
+  Group group = locator<Group>(instanceName: 'creategroup');
   List<GroupMember> searchResults = [];
 
   bool selected = false;

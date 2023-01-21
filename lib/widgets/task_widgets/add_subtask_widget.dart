@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
-
+import 'package:todolist/bloc/resources/injection.dart';
 //import 'package:todolist/models/global.dart';
 
 class AddSubtask extends StatefulWidget {
-  const AddSubtask({
-    Key? key,
 
-    required this.subtaskBloc,
-  }) : super(key: key);
-
-  final SubtaskBloc subtaskBloc;
 
   @override
   _AddSubtaskState createState() => _AddSubtaskState();
@@ -110,7 +104,7 @@ class _AddSubtaskState extends State<AddSubtask> {
       String title = controller.text;
       controller.clear();
       textfieldFocus.unfocus();
-      await widget.subtaskBloc.addSubtask(title);
+      await locator<SubtaskBloc>().addSubtask(title);
     }
   }
 }

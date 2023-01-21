@@ -10,9 +10,8 @@ import 'package:todolist/models/tasks.dart';
 class TaskListItemWidget extends StatefulWidget {
   final Task task;
   final Group group;
-  final TaskBloc taskbloc;
 
-  TaskListItemWidget({required this.group, required this.task, required this.taskbloc});
+  TaskListItemWidget({required this.group, required this.task});
 
   @override
   _TaskListItemWidgetState createState() => _TaskListItemWidgetState();
@@ -37,7 +36,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
     return GestureDetector(
       key: UniqueKey(),
       onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task, taskBloc:widget.taskbloc,)));
+               Navigator.push(context, MaterialPageRoute(builder: (context) => SubtaskListTab(group:widget.group, task:widget.task)));
                },
 
       child: Container(

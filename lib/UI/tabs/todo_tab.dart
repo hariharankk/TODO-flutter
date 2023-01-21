@@ -12,6 +12,7 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/task_widgets/add_task_widget.dart';
 import 'package:todolist/widgets/task_widgets/task_list_item_widget.dart';
 import 'package:todolist/UI/pages/sidebar_pages/group_info_page.dart';
+import 'package:todolist/bloc/resources/injection.dart';
 /// Argument that can be passed when navigating to ToDoTab
 /// * group
 class ToDoTab extends StatefulWidget {
@@ -37,7 +38,8 @@ class _ToDoTabState extends State<ToDoTab> {
   @override
   Widget build(BuildContext context) {
     group = widget.group;
-    taskBloc = TaskBloc(group.groupKey);
+    locator.registerLazySingleton<TaskBloc>(() =>TaskBloc(group.groupKey));
+    taskBloc = locator<TaskBloc>();
     Size mediaQuery = MediaQuery.of(context).size;
     height = mediaQuery.height * 0.13;
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
@@ -98,7 +100,7 @@ class _ToDoTabState extends State<ToDoTab> {
                   ),
                 ),
                 AddTask(
-                  taskbloc: taskBloc,
+
                 ),
               ],
             ),
@@ -157,7 +159,6 @@ class _ToDoTabState extends State<ToDoTab> {
       child: ListTile(
         key: Key(item.title),
         title: TaskListItemWidget(
-          taskbloc: taskBloc,
           group: group,
           task: item,
         ),

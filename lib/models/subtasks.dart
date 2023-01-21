@@ -5,39 +5,44 @@ import 'groupmember.dart';
 // ignore: must_be_immutable
 class Subtask extends Equatable {
   /// Subtask Name/Title
-  String title;
-
+  late String title;
   /// Subtask ID
-  int priority;
+  late int priority;
 
   /// Subtask Key
-  String subtaskKey;
+  late String subtaskKey;
 
   /// Has the subtask been completed
-  bool completed;
+  late bool completed;
 
   /// Time Created
-  DateTime timeCreated;
+  late DateTime timeCreated;
 
   /// Time Updated
-  DateTime timeUpdated;
+  late DateTime timeUpdated;
 
-  DateTime now = DateTime.now();
+  late DateTime now = DateTime.now();
 
   /// Deadline
   late DateTime deadline;
 
   /// Not Implemented
-  String note;
+  late String note;
 
   List<GroupMember> assignedTo = [];
 
   late List<GroupMember> allGroupMembers;
 
+  Subtask.blank();
+
   Subtask(this.title, this.completed, this.note,
       this.subtaskKey, this.timeCreated, this.timeUpdated,this.priority) {
     deadline = DateTime(now.year, 12, 31);
   }
+
+  factory Subtask.copyWith(Subtask obj) {
+    return Subtask(obj.title, obj.completed, obj.note, obj.subtaskKey, obj.timeCreated, obj.timeUpdated, obj.priority);
+}
 
   factory Subtask.fromJson(Map<String, dynamic> parsedJson) {
     return Subtask(

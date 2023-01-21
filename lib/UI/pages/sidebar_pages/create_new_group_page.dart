@@ -8,6 +8,7 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/bloc/resources/injection.dart';
 import 'package:todolist/UI/pages/sidebar_pages/add _memebers.dart';
+import 'package:todolist/bloc/resources/injection.dart';
 
 class CreateGroupPage extends StatefulWidget {
   static const routeName = '/create_group';
@@ -17,7 +18,7 @@ class CreateGroupPage extends StatefulWidget {
 }
 
 class _CreateGroupPageState extends State<CreateGroupPage> {
-  Group newGroup = locator<Group>();
+  Group newGroup = locator<Group>(instanceName: 'creategroup');
   int membersLength = 0;
   bool isPrivate = true;
   TextEditingController groupName = new TextEditingController();
@@ -95,7 +96,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       setState(() {
         saving=false;
       });
-      
+
       String groupKey = await repository.addGroup(groupName.text, isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
@@ -105,7 +106,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         }
       }
       await groupBloc.updateGroups();
-
+      // locator.resetLazySingleton<Group>();
       Navigator.pop(context);
     }
   }

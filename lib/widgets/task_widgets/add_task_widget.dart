@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
+import 'package:todolist/bloc/resources/injection.dart';
+
 
 class AddTask extends StatefulWidget {
-  const AddTask({
-    required this.taskbloc,
-  }) ;
-
-  final TaskBloc taskbloc;
 
   @override
   _AddTaskState createState() => _AddTaskState();
@@ -107,7 +104,7 @@ class _AddTaskState extends State<AddTask> {
       String title = controller.text;
       controller.clear();
       textfieldFocus.unfocus();
-      await widget.taskbloc.addTask(title);
+      await locator<TaskBloc>().addTask(title);
       //widget.taskbloc.updateTasks();
     }
   }

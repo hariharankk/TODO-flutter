@@ -12,13 +12,14 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/task_widgets/add_subtask_widget.dart';
 import 'package:todolist/widgets/task_widgets/subtask_list_item_widget.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
+import 'package:todolist/bloc/resources/injection.dart';
 
 class SubtaskListTab extends StatefulWidget {
   final Group group;
   final Task task;
-  final TaskBloc taskBloc;
 
-  SubtaskListTab({required this.group, required this.task, required this.taskBloc});
+
+  SubtaskListTab({required this.group, required this.task});
 
   @override
   _SubtaskListTabState createState() => _SubtaskListTabState();
@@ -45,7 +46,8 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
     Size mediaQuery = MediaQuery.of(context).size;
     height = mediaQuery.height * 0.13;
-    subtaskBloc = SubtaskBloc(task);
+    locator.registerLazySingleton<SubtaskBloc>(() =>SubtaskBloc(task));
+    subtaskBloc = locator<SubtaskBloc>();
     return KeyboardSizeProvider(
       child: SafeArea(
         child: GestureDetector(
@@ -76,7 +78,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
               actions: [
                 PriorityPicker(onTap: (int value){
                   widget.task.priority = value;
-                  widget.taskBloc.updateTask(widget.task);
+                  locator<TaskBloc>().updateTask(widget.task);
                   setState(() {});
                 } ),
                 _popupMenuButton()
@@ -90,9 +92,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                   widget:
                       TitleCard(title: 'To Do', child: _buildStreamBuilder()),
                 ),
-                AddSubtask(
-                  subtaskBloc: subtaskBloc,
-                ),
+                AddSubtask(),
               ],
             ),
           ),
@@ -149,7 +149,6 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
         key: Key(subtask.title),
         title: SubtaskListItemWidget(
           subtask: subtask,
-          subtaskBloc: subtaskBloc,
           group: group,
         ),
       ),

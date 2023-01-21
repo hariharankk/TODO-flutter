@@ -10,17 +10,13 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
 import 'package:todolist/widgets/messagepage.dart';
-
+import 'package:todolist/bloc/resources/injection.dart';
 
 
 class SubtaskInfo extends StatefulWidget {
-  final SubtaskBloc subtaskBloc;
-  final Subtask subtask;
   final List<GroupMember> members;
 
   const SubtaskInfo({
-    required this.subtaskBloc,
-    required this.subtask,
     required this.members,
   }) ;
 
@@ -38,8 +34,6 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   @override
   void initState() {
     viewmodel = SubtaskViewModel(
-        subtask: widget.subtask,
-        subtaskBloc: widget.subtaskBloc,
         members: widget.members);
     super.initState();
   }
@@ -54,7 +48,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
           endColor: Colors.white,
           widget: Scaffold(
             appBar: CustomAppBar(
-              widget.subtask.title,
+              locator<Subtask>().title,
               leading: IconButton(
                 tooltip: 'back',
                 icon: Icon(Icons.arrow_back,
@@ -67,7 +61,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               actions: <Widget>[
                 PriorityPicker(onTap: (int value){
                   viewmodel.priority = value;
-                  viewmodel.updateSubtaskInfo();
+                  //viewmodel.updateSubtaskInfo();
                   setState(() {});
                 } ),
                 Padding(
@@ -139,7 +133,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
             child: _subtaskInfoColumn(),
           ),
           _buildExpandedCard(),
-          ChatScreen(subtaskKey: widget.subtask.subtaskKey),
+          ChatScreen(subtaskKey: locator<Subtask>().subtaskKey),
         ],
       );
   }
@@ -227,7 +221,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
         radius: 20 * unitHeightValue,
         backgroundColor: Colors.blue,
         child: Text(
-          "${viewmodel.subtask.assignedTo.length}",
+          "${locator<Subtask>().assignedTo.length}",
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -235,7 +229,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
         ),
       ),
       SizedBox(width: 5 * unitWidthValue),
-      viewmodel.subtask.assignedTo.length > 1
+      locator<Subtask>().assignedTo.length > 1
       ?Text("people",
         style: TextStyle(
             fontWeight: FontWeight.bold,

@@ -2,50 +2,50 @@ import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/models/subtasks.dart';
+import 'package:todolist/bloc/resources/injection.dart';
 
 class SubtaskViewModel {
-  final Subtask subtask;
-  final SubtaskBloc subtaskBloc;
+  //final Subtask subtask;
+
   final List<GroupMember> members;
 
   SubtaskViewModel(
-      {required this.subtask,
-      required this.subtaskBloc,
+      {
       required this.members});
 
   String get title {
-    return this.subtask.title;
+    return locator<Subtask>().title;
   }
 
 set priority(int index){
-    subtask.priority=index;
+  locator<Subtask>().priority=index;
 }
 
   String get note {
-    return this.subtask.note;
+    return locator<Subtask>().note;
   }
 
   set note(String note) {
-    subtask.note = note;
+    locator<Subtask>().note = note;
   }
 
 
   DateTime get deadline {
-    return this.subtask.deadline;
+    return locator<Subtask>().deadline;
   }
 
   set deadline(DateTime deadline) {
-    subtask.deadline = deadline;
+    locator<Subtask>().deadline = deadline;
   }
 
 
 
   Future<void> getUsersAssignedtoSubtask() async {
-    subtask.assignedTo =
-        await repository.getUsersAssignedToSubtask(subtask.subtaskKey);
+    locator<Subtask>().assignedTo =
+        await repository.getUsersAssignedToSubtask(locator<Subtask>().subtaskKey);
     //initialAssignedMembers = subtask.assignedTo;
     for (GroupMember user in members) {
-      if (subtask.assignedTo.contains(user)) {
+      if (locator<Subtask>().assignedTo.contains(user)) {
         selected(user, true);
       } else
         selected(user, false);
@@ -60,7 +60,7 @@ set priority(int index){
   Future<void> assignSubtaskToUser(int index) async {
     try {
       await repository.assignSubtaskToUser(
-          subtask.subtaskKey, members[index].username);
+          locator<Subtask>().subtaskKey, members[index].username);
     } catch (e) {
       throw e;
     }
@@ -69,7 +69,7 @@ set priority(int index){
   Future<void> unassignSubtaskToUser(int index) async {
     try {
       await repository.unassignSubtaskToUser(
-          subtask.subtaskKey, members[index].username);
+          locator<Subtask>().subtaskKey, members[index].username);
     } catch (e) {
       throw e;
     }
@@ -78,6 +78,6 @@ set priority(int index){
 
 
   Future<void> updateSubtaskInfo() async {
-    await subtaskBloc.updateSubtaskInfo(this.subtask);
+    await locator<SubtaskBloc>().updateSubtaskInfo(locator<Subtask>());
   }
 }
