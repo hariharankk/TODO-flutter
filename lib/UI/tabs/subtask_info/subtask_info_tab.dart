@@ -15,8 +15,10 @@ import 'package:todolist/bloc/resources/injection.dart';
 
 class SubtaskInfo extends StatefulWidget {
   final List<GroupMember> members;
+  final Subtask subtask;
 
   const SubtaskInfo({
+    required this.subtask,
     required this.members,
   }) ;
 
@@ -34,6 +36,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   @override
   void initState() {
     viewmodel = SubtaskViewModel(
+        subtask: widget.subtask,
         members: widget.members);
     super.initState();
   }
@@ -48,7 +51,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
           endColor: Colors.white,
           widget: Scaffold(
             appBar: CustomAppBar(
-              locator<Subtask>().title,
+              widget.subtask.title,
               leading: IconButton(
                 tooltip: 'back',
                 icon: Icon(Icons.arrow_back,
@@ -133,7 +136,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
             child: _subtaskInfoColumn(),
           ),
           _buildExpandedCard(),
-          ChatScreen(subtaskKey: locator<Subtask>().subtaskKey),
+          ChatScreen(subtaskKey: widget.subtask.subtaskKey),
         ],
       );
   }
@@ -221,7 +224,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
         radius: 20 * unitHeightValue,
         backgroundColor: Colors.blue,
         child: Text(
-          "${locator<Subtask>().assignedTo.length}",
+          "${widget.subtask.assignedTo.length}",
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -229,7 +232,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
         ),
       ),
       SizedBox(width: 5 * unitWidthValue),
-      locator<Subtask>().assignedTo.length > 1
+      widget.subtask.assignedTo.length > 1
       ?Text("people",
         style: TextStyle(
             fontWeight: FontWeight.bold,

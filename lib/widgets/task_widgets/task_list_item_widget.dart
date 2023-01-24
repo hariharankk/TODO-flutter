@@ -18,7 +18,7 @@ class TaskListItemWidget extends StatefulWidget {
 }
 
 class _TaskListItemWidgetState extends State<TaskListItemWidget> {
-  late double unitHeightValue;
+  late double unitHeightValue , unitWidthValue;
   late double height;
 
   @override
@@ -30,6 +30,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.of(context).size;
     unitHeightValue = mediaQuery.height * 0.001;
+    unitWidthValue = MediaQuery.of(context).size.width * 0.001;
     height = mediaQuery.height * 0.1;
 
 
@@ -96,7 +97,7 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                children: <Widget>[
                  Padding(
                    padding: const EdgeInsets.only(left: 100.0),
-                   child: box(widget.task.priority),
+                   child:box(index: widget.task.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
                  )
               ],
             ),

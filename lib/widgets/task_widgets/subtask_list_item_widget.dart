@@ -5,7 +5,6 @@ import 'package:todolist/models/global.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/widgets/task_widgets/priority box.dart';
-import 'package:todolist/bloc/resources/injection.dart';
 
 class SubtaskListItemWidget extends StatefulWidget {
   final Subtask subtask;
@@ -23,18 +22,6 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
   late double listItemHeight;
   bool change = false;
   late double unitHeightValue, unitWidthValue;
-  @override
-  void initState() {
-    locator.registerLazySingleton<Subtask>(() => Subtask.copyWith(widget.subtask));
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    locator.resetLazySingleton<Subtask>();
-    super.dispose();
-  }
   //
   @override
   Widget build(BuildContext context) {
@@ -49,6 +36,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
       onTap: () => Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
         return SubtaskInfo(
+          subtask: widget.subtask,
           members: widget.group.members,
         );
       })),
@@ -72,7 +60,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
             ),
           ]),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
@@ -131,15 +119,38 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
               ],
             ),
           ),
+          SizedBox(width: 100 * unitWidthValue,),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            textDirection: TextDirection.ltr,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 100.0),
-                child: box(widget.subtask.priority),
-              )
+          Row(
+          children: [
+            Icon(Icons.calendar_today,
+                color: Colors.blue, size: 20 * unitHeightValue),
+            SizedBox(width: 5 * unitWidthValue),
+            Text(
+            "Due Date: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+              style: TextStyle(color: Colors.blue),
+             ),
+          ],
+        ),
+
+             Padding(
+                padding: const EdgeInsets.only(right: 50.0),
+                child:
+                box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
+              ),
+
+              Row(
+                  children: <Widget>[
+                    Icon(Icons.messenger_outlined,color: Colors.blue,),
+                    SizedBox(width: 5 * unitWidthValue),
+                    Text('1',style: TextStyle(color: Colors.blue,fontSize: 20 ),),
+                  ],
+                ),
+
             ],
           ),
         ],

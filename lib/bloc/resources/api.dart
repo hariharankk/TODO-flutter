@@ -15,7 +15,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = 'cca0-35-190-180-40.ngrok.io';
+  static String stageHost = '840b-35-236-143-44.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -464,7 +464,8 @@ class ApiProvider {
         "subtask_key":subtask.subtaskKey,
         "note": subtask.note,
         "completed": subtask.completed,
-        "due_date": subtask.deadline.toIso8601String()
+        "due_date": subtask.deadline.toIso8601String(),
+        "priority":subtask.priority
       }),
     );
     if (response.statusCode == 200) {

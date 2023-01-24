@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/models/global.dart';
 
-
-Container box(int index) {
-  return Container(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-        padding: const EdgeInsets.only(left: 6, right: 6),
-      child: Center(
-        child: Text(priorityText[index],
-            style: TextStyle(
+class  box extends StatelessWidget {
+  final int index;
+  final double height;
+  final double width;
+  box({required this.index, required this.height, required this.width});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+        child: Container(
+          height: height,
+          width: width,
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Center(
+              child: Text(priorityText[index],
+                style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-      ),
-      decoration: BoxDecoration(
-        color: priorityColor[index],
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(width: 2, color: Colors.black),
-      ),
-    ),
-  );
+              ),
+          decoration: BoxDecoration(
+            color: priorityColor[index],
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(width: 3, color: Colors.black),
+          ),
+        ),
+      );
+  }
 }
+

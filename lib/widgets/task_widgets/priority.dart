@@ -35,7 +35,7 @@ class _PriorityPickerState extends State<PriorityPicker> {
           widget.onTap(value);
         },
         itemBuilder: (context) => index.map((int index) {
-          return PopupMenuItem<dynamic>(value: index, child: box(index));
+          return PopupMenuItem<dynamic>(value: index, child: box(index: index,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,));
         }).toList(),
         );
  }
