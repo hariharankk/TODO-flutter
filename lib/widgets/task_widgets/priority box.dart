@@ -9,15 +9,17 @@ class  box extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20.0),
-        child: Container(
+      padding: const EdgeInsets.all(10.0),
+      child:
+        Container(
           height: height,
           width: width,
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          padding: EdgeInsets.only(left: height/100, right: width/100),
           child: Center(
               child: Text(priorityText[index],
                 style: TextStyle(
                 color: Colors.white,
+                fontSize: height*0.4,
                 fontWeight: FontWeight.bold)),
               ),
           decoration: BoxDecoration(

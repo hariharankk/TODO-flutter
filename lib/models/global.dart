@@ -93,8 +93,8 @@ List<int> index =[0,1,2];
 List<String> priorityText = ['Low', 'Mid', 'High'];
 List<Color> priorityColor = [Colors.green, Colors.lightGreen, Colors.red];
 
-const boxlength = 35;
-const boxwidth = 50;
+const boxlength = 40;
+const boxwidth = 40;
 
 
 const kMessageContainerDecoration = BoxDecoration(

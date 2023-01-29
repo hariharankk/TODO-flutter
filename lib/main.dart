@@ -7,11 +7,26 @@ import 'package:todolist/UI/pages/sidebar_pages/create_new_group_page.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/bloc/resources/injection.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
   runApp(MyApp());
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+        channelGroupKey: 'reminders',
+        channelKey: 'instant_notification',
+        channelName: 'Basic Instant Notification',
+        channelDescription:
+        'Notification channel that can trigger notification instantly.',
+        defaultColor: Colors.blue,
+        ledColor: Colors.white,
+      ),
+    ],
+  );
 }
 
 class MyApp extends StatelessWidget {

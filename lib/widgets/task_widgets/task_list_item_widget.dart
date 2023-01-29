@@ -81,30 +81,40 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Text(
-                        widget.task.timeCreated.toString().substring(0,11),
-                        style: toDoListTiletimeStyle(unitHeightValue*0.7),
-                      ),
                     ],
                   ),
                ],
               ),
              ),
             Column(
-               mainAxisAlignment: MainAxisAlignment.center,
-               crossAxisAlignment: CrossAxisAlignment.center,
-               textDirection: TextDirection.ltr,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                children: <Widget>[
-                 Padding(
-                   padding: const EdgeInsets.only(left: 100.0),
-                   child:box(index: widget.task.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
-                 )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+                 Row(
+                   children: [
+                     Icon(Icons.calendar_today,
+                         color: Colors.blue, size: 20 * unitHeightValue),
+                     SizedBox(width: 5 * unitWidthValue),
+                     Text(
+                       "Created: ${widget.task.timeCreated.toString().substring(0,11)}",
+                       style: toDoListTiletimeStyle(unitHeightValue*0.7),
+                     ),
+                    ]
+                  ),
+                 //Padding(
+                 //  padding: const EdgeInsets.only(left: 100.0),
+                   //child:
+                 box(index: widget.task.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
+                 //),
+
+               ],
+               ),
+             ]
+            )
+           ),
+         );
   }
 }
 

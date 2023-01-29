@@ -53,7 +53,7 @@ class Subtask extends Equatable {
       DateTime.parse(parsedJson['time_created']),
       DateTime.parse(parsedJson['time_updated']),
       parsedJson['priority'],
-    );
+     );
   }
 
   @override

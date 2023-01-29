@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/models/global.dart';
+import 'package:todolist/remainder/remainder.dart';
 
 class DueDateRow extends StatefulWidget {
   final viewmodel;
@@ -28,7 +29,15 @@ class _DueDateRowState extends State<DueDateRow> {
         IconButton(
             onPressed: () => _showDatePicker(context),
             icon: Icon(Icons.calendar_today,
-                color: Colors.white, size: 20 * unitHeightValue))
+                color: Colors.white, size: 20 * unitHeightValue)),
+        SizedBox(width: 10 * unitWidthValue),
+        IconButton(
+          onPressed: () {
+
+          },
+            icon: Icon(Icons.calendar_today,
+                color: Colors.white, size: 20 * unitHeightValue)
+        ),
       ],
     );
   }

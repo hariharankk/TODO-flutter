@@ -121,9 +121,9 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
           ),
           SizedBox(width: 100 * unitWidthValue,),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
           Row(
           children: [
@@ -143,13 +143,6 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                 box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
               ),
 
-              Row(
-                  children: <Widget>[
-                    Icon(Icons.messenger_outlined,color: Colors.blue,),
-                    SizedBox(width: 5 * unitWidthValue),
-                    Text('1',style: TextStyle(color: Colors.blue,fontSize: 20 ),),
-                  ],
-                ),
 
             ],
           ),

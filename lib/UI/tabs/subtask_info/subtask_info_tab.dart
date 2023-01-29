@@ -156,6 +156,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     );
   }
 
+
   /// Container for Notes
   ///
   /// Contains
