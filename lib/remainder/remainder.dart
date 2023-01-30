@@ -26,13 +26,10 @@ class Notify {
           NotificationActionButton(
               key: 'REPLY',
               label: 'Reply Message',
-              requireInputText: true,
-              actionType: ActionType.SilentAction
           ),
           NotificationActionButton(
               key: 'DISMISS',
               label: 'Dismiss',
-              actionType: ActionType.DismissAction,
               isDangerousOption: true)
         ]);
   }
@@ -60,7 +57,6 @@ class Notify {
           NotificationActionButton(
               key: 'DISMISS',
               label: 'Dismiss',
-              actionType: ActionType.DismissAction,
               isDangerousOption: true)
         ],
         schedule: NotificationCalendar.fromDate(
@@ -144,4 +140,20 @@ class MyApp extends StatelessWidget {
     );
   }
  }
+
+   AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+        channelGroupKey: 'reminders',
+        channelKey: 'instant_notification',
+        channelName: 'Basic Instant Notification',
+        channelDescription:
+        'Notification channel that can trigger notification instantly.',
+        defaultColor: Colors.blue,
+        ledColor: Colors.white,
+      ),
+    ],
+  );
+
 */ 

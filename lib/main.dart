@@ -13,20 +13,6 @@ main() {
   WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
   runApp(MyApp());
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(
-        channelGroupKey: 'reminders',
-        channelKey: 'instant_notification',
-        channelName: 'Basic Instant Notification',
-        channelDescription:
-        'Notification channel that can trigger notification instantly.',
-        defaultColor: Colors.blue,
-        ledColor: Colors.white,
-      ),
-    ],
-  );
 }
 
 class MyApp extends StatelessWidget {

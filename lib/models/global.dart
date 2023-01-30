@@ -114,3 +114,5 @@ const kSendButtonTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
+
+List<String> popup_repeat = ['Never','Daily','Weekly'];
