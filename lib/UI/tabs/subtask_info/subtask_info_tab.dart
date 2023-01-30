@@ -64,7 +64,6 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
               actions: <Widget>[
                 PriorityPicker(onTap: (int value){
                   viewmodel.priority = value;
-                  //viewmodel.updateSubtaskInfo();
                   setState(() {});
                 } ),
                 Padding(

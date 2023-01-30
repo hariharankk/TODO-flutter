@@ -6,17 +6,18 @@ class DatePicker extends StatefulWidget {
 }
 
 class DatePickerState extends State<DatePicker> {
+  String selectedDate='', hour='';
 
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<Null> _selectDate(BuildContext  floatContext) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        initialDatePickerMode: DatePickerMode.day,
+        context: floatContext,
         firstDate: DateTime.now(),
-      lastDate: DateTime(2022),);
+        initialDate: DateTime.now().subtract(Duration(days: 30)),
+        lastDate: DateTime.now().add(Duration(days: 60)));
     if (picked != null)
       setState(() {
+        selectedDate = picked.toString();
       });
   }
 
@@ -27,6 +28,7 @@ class DatePickerState extends State<DatePicker> {
     );
     if (picked != null)
       setState(() {
+        hour = picked.format(context);
       });
   }
   @override
@@ -43,31 +45,21 @@ class DatePickerState extends State<DatePicker> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            TextButton(onPressed: (){}, child: Text('Cancel',style: TextStyle(color: Colors.blue),)),
-            Text('Details',style: TextStyle(color: Colors.black,fontSize: 10),),
-            TextButton(onPressed: (){}, child: Text('Cancel',style: TextStyle(color: Colors.blue),))
+            TextButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel',style: TextStyle(color: Colors.blue),)
+            ),
+            Text('Details',style: TextStyle(color: Colors.black,fontSize: 30),),
+            TextButton(
+                onPressed: (){},
+                child: Text('Set Remainder',style: TextStyle(color: Colors.blue),)
+            )
           ],
-        ),
+         ),
         SizedBox(height: 5,),
         Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: TextField(
-               keyboardType: TextInputType.multiline,
-               maxLines: null,
-               minLines: 4,
-               decoration: InputDecoration(border: InputBorder.none,
-                 enabledBorder:  UnderlineInputBorder(
-                 borderSide: BorderSide(color: Colors.grey),)
-               ),
-               style: TextStyle(fontSize: 10,color: Colors.black),
-              ),
-           ),
-           SizedBox(height: 5,),
-           Container(
              padding: EdgeInsets.symmetric(horizontal: 15.0),
              decoration: BoxDecoration(
                color: Colors.white,
@@ -75,7 +67,33 @@ class DatePickerState extends State<DatePicker> {
              ),
 
               child: Column(
-                   children: [],
+                   children: [
+                     ListTile(
+                       shape: Border(
+                         bottom: BorderSide(color: Colors.grey),
+                       ),
+                       onTap: () {
+                         _selectDate(context);
+                       },
+                       leading: Icon(Icons.calendar_month,color: Colors.red,size: 40,),
+                       title: Text('Date',style: TextStyle(fontSize: 25,color: Colors.black),),
+                       subtitle: selectedDate != '' ? Text(selectedDate,style: TextStyle(fontSize: 15,color: Colors.black)):Text(''),
+                       trailing: Icon(Icons.arrow_circle_right_sharp,color: Colors.black,size: 30,),
+                       ),
+                     ListTile(
+                       shape: Border(
+                         bottom: BorderSide(color: Colors.grey),
+                       ),
+                       onTap: () {
+                         _selectTime(context);
+                         },
+                       leading: Icon(Icons.access_time,color: Colors.blue,size: 40,),
+                       title: Text('Time',style: TextStyle(fontSize: 25,color: Colors.black)),
+                       subtitle: hour != '' ? Text(hour,style: TextStyle(fontSize: 15,color: Colors.black)):Text(''),
+                       trailing: Icon(Icons.arrow_circle_right_sharp,color: Colors.black,size: 30,),
+                     )
+
+                   ],
               ),
            ),
            SizedBox(height: 10,),
@@ -86,7 +104,18 @@ class DatePickerState extends State<DatePicker> {
                borderRadius: BorderRadius.circular(10.0),
              ),
 
-             child: Container(),
+             child: ListTile(
+               shape: Border(
+                 bottom: BorderSide(color: Colors.grey),
+               ),
+               onTap: () {
+
+               },
+               leading: Icon(Icons.repeat,color: Colors.grey,size: 40,),
+               title: Text('Repeat',style: TextStyle(fontSize: 25,color: Colors.black),),
+               subtitle: Text('pick when to repeat', style: TextStyle(fontSize: 15,color: Colors.black)),
+               trailing: Icon(Icons.arrow_circle_right_sharp,color: Colors.black,size: 30,),
+             ),
 
            )
          ],

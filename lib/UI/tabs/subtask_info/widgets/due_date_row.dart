@@ -34,8 +34,10 @@ class _DueDateRowState extends State<DueDateRow> {
         SizedBox(width: 10 * unitWidthValue),
         IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DatePicker()));
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) =>  DatePicker());
           },
             icon: Icon(Icons.calendar_today,
                 color: Colors.white, size: 20 * unitHeightValue)
