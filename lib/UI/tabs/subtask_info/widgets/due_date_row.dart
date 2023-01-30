@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/models/global.dart';
 import 'package:todolist/remainder/remainder.dart';
+import 'package:todolist/widgets/task_widgets/remainder_widget.dart';
 
 class DueDateRow extends StatefulWidget {
   final viewmodel;
@@ -33,7 +34,8 @@ class _DueDateRowState extends State<DueDateRow> {
         SizedBox(width: 10 * unitWidthValue),
         IconButton(
           onPressed: () {
-
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DatePicker()));
           },
             icon: Icon(Icons.calendar_today,
                 color: Colors.white, size: 20 * unitHeightValue)

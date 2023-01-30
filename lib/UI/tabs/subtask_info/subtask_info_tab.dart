@@ -11,7 +11,7 @@ import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/widgets/task_widgets/priority.dart';
 import 'package:todolist/widgets/messagepage.dart';
 import 'package:todolist/bloc/resources/injection.dart';
-
+import 'package:todolist/widgets/task_widgets/remainder_widget.dart';
 
 class SubtaskInfo extends StatefulWidget {
   final List<GroupMember> members;
