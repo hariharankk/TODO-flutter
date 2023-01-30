@@ -9,12 +9,13 @@ class DatePickerState extends State<DatePicker> {
   String selectedDate='', hour='';
 
 
-  Future<Null> _selectDate(BuildContext  floatContext) async {
+  Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: floatContext,
+        context: context,
+        initialDate: DateTime.now().add(Duration(hours: 1)),
         firstDate: DateTime.now(),
-        initialDate: DateTime.now().subtract(Duration(days: 30)),
-        lastDate: DateTime.now().add(Duration(days: 60)));
+        lastDate: DateTime(2100));
+
     if (picked != null)
       setState(() {
         selectedDate = picked.toString();
