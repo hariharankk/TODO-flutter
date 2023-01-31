@@ -13,6 +13,20 @@ main() {
   WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
   runApp(MyApp());
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+        channelKey: 'alerts',
+        channelName: 'Basic Instant Notification',
+        channelDescription:
+        'Notification channel that can trigger notification instantly.',
+        defaultColor: Colors.blue,
+        ledColor: Colors.white,
+      ),
+    ],
+  );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +34,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    AwesomeNotifications().actionStream.listen(
+            (receivedNotification){
+         Navigator.push(context,  MaterialPageRoute(builder: (BuildContext context) {
+           return HomePage();
+         }
+         ));
+        }
+    );
     return MaterialApp(
       title: 'To Do List',
       debugShowCheckedModeBanner: false,

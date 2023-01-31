@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:popover/popover.dart';
+import 'package:intl/intl.dart';
 import 'package:todolist/models/global.dart';
 
 class DatePicker extends StatefulWidget {
@@ -9,6 +10,7 @@ class DatePicker extends StatefulWidget {
 
 class DatePickerState extends State<DatePicker> {
   String selectedDate = '', hour = '',repeat_text='Never';
+  late double unitHeightValue, unitWidthValue;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -19,7 +21,8 @@ class DatePickerState extends State<DatePicker> {
 
     if (picked != null)
       setState(() {
-        selectedDate = picked.toString();
+        var Format = DateFormat('dd/MM/yyyy');
+        selectedDate = Format.format(picked);
       });
   }
 
@@ -36,6 +39,8 @@ class DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
+    unitHeightValue = MediaQuery.of(context).size.height/4;
+    unitWidthValue = MediaQuery.of(context).size.width/4;
     return SingleChildScrollView(
       child: Container(
         alignment: Alignment.center,
@@ -148,6 +153,8 @@ class DatePickerState extends State<DatePicker> {
                     context: context,
                     bodyBuilder: (context) =>  ListItems(),
                     direction: PopoverDirection.top,
+                    height: unitHeightValue,
+                    width: unitWidthValue,
                   ).then((value){
                     setState(() {
                       repeat_text=value.toString();
@@ -183,12 +190,15 @@ class ListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final yourScrollController = ScrollController();
     return Scrollbar(
+      controller: yourScrollController,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ListView.separated(
           padding: const EdgeInsets.all(8),
           itemCount: popup_repeat.length,
+            controller: yourScrollController,
           separatorBuilder: (BuildContext context,int index) {
             return Divider(color: Colors.grey,);
             },
