@@ -8,7 +8,7 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/bloc/resources/injection.dart';
 import 'package:todolist/UI/pages/sidebar_pages/add _memebers.dart';
-import 'package:todolist/bloc/resources/injection.dart';
+import 'package:todolist/models/global.dart';
 
 class CreateGroupPage extends StatefulWidget {
   static const routeName = '/create_group';
@@ -267,8 +267,23 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         ),
         itemBuilder: (context, index) => Column(
           children: [
-            newGroup.members[index]
-                .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
+
+
+              GestureDetector(
+                child: newGroup.members[index]
+                    .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
+              onTap: (){
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) =>  ListItems()).then((value) {
+                      setState(() {
+
+                       });
+                   });
+                },
+              ),
+
             Text(
               newGroup.members[index].username,
               overflow: TextOverflow.ellipsis,
@@ -277,6 +292,16 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                 fontSize: 16 * unitHeightValue,
               ),
             ),
+
+            Text(
+              '',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16 * unitHeightValue,
+              ),
+            ),
+
           ],
         ),
         itemCount: membersLength,
@@ -302,5 +327,37 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               child: Icon(Icons.arrow_forward, size: 36 * unitHeightValue),
             ),
           );
+  }
+}
+
+class ListItems extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return
+      Container(
+        height: MediaQuery.of(context).size.height * 0.22,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+        ),
+          child: ListView.separated(
+              padding: const EdgeInsets.all(8),
+              itemCount: popup_repeat.length,
+              //controller: yourScrollController,
+              separatorBuilder: (BuildContext context,int index) {
+                return Divider(color: Colors.grey,);
+              },
+              itemBuilder: (BuildContext context,int index) {
+                return ListTile(
+                    title: Text(group_permissions[index],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                    trailing: Icon(Icons.arrow_forward_outlined,color: Colors.black,),
+                    onTap: (){
+                      Navigator.pop(context,group_permissions[index]);
+                    }
+                );
+              }
+          ),
+//        ),
+      );
   }
 }

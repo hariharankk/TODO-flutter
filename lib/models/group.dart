@@ -23,7 +23,6 @@ class Group extends ChangeNotifier {
   factory Group.fromJson(Map<String, dynamic> parsedJson) {
     return Group(
         parsedJson['name'],
-        //parsedJson['members'],
         parsedJson['group_key'],
         parsedJson['is_public'],
         DateTime.parse(parsedJson['time_created']),
@@ -41,6 +40,7 @@ class Group extends ChangeNotifier {
     members.add(member);
     notifyListeners();
   }
+
 
   void removeGroupMember(GroupMember member) {
     members.remove(member);

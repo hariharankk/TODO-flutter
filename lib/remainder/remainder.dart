@@ -32,9 +32,9 @@ class Notify {
             payload: {
               'notificationId': '1234567890'
             }),
-        schedule: NotificationCalendar.fromDate(
-            date: ,
-        )
+        //schedule: NotificationCalendar.fromDate(
+        //    date: ,
+        //)
     );
   }
 

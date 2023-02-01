@@ -116,3 +116,5 @@ const kSendButtonTextStyle = TextStyle(
 );
 
 List<String> popup_repeat = ['Never','Daily','Weekly'];
+
+List<String> group_permissions = ['Visitor','Worker','Admin'];

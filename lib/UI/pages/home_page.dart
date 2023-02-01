@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
               ),
               tooltip: 'Add Group',
               onPressed: () {
-                Navigator.pushNamed(context, CreateGroupPage.routeName);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroupPage()));
               }, //will go to Create a group Page
             ),
             SizedBox(
