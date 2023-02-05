@@ -24,11 +24,14 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   TextEditingController groupName = new TextEditingController();
   late double unitHeightValue, unitWidthValue;
   bool saving = true;
+  late GroupMember admin;
 
   @override
   void initState() {
     if (newGroup.members.length == 0) {
-      newGroup.addGroupMember(userBloc.getUserObject());
+      admin=userBloc.getUserObject();
+      admin.role='Admin';
+      newGroup.addGroupMember(admin);
       membersLength = newGroup.members.length;
     }
     super.initState();
@@ -294,7 +297,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             ),
 
             Text(
-              '',
+              newGroup.members[index].role == null?'Admin':newGroup.members[index].role,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
