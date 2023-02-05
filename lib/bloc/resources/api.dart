@@ -15,7 +15,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '5a37-104-199-220-157.ngrok.io';
+  static String stageHost = 'b891-34-86-152-119.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -249,7 +249,7 @@ class ApiProvider {
   /// Add a Group Member to the Group.
   /// * GroupKey: Unique Group Identifier
   /// * Username: Group Member's Username to be added
-  Future addGroupMember(String groupKey, String username) async {
+  Future addGroupMember(String groupKey, String username,String role) async {
     final response = await client.post(
       groupmemberaddURL,
       headers: {
@@ -260,6 +260,7 @@ class ApiProvider {
       body: jsonEncode({
         "groupKey":groupKey,
         "username": username,
+        "role":role
       }),
     );
     final Map result = json.decode(response.body);

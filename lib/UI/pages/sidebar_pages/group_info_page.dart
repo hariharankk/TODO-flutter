@@ -89,7 +89,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
     for (GroupMember member in group.members) {
       if (!initialMembers.contains(member)) {
         try {
-          await repository.addGroupMember(groupKey, member.username);
+          await repository.addGroupMember(groupKey, member.username,member.role);
         } catch (e) {
           throw e;
         }

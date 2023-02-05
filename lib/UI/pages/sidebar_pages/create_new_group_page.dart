@@ -100,7 +100,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       String groupKey = await repository.addGroup(groupName.text, isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
-          await repository.addGroupMember(groupKey, member.username);
+          await repository.addGroupMember(groupKey, member.username,member.role);
         } catch (e) {
           print(e);
         }
@@ -278,7 +278,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                     isScrollControlled: true,
                     builder: (context) =>  ListItems()).then((value) {
                       setState(() {
-
+                        newGroup.members[index].role=value.toString();
                        });
                    });
                 },

@@ -12,6 +12,7 @@ class GroupMember extends Equatable {
   /// Member's Email Address
   late String emailaddress;
 
+  late String role;
   /// Member's Phone Number
   late String phonenumber;
 
@@ -24,6 +25,7 @@ class GroupMember extends Equatable {
       required this.emailaddress,
       required this.username,
       required this.phonenumber,
+      required this.role
       });
 
   factory GroupMember.fromJson(Map<String, dynamic> parsedJson) {
@@ -31,6 +33,7 @@ class GroupMember extends Equatable {
       username: parsedJson["username"],
       emailaddress: parsedJson["emailaddress"],
       phonenumber: parsedJson["phonenumber"],
+      role: parsedJson['role']
     );
   }
 
