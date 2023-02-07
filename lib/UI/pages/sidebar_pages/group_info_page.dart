@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/UI/pages/sidebar_pages/add_members.dart';
 import 'package:todolist/bloc/resources/repository.dart';
-import 'package:todolist/models/global.dart';
+import 'package:todolist/UI/pages/sidebar_pages/Listitem.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
@@ -247,8 +247,24 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           mainAxisSpacing: 10 * unitHeightValue,),
         itemBuilder: (context, index) => Column(
           children: [
-            group.members[index]
-                .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
+            GestureDetector(
+              child: group.members[index]
+                  .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
+              onTap: (){
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) =>  ListItems()).then((value) {
+                  setState(() {
+                    if(value!=null  ){
+                      group.members[index].role=value.toString();
+                    }
+
+                  });
+                });
+              },
+
+            ),
             Text(
               group.members[index].username,
               overflow: TextOverflow.ellipsis,
@@ -257,6 +273,15 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Text(
+              group.members[index].role,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16 * unitHeightValue,
+              ),
+            ),
+
           ],
         ),
         itemCount: group.members.length,

@@ -15,7 +15,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '5912-34-171-49-168.ngrok.io';
+  static String stageHost = 'b589-35-237-8-21.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -66,7 +66,9 @@ class ApiProvider {
     final Map result = json.decode(response.body);
     if (response.statusCode == 201) {
       // If the call to the server was successful, parse the JSON
+
       await saveApiKey(result["data"]["api_key"]);
+      print((result["data"]['role']));
       return User.fromJson(result["data"]);
     } else {
       // If that call was not successful, throw an error.
@@ -233,7 +235,7 @@ class ApiProvider {
       List<GroupMember> groupMembers = [];
       for (Map<String, dynamic> json_ in result["data"]) {
         try {
-          groupMembers.add(GroupMember.fromJson(json_));
+          groupMembers.add(GroupMember.fromJsonwithrole(json_));
         } catch (Exception) {
           print(Exception);
           //throw Exception;

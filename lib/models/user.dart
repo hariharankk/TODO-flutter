@@ -12,12 +12,11 @@ class User extends GroupMember {
   User.blank(): super.blank();
 
   User(this.id, this.password, this.apiKey,
-      {username, firstname, lastname, emailaddress, phonenumber, avatar,role})
+      {username, firstname, lastname, emailaddress, phonenumber, avatar})
       : super(
             username: username,
             emailaddress: emailaddress,
             phonenumber: phonenumber,
-            role: role
   );
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {

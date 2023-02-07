@@ -25,15 +25,28 @@ class GroupMember extends Equatable {
       required this.emailaddress,
       required this.username,
       required this.phonenumber,
-      required this.role
-      });
+      }):role='';
+  GroupMember.withrole({
+    required this.emailaddress,
+    required this.username,
+    required this.phonenumber,
+    required this.role
+  });
 
   factory GroupMember.fromJson(Map<String, dynamic> parsedJson) {
     return GroupMember(
       username: parsedJson["username"],
       emailaddress: parsedJson["emailaddress"],
       phonenumber: parsedJson["phonenumber"],
-      role: parsedJson['role']
+    );
+  }
+
+  factory GroupMember.fromJsonwithrole(Map<String, dynamic> parsedJson) {
+    return GroupMember.withrole(
+      username: parsedJson["username"],
+      emailaddress: parsedJson["emailaddress"],
+      phonenumber: parsedJson["phonenumber"],
+      role: parsedJson["role"]
     );
   }
 

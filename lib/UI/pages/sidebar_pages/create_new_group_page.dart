@@ -8,7 +8,7 @@ import 'package:todolist/widgets/global_widgets/background_color_container.dart'
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/bloc/resources/injection.dart';
 import 'package:todolist/UI/pages/sidebar_pages/add _memebers.dart';
-import 'package:todolist/models/global.dart';
+import 'package:todolist/UI/pages/sidebar_pages/Listitem.dart';
 
 class CreateGroupPage extends StatefulWidget {
   static const routeName = '/create_group';
@@ -281,7 +281,10 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                     isScrollControlled: true,
                     builder: (context) =>  ListItems()).then((value) {
                       setState(() {
-                        newGroup.members[index].role=value.toString();
+                        if(value!=null  ){
+                          newGroup.members[index].role=value.toString();
+                        }
+
                        });
                    });
                 },
@@ -297,7 +300,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             ),
 
             Text(
-              newGroup.members[index].role == null?'Admin':newGroup.members[index].role,
+              newGroup.members[index].role,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -333,34 +336,3 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   }
 }
 
-class ListItems extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return
-      Container(
-        height: MediaQuery.of(context).size.height * 0.22,
-        decoration: new BoxDecoration(
-          color: Colors.white,
-        ),
-          child: ListView.separated(
-              padding: const EdgeInsets.all(8),
-              itemCount: popup_repeat.length,
-              //controller: yourScrollController,
-              separatorBuilder: (BuildContext context,int index) {
-                return Divider(color: Colors.grey,);
-              },
-              itemBuilder: (BuildContext context,int index) {
-                return ListTile(
-                    title: Text(group_permissions[index],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_outlined,color: Colors.black,),
-                    onTap: (){
-                      Navigator.pop(context,group_permissions[index]);
-                    }
-                );
-              }
-          ),
-//        ),
-      );
-  }
-}

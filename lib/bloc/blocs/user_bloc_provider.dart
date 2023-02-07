@@ -31,6 +31,7 @@ class UserBloc {
     try {
       _user = await repository.registerUser(
           username, password, email, firstname, lastname, phonenumber, avatar);
+
       _userGetter.sink.add(_user);
     } catch (e) {
       throw e;
