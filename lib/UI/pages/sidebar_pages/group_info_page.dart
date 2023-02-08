@@ -247,6 +247,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           mainAxisSpacing: 10 * unitHeightValue,),
         itemBuilder: (context, index) => Column(
           children: [
+            group.members[index].role == ''?
             GestureDetector(
               child: group.members[index]
                   .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
@@ -264,7 +265,9 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                 });
               },
 
-            ),
+            ):
+         group.members[index]
+        .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
             Text(
               group.members[index].username,
               overflow: TextOverflow.ellipsis,

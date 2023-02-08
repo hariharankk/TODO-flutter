@@ -45,6 +45,7 @@ class _GroupListState extends State<GroupList> {
 
   late double groupListItemHeight;
   late double unitHeightValue, unitWidthValue;
+  String role='';
 
   @override
   Widget build(BuildContext context) {
@@ -99,13 +100,50 @@ class _GroupListState extends State<GroupList> {
           bottom: widget.bottom),
       itemCount: groups.length,
       itemBuilder: (BuildContext context, int index) {
-        return buildGroupListTile(groups[index]);
+        return Privacy_widget(groups[index]);
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(
         height: 20,
         color: Colors.transparent,
       ),
     );
+  }
+
+  Widget buildWaitingScreen() {
+    return Scaffold(
+      body: Container(
+        alignment: Alignment.center,
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  Widget Privacy_widget(Group group){
+    group.members.map((element) {
+      if(element.username==userBloc.getUserObject().username){
+        role=element.role;
+        setState(() {});
+      }
+    });
+    switch(role) {
+      case '': {
+        return buildWaitingScreen();
+      }
+
+      case 'Admin': {
+        return buildGroupListTile(group);
+      }
+
+      case 'Worker': {
+        return workerbuildGroupListTile(group);
+      }
+
+      case 'Visitor': {
+        return visitorbuildGroupListTile(group);
+      }
+      default:
+        return buildWaitingScreen();
+    }
   }
 
   Dismissible buildGroupListTile(Group group) {
@@ -230,4 +268,44 @@ class _GroupListState extends State<GroupList> {
         )
     ]);
   }
+
+  GestureDetector workerbuildGroupListTile(Group group) {
+    group.addListener(() {
+      if (this.mounted) {
+        setState(() {});
+      }
+    });
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => WorkerToDoTab(group: group)));
+      },
+      child: Container(
+        height: groupListItemHeight,
+        decoration: _tileDecoration(),
+        child: _buildTilePadding(group),
+      ),
+    );
+  }
+
+  GestureDetector visitorbuildGroupListTile(Group group) {
+    group.addListener(() {
+      if (this.mounted) {
+        setState(() {});
+      }
+    });
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => VisitorToDoTab(group: group)));
+      },
+      child: Container(
+        height: groupListItemHeight,
+        decoration: _tileDecoration(),
+        child: _buildTilePadding(group),
+      ),
+    );
+  }
+
+
 }
