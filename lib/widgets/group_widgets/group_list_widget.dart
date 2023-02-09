@@ -4,6 +4,7 @@ import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
+import 'package:todolist/models/global.dart';
 
 class GroupList extends StatefulWidget {
   /// The Page which the list tile will navigate to upon being clicked.
@@ -110,41 +111,20 @@ class _GroupListState extends State<GroupList> {
   }
 
   Widget buildWaitingScreen() {
-    return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        child: CircularProgressIndicator(),
-      ),
-    );
+    return  Center(
+        child: CircularProgressIndicator()
+     );
   }
 
   Widget Privacy_widget(Group group){
-    group.members.map((element) {
-      if(element.username==userBloc.getUserObject().username){
-        role=element.role;
-        setState(() {});
-      }
-    });
-    switch(role) {
-      case '': {
-        return buildWaitingScreen();
-      }
-
-      case 'Admin': {
-        return buildGroupListTile(group);
-      }
-
-      case 'Worker': {
-        return workerbuildGroupListTile(group);
-      }
-
-      case 'Visitor': {
-        return visitorbuildGroupListTile(group);
-      }
-      default:
-        return buildWaitingScreen();
+    List<String> roles = group.members.map((element) => element.username==userBloc.getUserObject().username?element.role.trim():'').toList();
+    roles.removeWhere( (item) => item == '');
+    print(roles);
+    role = roles[0];
+    print(roles);
+    print(role);
+    return role == null ? buildWaitingScreen() :role=='Admin'? buildGroupListTile(group):role=='Worker'?workerbuildGroupListTile(group):visitorbuildGroupListTile(group);
     }
-  }
 
   Dismissible buildGroupListTile(Group group) {
     group.addListener(() {

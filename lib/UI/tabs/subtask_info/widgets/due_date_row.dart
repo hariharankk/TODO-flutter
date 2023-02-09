@@ -39,7 +39,7 @@ class _DueDateRowState extends State<DueDateRow> {
         ),
         SizedBox(width: 5 * unitWidthValue),
         IconButton(
-            onPressed: () => _showDatePicker(context),
+            onPressed: () => DatePicker(),
             icon: Icon(Icons.calendar_today,
                 color: Colors.white, size: 20 * unitHeightValue)),
       ],
@@ -120,7 +120,7 @@ class _VisitorDueDateRowState extends State<VisitorDueDateRow> {
         ),
         SizedBox(width: 5 * unitWidthValue),
         IconButton(
-            onPressed: () => _showDatePicker(context),
+            onPressed: () => DatePicker(),
             icon: Icon(Icons.calendar_today,
                 color: Colors.white, size: 20 * unitHeightValue)),
       ],
