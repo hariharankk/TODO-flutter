@@ -53,7 +53,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
             appBar: CustomAppBar(
               widget.subtask.title,
               leading: IconButton(
-                tooltip: 'back',
+                tooltip: 'பின்னால்',
                 icon: Icon(Icons.arrow_back,
                     size: 32.0 * unitHeightValue, color: Colors.white),
                 onPressed: () {
@@ -91,7 +91,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                     child: updating
                         ? _buildProgressIndicator()
                         : Text(
-                            "Update",
+                            "தரவைப் புதுப்பிக்கவும்",
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: 24 * unitHeightValue,
@@ -101,7 +101,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                 ),
               ],
             ),
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.grey.shade100,
             body:
               SingleChildScrollView(
                 child: FutureBuilder(
@@ -145,7 +145,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Notes/Description", style: labelStyle(unitHeightValue)),
+        Text("விளக்கம்", style: labelStyle(unitHeightValue)),
         SizedBox(height: 10.0 * unitHeightValue),
         _notesContainer(),
         SizedBox(height: 20 * unitHeightValue),
@@ -213,7 +213,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   Row _buildMembersLabelRow() {
     return Row(children: [
       Text(
-        "Assigned To:",
+        "ஒதுக்கப்படும்:",
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.blue,
@@ -233,13 +233,13 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
       ),
       SizedBox(width: 5 * unitWidthValue),
       widget.subtask.assignedTo.length > 1
-      ?Text("people",
+      ?Text("நபர்கள்",
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.blue,
             fontSize: 22 * unitHeightValue),
       )
-    :Text("person",
+    :Text("நபர்",
     style: TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.blue,
@@ -337,7 +337,7 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
           appBar: CustomAppBar(
             widget.subtask.title,
             leading: IconButton(
-              tooltip: 'back',
+              tooltip: 'பின்னால்',
               icon: Icon(Icons.arrow_back,
                   size: 32.0 * unitHeightValue, color: Colors.white),
               onPressed: () {
@@ -346,7 +346,7 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
               color: Colors.white,
             ),
            ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.grey.shade400,
           body:
           SingleChildScrollView(
             child: FutureBuilder(
@@ -390,7 +390,7 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Notes/Description", style: labelStyle(unitHeightValue)),
+        Text("விளக்கம்", style: labelStyle(unitHeightValue)),
         SizedBox(height: 10.0 * unitHeightValue),
         _notesContainer(),
         SizedBox(height: 20 * unitHeightValue),
@@ -456,7 +456,7 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
   Row _buildMembersLabelRow() {
     return Row(children: [
       Text(
-        "Assigned To:",
+        "ஒதுக்கப்படும்::",
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.blue,
@@ -476,13 +476,13 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
       ),
       SizedBox(width: 5 * unitWidthValue),
       widget.subtask.assignedTo.length > 1
-          ?Text("people",
+          ?Text("நபர்கள்",
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.blue,
             fontSize: 22 * unitHeightValue),
       )
-          :Text("person",
+          :Text("நபர்",
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.blue,

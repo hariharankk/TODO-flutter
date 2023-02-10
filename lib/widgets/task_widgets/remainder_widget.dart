@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:popover/popover.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/models/global.dart';
 
@@ -149,13 +148,10 @@ class DatePickerState extends State<DatePicker> {
                   bottom: BorderSide(color: Colors.grey),
                 ),
                 onTap: () {
-                  showPopover(
-                    context: context,
-                    bodyBuilder: (context) =>  ListItems(),
-                    direction: PopoverDirection.top,
-                    height: unitHeightValue,
-                    width: unitWidthValue,
-                  ).then((value){
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) =>  ListItems()).then((value){
                     setState(() {
                       repeat_text=value.toString();
                     });

@@ -19,7 +19,7 @@ class _PriorityPickerState extends State<PriorityPicker> {
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
 
     return PopupMenuButton<dynamic>(
-        tooltip: 'task priority',
+        tooltip: 'முன்னுரிமை',
         padding: EdgeInsets.symmetric(
             vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
         icon: Icon(Icons.priority_high,

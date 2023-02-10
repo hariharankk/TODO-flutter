@@ -65,7 +65,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                 TextButton(
                   onPressed: saveGroup,
                   child: Text(
-                    "Save",
+                    "தரவு சேமிக்க",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20 * unitHeightValue,
@@ -91,7 +91,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     if (groupName.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Enter a Group Name"),
+          content: Text("குழுவின் பெயரை உள்ளிடவும்"),
           backgroundColor: Colors.red,
         ),
       );
@@ -168,7 +168,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: "Group Name",
+        hintText: "குழு பெயர்",
         hintStyle: TextStyle(
           color: Colors.black54,
           fontSize: 24 * unitHeightValue,
@@ -213,7 +213,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   Row _buildMembersLabelRow() {
     return Row(children: [
       Text(
-        "MEMBERS",
+        "உறுப்பினர்கள்",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.blue,
@@ -235,7 +235,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       ),
       Spacer(),
       Text(
-        "Public",
+        "பொது",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black54,
@@ -321,7 +321,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         : Align(
             alignment: Alignment(0.9, 0.9),
             child: FloatingActionButton(
-              tooltip: "Search to Add Members",
+              tooltip: "உறுப்பினர்களைச் சேர்க்க தேடவும்",
               onPressed: () {
                 Navigator.push(
                   context,

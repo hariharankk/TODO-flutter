@@ -20,7 +20,7 @@ class ListItems extends StatelessWidget {
               children: <Widget>[
                 SizedBox(width: 2,),
                 Text(
-                  'Select role of group member',
+                  'குழு உறுப்பினரின் பங்கைத் தேர்ந்தெடுக்கவும்',
                   style: TextStyle(color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold),
                 ),
                 TextButton(
@@ -28,7 +28,7 @@ class ListItems extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Go back',
+                      'திரும்பிச் செல்லுங்கள்',
                       style: TextStyle(color: Colors.blue),
                     )),
 

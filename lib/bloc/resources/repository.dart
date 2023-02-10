@@ -40,6 +40,10 @@ class Repository {
   Future addGroupMember(String groupKey, String username,String role) =>
       apiProvider.addGroupMember(groupKey, username, role);
 
+  Future updateGroupMemberrole(String groupKey, String username,String role) =>
+      apiProvider.updateGroupMemberrole(groupKey, username, role);
+
+
   Future<dynamic> deleteGroupMember(String groupKey, String username) =>
       apiProvider.deleteGroupMember(groupKey, username);
 

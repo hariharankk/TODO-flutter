@@ -69,7 +69,7 @@ class _GroupListState extends State<GroupList> {
           case ConnectionState.none:
             return Container(
               child: Center(
-                child: Text("No Connection"),
+                child: Text("இணைப்பு இல்லை"),
               ),
             );
           case ConnectionState.waiting:
@@ -220,7 +220,7 @@ class _GroupListState extends State<GroupList> {
   ///Build Group's Size
   Text _buildGroupSize(int groupSize) {
     return Text(
-      groupSize == 1 ? "Personal" : "$groupSize People",
+      groupSize == 1 ? "தனிப்பட்ட குழு" : "$groupSize நபர்கள்",
       style: TextStyle(fontSize: 20 * unitHeightValue, color: Colors.blueGrey),
     );
   }

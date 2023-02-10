@@ -20,7 +20,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
   late double unitHeightValue;
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
-  String searchQuery = "Search query";
+
 
   List<GroupMember> searchResults = [];
 
@@ -81,7 +81,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
 
   Text _buildTitle() {
     return Text(
-      "Add Members",
+      "உறுப்பினர்களைச் சேர்க்கவும்",
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
       controller: _searchQueryController,
       autofocus: true,
       decoration: InputDecoration(
-        hintText: "Search Users...",
+        hintText: "பயனர்களைத் தேடு...",
         border: InputBorder.none,
         hintStyle: TextStyle(
             color: Colors.white,
@@ -187,7 +187,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
               });
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("Removed ${member.username}"),
+                  content: Text("அகற்றப்பட்டது ${member.username}"),
                 ),
               );
             },
@@ -227,7 +227,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
       child: Stack(
         children: [
           Text(
-            "USERS",
+            "பயனர்கள்",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.blue,

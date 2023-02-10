@@ -15,7 +15,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '487f-34-75-52-14.ngrok.io';
+  static String stageHost = '18c3-34-125-232-114.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
@@ -34,7 +34,7 @@ class ApiProvider {
   Uri groupmemberaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-add');
 
   Uri searchURL = Uri(scheme: 'http', host: stageHost, path: '/api/search');
-
+  Uri groupmemberupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-update');
   Uri assignedtouserhaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-add');
 
   Uri sendmessage = Uri(scheme: 'http', host: stageHost, path: '/api/message_send');
@@ -257,6 +257,31 @@ class ApiProvider {
     }
     final response = await client.post(
       groupmemberaddURL,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+        "Access-Control-Allow-Methods": "POST, OPTIONS"},
+      body: jsonEncode({
+        "groupKey":groupKey,
+        "username": username,
+        "role":role
+      }),
+    );
+    final Map result = json.decode(response.body);
+    if (response.statusCode == 200) {
+    } else {
+      print(result["status"]);
+      throw Exception(result["status"]);
+    }
+  }
+
+  Future updateGroupMemberrole(String groupKey, String username,String role) async {
+    if (role==''){
+      role='Visitor';
+    }
+    final response = await client.patch(
+      groupmemberupdateURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS

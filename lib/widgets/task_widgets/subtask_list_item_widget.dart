@@ -104,13 +104,13 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                               maxLines: 2,
                             )
                           : Text(
-                              "No Notes",
+                              "குறிப்புகள் இல்லை",
                               style: toDoListTiletimeStyle(unitHeightValue)
                             ),
                       widget.subtask.assignedTo.length > 0
                           ? _buildAssignedMemberAvatars()
                           : Text(
-                              "No Assigned Members",
+                              "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
                               style: toDoListTiletimeStyle(unitHeightValue),
                             ),
                     ],
@@ -131,7 +131,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                 color: Colors.blue, size: 20 * unitHeightValue),
             SizedBox(width: 5 * unitWidthValue),
             Text(
-            "Due Date: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+            "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
               style: TextStyle(color: Colors.blue),
              ),
           ],
@@ -262,13 +262,13 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                         maxLines: 2,
                       )
                           : Text(
-                          "No Notes",
+                          "குறிப்புகள் இல்லை",
                           style: toDoListTiletimeStyle(unitHeightValue)
                       ),
                       widget.subtask.assignedTo.length > 0
                           ? _buildAssignedMemberAvatars()
                           : Text(
-                        "No Assigned Members",
+                        "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
                         style: toDoListTiletimeStyle(unitHeightValue),
                       ),
                     ],
@@ -289,7 +289,7 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                       color: Colors.blue, size: 20 * unitHeightValue),
                   SizedBox(width: 5 * unitWidthValue),
                   Text(
-                    "Due Date: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+                    "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
                     style: TextStyle(color: Colors.blue),
                   ),
                 ],
@@ -416,13 +416,13 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
                         maxLines: 2,
                       )
                           : Text(
-                          "No Notes",
+                          "குறிப்புகள் இல்லை",
                           style: toDoListTiletimeStyle(unitHeightValue)
                       ),
                       widget.subtask.assignedTo.length > 0
                           ? _buildAssignedMemberAvatars()
                           : Text(
-                        "No Assigned Members",
+                        "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
                         style: toDoListTiletimeStyle(unitHeightValue),
                       ),
                     ],
@@ -443,7 +443,7 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
                       color: Colors.blue, size: 20 * unitHeightValue),
                   SizedBox(width: 5 * unitWidthValue),
                   Text(
-                    "Due Date: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+                    "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
                     style: TextStyle(color: Colors.blue),
                   ),
                 ],

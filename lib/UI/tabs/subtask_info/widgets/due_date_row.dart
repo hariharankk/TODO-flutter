@@ -24,24 +24,26 @@ class _DueDateRowState extends State<DueDateRow> {
       children: [
         SizedBox(width: 10 * unitWidthValue),
         IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) =>  DatePicker());
-            },
+            onPressed: () => _showDatePicker(context),
             icon: Icon(Icons.calendar_today,
                 color: Colors.white, size: 20 * unitHeightValue)
         ),
         Text(
-          "Due Date: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
+          "நிலுவைத் தேதி: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
           style: labelStyle(unitHeightValue),
         ),
         SizedBox(width: 5 * unitWidthValue),
         IconButton(
-            onPressed: () => DatePicker(),
-            icon: Icon(Icons.calendar_today,
+            onPressed: () {
+              showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (context) =>  DatePicker());
+            },
+            icon: Icon(Icons.notifications_active_outlined,
                 color: Colors.white, size: 20 * unitHeightValue)),
+        SizedBox(width: 5 * unitWidthValue),
+        Text('மீதியை அமைக்கவும்',style: labelStyle(unitHeightValue))
       ],
     );
   }
@@ -70,7 +72,7 @@ class _DueDateRowState extends State<DueDateRow> {
             // Close the modal
             TextButton(
               child: Text(
-                'Done',
+                'முடிந்தது',
                 style: TextStyle(
                     color: Colors.blue,
                     fontSize: 20 * unitHeightValue,
@@ -115,14 +117,22 @@ class _VisitorDueDateRowState extends State<VisitorDueDateRow> {
                 color: Colors.white, size: 20 * unitHeightValue)
         ),
         Text(
-          "Due Date: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
+          "நிலுவைத் தேதி: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
           style: labelStyle(unitHeightValue),
         ),
         SizedBox(width: 5 * unitWidthValue),
         IconButton(
-            onPressed: () => DatePicker(),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) =>  DatePicker());
+            },
             icon: Icon(Icons.calendar_today,
                 color: Colors.white, size: 20 * unitHeightValue)),
+        SizedBox(width: 5 * unitWidthValue),
+        Text('மீதியை அமைக்கவும்',style: labelStyle(unitHeightValue))
+
       ],
     );
   }
@@ -151,7 +161,7 @@ class _VisitorDueDateRowState extends State<VisitorDueDateRow> {
             // Close the modal
             TextButton(
               child: Text(
-                'Done',
+                'முடிந்தது',
                 style: TextStyle(
                     color: Colors.blue,
                     fontSize: 20 * unitHeightValue,

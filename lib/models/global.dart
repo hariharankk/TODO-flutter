@@ -90,7 +90,7 @@ TextStyle registerButtonStyle(double unitHeightValue) => new TextStyle(
 
 
 List<int> index =[0,1,2];
-List<String> priorityText = ['Low', 'Mid', 'High'];
+List<String> priorityText = ['குறைந்த', 'நடுத்தர', 'உயர்'];
 List<Color> priorityColor = [Colors.green, Colors.lightGreen, Colors.red];
 
 const boxlength = 40;
@@ -105,7 +105,7 @@ const kMessageContainerDecoration = BoxDecoration(
 
 const kMessageTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-  hintText: 'Type your message here...',
+  hintText: 'உங்கள் செய்தியை இங்கே உள்ளிடவும்...',
   border: InputBorder.none,
 );
 

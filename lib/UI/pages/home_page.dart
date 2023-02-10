@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("TODO List", style: appTitleStyle(unitHeightValue)),
+          title: Text("அணிகள்", style: appTitleStyle(unitHeightValue)),
           centerTitle: true,
           backgroundColor: Colors.blue,
           elevation: 0,
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                 size: 32 * unitHeightValue,
 
               ),
-              tooltip: 'Add Group',
+              tooltip: 'குழுக்களைச் சேர்க்கவும்',
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroupPage()));
               }, //will go to Create a group Page

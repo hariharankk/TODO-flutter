@@ -15,7 +15,7 @@ class ListGroupsTab extends StatelessWidget {
         startColor: Colors.white,
         endColor: Colors.white,
         widget: TitleCard(
-            title: "Groups",
+            title: "குழுக்கள்",
             child: GroupList(top: height)),
       )
     ]);

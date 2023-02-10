@@ -65,7 +65,7 @@ class _ToDoTabState extends State<ToDoTab> {
               backgroundColor: Colors.blue,
               elevation: 0,
               leading: IconButton(
-                tooltip: 'back',
+                tooltip: 'பின்னால்',
                 icon: Icon(Icons.arrow_back,
                     size: 32.0 * unitHeightValue, color: Colors.white),
                 onPressed: () {
@@ -76,7 +76,7 @@ class _ToDoTabState extends State<ToDoTab> {
 
               actions: [
                 IconButton(
-                        tooltip:  'Edit Group',
+                        tooltip:  'குழுவைத் திருத்து',
                         icon: Icon(
                             Icons.group_add_outlined,
                         size: 32.0 * unitHeightValue, color:Colors.white),
@@ -95,7 +95,7 @@ class _ToDoTabState extends State<ToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'Tasks',
+                    title: 'திட்டங்கள்',
                     child: _buildStreamBuilder(),
                   ),
                 ),
@@ -119,7 +119,7 @@ class _ToDoTabState extends State<ToDoTab> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            print("None Data");
+            print("தகவல் இல்லை");
             break;
           case ConnectionState.active:
             if (snapshot.hasData && !listEquals(group.tasks, snapshot.data)) {
@@ -176,9 +176,9 @@ class _ToDoTabState extends State<ToDoTab> {
         await deleteTask(item);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Task " + item.title + " dismissed"),
+            content: Text("திட்டம் " + item.title + " நீக்கப்பட்டது"),
             action: SnackBarAction(
-              label: 'Undo',
+              label: 'செயல்தவிர்',
               onPressed: () {
                 reAddTask(item);
               },
@@ -210,6 +210,7 @@ class _ToDoTabState extends State<ToDoTab> {
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
       offset: Offset(0, 70 * unitHeightValue),
+      tooltip: 'வகைபடுத்து',
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(15.0),
@@ -223,38 +224,38 @@ class _ToDoTabState extends State<ToDoTab> {
       },
       itemBuilder: (context) => [
         PopupMenuItem<String>(
-          value: "Alphabetical",
+          value: "அகரவரிசைப்படி",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 24 * unitHeightValue),
+            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 20 * unitHeightValue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Alphabetical",
+              "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
-          value: "Recent-Oldest",
+          value: "அண்மையில்-பழமையான",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Recent-Oldest",
+              "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
-          value: "Oldest-Recent",
+          value: "பழமையான-அண்மையில்",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Oldest-Recent",
+              "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
@@ -264,14 +265,14 @@ class _ToDoTabState extends State<ToDoTab> {
 
   _orderBy() {
     switch (orderBy) {
-      case "Alphabetical":
+      case "அகரவரிசைப்படி":
         group.tasks.sort(
-            (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+                (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
         break;
-      case "Recent-Oldest":
+      case "அண்மையில்-பழமையான":
         group.tasks.sort((a, b) => b.timeCreated.compareTo(a.timeCreated));
         break;
-      case "Oldest-Recent":
+      case "பழமையான-அண்மையில்":
         group.tasks.sort((a, b) => a.timeCreated.compareTo(b.timeCreated));
         break;
       default:
@@ -281,7 +282,7 @@ class _ToDoTabState extends State<ToDoTab> {
   /// Get order list from persistant storage.
   void getOrderBy() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    this.orderBy = prefs.getString('TASK_ORDER_LIST') ?? "Recent-Oldest";
+    this.orderBy = prefs.getString('TASK_ORDER_LIST') ?? "அண்மையில்-பழமையான";
   }
 
   /// Save orderlist to Device's persistant storage
@@ -342,7 +343,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
               backgroundColor: Colors.blue,
               elevation: 0,
               leading: IconButton(
-                tooltip: 'back',
+                tooltip: 'பின்னால்',
                 icon: Icon(Icons.arrow_back,
                     size: 32.0 * unitHeightValue, color: Colors.white),
                 onPressed: () {
@@ -351,17 +352,6 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
                 color: Colors.white,
               ),
               actions: [
-                IconButton(
-                  tooltip:  'Edit Group',
-                  icon: Icon(
-                      Icons.group_add_outlined,
-                      size: 32.0 * unitHeightValue, color:Colors.white),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => GroupInfoPage(group: widget.group)));
-                  },
-                  color: Colors.white,
-                ),
                 _popupMenuButton(),
               ],
             ),
@@ -371,7 +361,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'Tasks',
+                    title: 'திட்டங்கள்',
                     child: _buildStreamBuilder(),
                   ),
                 ),
@@ -395,7 +385,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            print("None Data");
+            print("தகவல் இல்லை");
             break;
           case ConnectionState.active:
             if (snapshot.hasData && !listEquals(group.tasks, snapshot.data)) {
@@ -446,6 +436,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
       icon: Icon(Icons.sort,
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
+      tooltip: 'வகைபடுத்து',
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -460,38 +451,38 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
       },
       itemBuilder: (context) => [
         PopupMenuItem<String>(
-          value: "Alphabetical",
+          value: "அகரவரிசைப்படி",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 24 * unitHeightValue),
+            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 20 * unitHeightValue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Alphabetical",
+              "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
-          value: "Recent-Oldest",
+          value: "அண்மையில்-பழமையான",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Recent-Oldest",
+              "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
-          value: "Oldest-Recent",
+          value: "பழமையான-அண்மையில்",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Oldest-Recent",
+              "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
@@ -501,14 +492,14 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
 
   _orderBy() {
     switch (orderBy) {
-      case "Alphabetical":
+      case "அகரவரிசைப்படி":
         group.tasks.sort(
                 (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
         break;
-      case "Recent-Oldest":
+      case "அண்மையில்-பழமையான":
         group.tasks.sort((a, b) => b.timeCreated.compareTo(a.timeCreated));
         break;
-      case "Oldest-Recent":
+      case "பழமையான-அண்மையில்":
         group.tasks.sort((a, b) => a.timeCreated.compareTo(b.timeCreated));
         break;
       default:
@@ -518,7 +509,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
   /// Get order list from persistant storage.
   void getOrderBy() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    this.orderBy = prefs.getString('TASK_ORDER_LIST') ?? "Recent-Oldest";
+    this.orderBy = prefs.getString('TASK_ORDER_LIST') ?? "அண்மையில்-பழமையான";
   }
 
   /// Save orderlist to Device's persistant storage
@@ -579,7 +570,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
               backgroundColor: Colors.blue,
               elevation: 0,
               leading: IconButton(
-                tooltip: 'back',
+                tooltip: 'பின்னால்',
                 icon: Icon(Icons.arrow_back,
                     size: 32.0 * unitHeightValue, color: Colors.white),
                 onPressed: () {
@@ -594,7 +585,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'Tasks',
+                    title: 'திட்டங்கள்',
                     child: _buildStreamBuilder(),
                   ),
                 ),
@@ -615,7 +606,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            print("None Data");
+            print("தகவல் இல்லை");
             break;
           case ConnectionState.active:
             if (snapshot.hasData && !listEquals(group.tasks, snapshot.data)) {
@@ -666,6 +657,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
       icon: Icon(Icons.sort,
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
+      tooltip: 'வகைபடுத்து',
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -680,38 +672,38 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
       },
       itemBuilder: (context) => [
         PopupMenuItem<String>(
-          value: "Alphabetical",
+          value: "அகரவரிசைப்படி",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 24 * unitHeightValue),
+            Icon(Icons.sort_by_alpha,color: Colors.blue, size: 20 * unitHeightValue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Alphabetical",
+              "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
-          value: "Recent-Oldest",
+          value: "அண்மையில்-பழமையான",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Recent-Oldest",
+              "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
-          value: "Oldest-Recent",
+          value: "பழமையான-அண்மையில்",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
             SizedBox(width: 30.0 * unitWidthValue),
             Text(
-              "Oldest-Recent",
+              "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 20 * unitHeightValue),
             )
           ]),
         ),
@@ -721,14 +713,14 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
 
   _orderBy() {
     switch (orderBy) {
-      case "Alphabetical":
+      case "அகரவரிசைப்படி":
         group.tasks.sort(
                 (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
         break;
-      case "Recent-Oldest":
+      case "அண்மையில்-பழமையான":
         group.tasks.sort((a, b) => b.timeCreated.compareTo(a.timeCreated));
         break;
-      case "Oldest-Recent":
+      case "பழமையான-அண்மையில்":
         group.tasks.sort((a, b) => a.timeCreated.compareTo(b.timeCreated));
         break;
       default:
@@ -738,7 +730,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
   /// Get order list from persistant storage.
   void getOrderBy() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    this.orderBy = prefs.getString('TASK_ORDER_LIST') ?? "Recent-Oldest";
+    this.orderBy = prefs.getString('TASK_ORDER_LIST') ?? "அண்மையில்-பழமையான";
   }
 
   /// Save orderlist to Device's persistant storage

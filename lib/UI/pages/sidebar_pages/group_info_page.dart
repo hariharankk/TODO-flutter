@@ -9,7 +9,6 @@ import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
 class GroupInfoPage extends StatefulWidget {
-  static const routeName = '/GroupInfoPage';
   Group group;
   GroupInfoPage({required this.group});
   @override
@@ -20,6 +19,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late Group group;
   late List<GroupMember> initialMembers;
+  List<GroupMember> updatedMembers=[];
   late int membersLength;
   late double unitHeightValue, unitWidthValue;
   bool saving = true;
@@ -51,7 +51,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
               TextButton(
                 onPressed: updateGroup,
                 child: Text(
-                  "update",
+                  "தரவு புதுப்பிக்கவும்",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20 * unitHeightValue,
@@ -95,6 +95,15 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         }
       }
     }
+
+    for (GroupMember member in updatedMembers){
+      try {
+        await repository.updateGroupMemberrole(groupKey, member.username,member.role);
+      } catch (e) {
+        throw e;
+      }
+    }
+
     await groupBloc.updateGroups();
     Navigator.pop(context);
   }
@@ -175,7 +184,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
   Row _buildMembersLabelRow() {
     return Row(children: [
       Text(
-        "MEMBERS",
+        "உறுப்பினர்கள்",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.blue,
@@ -197,7 +206,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
       ),
       Spacer(),
       Text(
-        "Public",
+        "பொது",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black54,
@@ -223,7 +232,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
             if (group.members.length > 1) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("Personal Groups are Limited to 1 Member Only"),
+                  content: Text("தனிப்பட்ட குழுக்கள் 1 உறுப்பினருக்கு மட்டுமே"),
                 ),
               );
             }
@@ -266,8 +275,25 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
               },
 
             ):
-         group.members[index]
+         GestureDetector(
+           child: group.members[index]
         .cAvatar(radius: 34, unitHeightValue: unitHeightValue),
+           onTap: (){
+             showModalBottomSheet(
+                 context: context,
+                 isScrollControlled: true,
+                 builder: (context) =>  ListItems()).then((value) {
+               setState(() {
+                 if(value!=null  ){
+                   group.members[index].role=value.toString();
+                   updatedMembers.add(group.members[index]);
+                 }
+
+               });
+             });
+           },
+
+         ),
             Text(
               group.members[index].username,
               overflow: TextOverflow.ellipsis,
@@ -297,7 +323,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         ? Align(
             alignment: Alignment(0.9, 0.9),
             child: FloatingActionButton(
-              tooltip: "Search to Add Members",
+              tooltip: "உறுப்பினர்களைச் சேர்க்க தேடவும்",
               onPressed: () {
                 Navigator.push(
                   context,

@@ -86,7 +86,7 @@ class _AddTaskState extends State<AddTask> {
                         : SizedBox.shrink(),
                     //contentPadding: EdgeInsets.only(left: 12.0,),
                     border: InputBorder.none,
-                    hintText: "Write a Task",
+                    hintText: "ஒரு திட்டத்தைச் சேர்க்கவும்",
                     hintStyle: TextStyle(
                         color: Colors.black54, fontSize: 16 * unitHeightValue),
                   ),
