@@ -37,6 +37,7 @@ class _ToDoTabState extends State<ToDoTab> {
 
   @override
   Widget build(BuildContext context) {
+
     group = widget.group;
     locator.registerLazySingleton<TaskBloc>(() =>TaskBloc(group.groupKey));
     taskBloc = locator<TaskBloc>();
@@ -44,6 +45,7 @@ class _ToDoTabState extends State<ToDoTab> {
     height = mediaQuery.height * 0.13;
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
+
     return KeyboardSizeProvider(
       child: SafeArea(
         child: GestureDetector(
@@ -75,6 +77,8 @@ class _ToDoTabState extends State<ToDoTab> {
               ),
 
               actions: [
+                _popupMenuButton(),
+                SizedBox(width: 10,),
                 IconButton(
                         tooltip:  'குழுவைத் திருத்து',
                         icon: Icon(
@@ -86,7 +90,8 @@ class _ToDoTabState extends State<ToDoTab> {
                                   },
                         color: Colors.white,
                 ),
-                _popupMenuButton(),
+                SizedBox(width: 5,),
+
               ],
             ),
             body: Stack(
@@ -156,13 +161,13 @@ class _ToDoTabState extends State<ToDoTab> {
   Dismissible _buildListTile(Task item) {
     return Dismissible(
       key: Key(item.taskKey),
-      child: ListTile(
-        key: Key(item.title),
-        title: TaskListItemWidget(
-          group: group,
-          task: item,
+        child: ListTile(
+          key: Key(item.title),
+          title: TaskListItemWidget(
+            group: group,
+            task: item,
+          ),
         ),
-      ),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
         color: Colors.red,
@@ -227,11 +232,11 @@ class _ToDoTabState extends State<ToDoTab> {
           value: "அகரவரிசைப்படி",
           child: Row(children: [
             Icon(Icons.sort_by_alpha,color: Colors.blue, size: 20 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -239,11 +244,11 @@ class _ToDoTabState extends State<ToDoTab> {
           value: "அண்மையில்-பழமையான",
           child: Row(children: [
             Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -251,11 +256,11 @@ class _ToDoTabState extends State<ToDoTab> {
           value: "பழமையான-அண்மையில்",
           child: Row(children: [
             Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -353,6 +358,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
               ),
               actions: [
                 _popupMenuButton(),
+                SizedBox(width: 10,)
               ],
             ),
             body: Stack(
@@ -432,7 +438,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
   PopupMenuButton _popupMenuButton() {
     return PopupMenuButton<String>(
       padding: EdgeInsets.symmetric(
-          vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
+          vertical: 8 * unitHeightValue, horizontal: 20 * unitWidthValue),
       icon: Icon(Icons.sort,
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
@@ -454,11 +460,11 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
           value: "அகரவரிசைப்படி",
           child: Row(children: [
             Icon(Icons.sort_by_alpha,color: Colors.blue, size: 20 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -466,11 +472,11 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
           value: "அண்மையில்-பழமையான",
           child: Row(children: [
             Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -478,11 +484,11 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
           value: "பழமையான-அண்மையில்",
           child: Row(children: [
             Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -578,6 +584,11 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
                 },
                 color: Colors.white,
               ),
+              actions: [
+                _popupMenuButton(),
+                SizedBox(width: 10,)
+              ],
+
             ),
             body: Stack(
               children: <Widget>[
@@ -675,11 +686,11 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
           value: "அகரவரிசைப்படி",
           child: Row(children: [
             Icon(Icons.sort_by_alpha,color: Colors.blue, size: 20 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width:5.0 * unitWidthValue),
             Text(
               "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -687,11 +698,11 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
           value: "அண்மையில்-பழமையான",
           child: Row(children: [
             Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -699,11 +710,11 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
           value: "பழமையான-அண்மையில்",
           child: Row(children: [
             Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 20 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),

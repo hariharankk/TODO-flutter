@@ -32,6 +32,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   TextEditingController notesController = new TextEditingController();
   bool buffering = true;
   bool updating = false;
+  final double fontSize= 32.0;
 
   @override
   void initState() {
@@ -50,31 +51,44 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
           startColor: Colors.white,
           endColor: Colors.white,
           widget: Scaffold(
-            appBar: CustomAppBar(
-              widget.subtask.title,
+            appBar: AppBar(
+              title: Text(
+                widget.subtask.title,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSize * unitHeightValue,
+                ),
+              ),
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              elevation: 0.0,
+              toolbarHeight: 100.0,
               leading: IconButton(
                 tooltip: 'பின்னால்',
                 icon: Icon(Icons.arrow_back,
-                    size: 32.0 * unitHeightValue, color: Colors.white),
+                    size: 32.0 * unitHeightValue, color: Colors.blue),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 color: Colors.white,
               ),
               actions: <Widget>[
-                PriorityPicker(onTap: (int value){
+                PriorityPicker(colors: Colors.blue,onTap: (int value){
                   viewmodel.priority = value;
                   setState(() {});
-                } ),
+                }
+                ),
+                SizedBox(width: 10,),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 40.0 * unitHeightValue,
-                      bottom: 40.0 * unitHeightValue,
+                      top: 25.0 * unitHeightValue,
+                      bottom: 25.0 * unitHeightValue,
                       right: 8.0 * unitWidthValue),
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Colors.white,
+                      primary: Colors.blue,
+                      backgroundColor: Colors.blue,
                       elevation: 9.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
@@ -93,7 +107,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                         : Text(
                             "தரவைப் புதுப்பிக்கவும்",
                             style: TextStyle(
-                                color: Colors.blue,
+                                color: Colors.white,
                                 fontSize: 24 * unitHeightValue,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -145,12 +159,12 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("விளக்கம்", style: labelStyle(unitHeightValue)),
-        SizedBox(height: 10.0 * unitHeightValue),
+        Text("விளக்கம்", style: labelStyle1(unitHeightValue)),
+        SizedBox(height: 15.0 * unitHeightValue),
         _notesContainer(),
-        SizedBox(height: 20 * unitHeightValue),
+        SizedBox(height: 25 * unitHeightValue),
         DueDateRow(viewmodel),
-        SizedBox(height: 15 * unitHeightValue),
+        SizedBox(height: 25 * unitHeightValue),
       ],
     );
   }
@@ -339,14 +353,14 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
             leading: IconButton(
               tooltip: 'பின்னால்',
               icon: Icon(Icons.arrow_back,
-                  size: 32.0 * unitHeightValue, color: Colors.white),
+                  size: 32.0 * unitHeightValue, color: Colors.blue),
               onPressed: () {
                 Navigator.pop(context);
               },
               color: Colors.white,
             ),
            ),
-          backgroundColor: Colors.grey.shade400,
+          backgroundColor: Colors.grey.shade200,
           body:
           SingleChildScrollView(
             child: FutureBuilder(

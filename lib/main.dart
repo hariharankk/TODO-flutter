@@ -7,7 +7,6 @@ import 'package:todolist/UI/pages/sidebar_pages/create_new_group_page.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/bloc/resources/injection.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();

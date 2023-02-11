@@ -7,16 +7,28 @@ TextStyle appTitleStyle(double unitHeightValue) => TextStyle(
       fontSize: 36.0 * unitHeightValue,
     );
 
+TextStyle appTitleStyle1(double unitHeightValue) => TextStyle(
+  color: Colors.blue,
+  fontWeight: FontWeight.bold,
+  fontSize: 36.0 * unitHeightValue,
+);
+
 TextStyle hintTextStyle(double unitHeightValue) => TextStyle(
       color: Colors.white70,
       fontSize: 18 * unitHeightValue,
     );
 
 TextStyle labelStyle(double unitHeightValue) => TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-      fontSize: 18 * unitHeightValue,
-    );
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 18 * unitHeightValue,
+);
+
+TextStyle labelStyle1(double unitHeightValue) => TextStyle(
+  color: Colors.blue,
+  fontWeight: FontWeight.bold,
+  fontSize: 18 * unitHeightValue,
+);
 
 BoxDecoration boxDecorationStyle() => BoxDecoration(
       color: Color(0xff57CBF2),

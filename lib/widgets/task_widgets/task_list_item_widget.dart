@@ -242,7 +242,7 @@ class VisitorTaskListItemWidget extends StatefulWidget {
 
 class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
   late double unitHeightValue , unitWidthValue;
-  late double height;
+
 
   @override
   void initState() {
@@ -254,7 +254,6 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
     Size mediaQuery = MediaQuery.of(context).size;
     unitHeightValue = mediaQuery.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
-    height = mediaQuery.height * 0.1;
 
 
     return GestureDetector(
@@ -264,7 +263,6 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
       },
 
       child: Container(
-          height: height,
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -277,7 +275,7 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
             ],
           ),
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
@@ -305,6 +303,7 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
                     ],
                   ),
                 ),
+                SizedBox(width: 75 * unitWidthValue,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -325,8 +324,11 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
                     //Padding(
                     //  padding: const EdgeInsets.only(left: 100.0),
                     //child:
+                 Padding(
+                    padding: const EdgeInsets.only(right: 100.0),
+                    child:
                     box(index: widget.task.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
-                    //),
+                 )//),
 
                   ],
                 ),

@@ -4,13 +4,15 @@ import 'package:todolist/widgets/task_widgets/priority box.dart';
 
 class PriorityPicker extends StatefulWidget {
   final void Function(int) onTap;
-  PriorityPicker({required this.onTap});
+  final Color colors;
+  PriorityPicker({required this.onTap, required this.colors});
   @override
   _PriorityPickerState createState() => _PriorityPickerState();
 }
 
 class _PriorityPickerState extends State<PriorityPicker> {
   late double unitHeightValue, unitWidthValue;
+
 
   // Array list of items
   @override
@@ -23,7 +25,7 @@ class _PriorityPickerState extends State<PriorityPicker> {
         padding: EdgeInsets.symmetric(
             vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
         icon: Icon(Icons.priority_high,
-            size: 32.0 * unitHeightValue, color: Colors.white),
+            size: 32.0 * unitHeightValue, color: widget.colors),
         color: Colors.white,
         offset: Offset(0, 70 * unitHeightValue),
         shape: RoundedRectangleBorder(

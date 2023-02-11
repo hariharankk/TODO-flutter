@@ -17,9 +17,8 @@ class SubtaskListItemWidget extends StatefulWidget {
 }
 
 class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
-  late double listItemWidth;
+  late double listItemWidth,listItemHeight;
   late Size mediaQuery;
-  late double listItemHeight;
   bool change = false;
   late double unitHeightValue, unitWidthValue;
   //
@@ -132,7 +131,7 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
             SizedBox(width: 5 * unitWidthValue),
             Text(
             "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
-              style: TextStyle(color: Colors.blue),
+              style: toDoListTiletimeStyle(unitHeightValue*0.7),
              ),
           ],
         ),

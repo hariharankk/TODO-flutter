@@ -1,4 +1,6 @@
-import 'package:splashscreen/splashscreen.dart';
+
+
+/*import 'package:splashscreen/splashscreen.dart';
 import 'package:todolist/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -99,4 +101,4 @@ class _LocalNotificationsState extends State<LocalNotifications> {
       ),
     );
   }
-}
+}*/

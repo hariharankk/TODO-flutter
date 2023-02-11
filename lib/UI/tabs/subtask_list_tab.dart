@@ -76,12 +76,14 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
-                PriorityPicker(onTap: (int value){
+                _popupMenuButton(),
+                SizedBox(width: 10,),
+                PriorityPicker(colors: Colors.white,onTap: (int value){
                   widget.task.priority = value;
                   locator<TaskBloc>().updateTask(widget.task);
                   setState(() {});
                 } ),
-                _popupMenuButton()
+                SizedBox(width: 5,)
               ],
             ),
             body: Stack(
@@ -213,48 +215,48 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
         PopupMenuItem<String>(
           value: "அகரவரிசைப்படி",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha, size: 24 * unitHeightValue, color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.sort_by_alpha, size: 20 * unitHeightValue, color: Colors.blue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "அண்மையில்-பழமையான",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "பழமையான-அண்மையில்",
           child: Row(children: [
-            Icon(Icons.date_range,color: Colors.blue,  size: 24 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range,color: Colors.blue,  size: 20 * unitHeightValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "இறுதி தேதி",
           child: Row(children: [
-            Icon(Icons.date_range,color: Colors.blue, size: 24 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range,color: Colors.blue, size: 20 * unitHeightValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "இறுதி தேதி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -357,12 +359,15 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
-                PriorityPicker(onTap: (int value){
+                _popupMenuButton(),
+                SizedBox(width: 10,),
+                PriorityPicker(colors: Colors.blue,onTap: (int value){
                   widget.task.priority = value;
                   locator<TaskBloc>().updateTask(widget.task);
                   setState(() {});
                 } ),
-                _popupMenuButton()
+                SizedBox(width: 5,)
+
               ],
             ),
             body: Stack(
@@ -457,48 +462,48 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
         PopupMenuItem<String>(
           value: "அகரவரிசைப்படி",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha, size: 24 * unitHeightValue, color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.sort_by_alpha, size: 20 * unitHeightValue, color: Colors.blue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "அண்மையில்-பழமையான",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "பழமையான-அண்மையில்",
           child: Row(children: [
-            Icon(Icons.date_range,color: Colors.blue,  size: 24 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range,color: Colors.blue,  size: 20 * unitHeightValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "இறுதி தேதி",
           child: Row(children: [
-            Icon(Icons.date_range,color: Colors.blue, size: 24 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range,color: Colors.blue, size: 20 * unitHeightValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "இறுதி தேதி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
@@ -601,7 +606,8 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
-                _popupMenuButton()
+                _popupMenuButton(),
+                SizedBox(width: 10,)
               ],
             ),
             body: Stack(
@@ -696,48 +702,48 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
         PopupMenuItem<String>(
           value: "அகரவரிசைப்படி",
           child: Row(children: [
-            Icon(Icons.sort_by_alpha, size: 24 * unitHeightValue, color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.sort_by_alpha, size: 20 * unitHeightValue, color: Colors.blue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அகரவரிசைப்படி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "அண்மையில்-பழமையான",
           child: Row(children: [
-            Icon(Icons.date_range, size: 24 * unitHeightValue,color: Colors.blue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range, size: 20 * unitHeightValue,color: Colors.blue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "அண்மையில்-பழமையான",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "பழமையான-அண்மையில்",
           child: Row(children: [
-            Icon(Icons.date_range,color: Colors.blue,  size: 24 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range,color: Colors.blue,  size: 20 * unitHeightValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "பழமையான-அண்மையில்",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
         PopupMenuItem<String>(
           value: "இறுதி தேதி",
           child: Row(children: [
-            Icon(Icons.date_range,color: Colors.blue, size: 24 * unitHeightValue),
-            SizedBox(width: 30.0 * unitWidthValue),
+            Icon(Icons.date_range,color: Colors.blue, size: 20 * unitHeightValue),
+            SizedBox(width:5.0 * unitWidthValue),
             Text(
               "இறுதி தேதி",
               style: TextStyle(
-                  color: Colors.blue, fontSize: 24 * unitHeightValue),
+                  color: Colors.blue, fontSize: 17 * unitHeightValue),
             )
           ]),
         ),
