@@ -16,13 +16,10 @@ class Repository {
       apiProvider.registerUser(
           username, password, email, firstname, lastname, phonenumber, avatar);
 
-  Future signinUser(String username, String password, String apiKey) =>
-      apiProvider.signinUser(username, password, apiKey);
+  Future signinUser(String username, String password) =>
+      apiProvider.signinUser(username, password);
 
 
-  Future<String> getApiKey() => apiProvider.getApiKey();
-
-  Future<void> saveApiKey(String apiKey) => apiProvider.saveApiKey(apiKey);
 
   //Groups: Get, Post, Delete
   Future<List<Group>> getUserGroups() => apiProvider.getUserGroups();

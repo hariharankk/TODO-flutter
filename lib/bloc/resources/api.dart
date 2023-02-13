@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:http/http.dart' show Client;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/models/message.dart';
@@ -8,18 +7,22 @@ import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/models/tasks.dart';
 import 'dart:convert';
 import 'package:todolist/models/user.dart';
+import 'package:todolist/jwt.dart';
+import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
 class ApiProvider {
   Client client = Client();
+  JWT jwt= JWT();
+  String Token='';
   //static String baseURL = "https://taskmanager-group-pro.herokuapp.com/api";
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = 'b5fa-34-132-221-60.ngrok.io';
+  static String stageHost = 'e402-34-125-115-47.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
-  Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/signin');
-  Uri userURL = Uri(scheme: 'http', host: stageHost, path: '/api/user');
+  Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/login');
+  Uri userURL = Uri(scheme: 'http', host: stageHost, path: '/api/register');
   Uri userupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/userupdate');
 
   Uri taskaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-add');
@@ -39,7 +42,6 @@ class ApiProvider {
 
   Uri sendmessage = Uri(scheme: 'http', host: stageHost, path: '/api/message_send');
 
-  String apiKey = '';
 
   // User CRUD Functions
   /// Sign Up
@@ -51,7 +53,8 @@ class ApiProvider {
       userURL,
         headers: {
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-          "Access-Control-Allow-Methods": "POST, OPTIONS"
+          "Content-Type": "application/json",
+          "Accept": "application/json",
         },
       body: jsonEncode({
         "emailaddress": email,
@@ -64,11 +67,10 @@ class ApiProvider {
       }),
     );
     final Map result = json.decode(response.body);
-    if (response.statusCode == 201) {
+    if (result['status'] == true) {
       // If the call to the server was successful, parse the JSON
 
-      await saveApiKey(result["data"]["api_key"]);
-      print((result["data"]['role']));
+      await jwt.store_token(result['token']);
       return User.fromJson(result["data"]);
     } else {
       // If that call was not successful, throw an error.
@@ -77,10 +79,10 @@ class ApiProvider {
   }
 
   /// Sign User In using username and password or API_Key
-  Future signinUser(String username, String password, String apiKey) async {
+  Future signinUser(String username, String password) async {
     final response = await client.post(
       signinURL,
-      headers: {"Authorization": apiKey,
+      headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -92,9 +94,9 @@ class ApiProvider {
       }),
     );
     final Map result = json.decode(response.body);
-    if (response.statusCode == 200) {
+    if (result['status'] == true) {
       // If the call to the server was successful, parse the JSON
-      await saveApiKey(result["data"]["api_key"]);
+      await jwt.store_token(result['token']);
       await Future<void>.delayed(const Duration(milliseconds: 200));
       return User.fromJson(result["data"]);
     } else {
@@ -109,17 +111,17 @@ class ApiProvider {
   /// Group CRUD Functions
   /// Get a list of the User's Groups
   Future<List<Group>> getUserGroups() async {
-    final _apiKey = await getApiKey();
-    final queryParameters = {'apiKey':apiKey};
+    final Token = await jwt.read_token();
+    final queryParameters = {'username':userBloc.getUserObject()};
     Uri groupURL = Uri(scheme: 'http', host: stageHost, path: '/api/group',queryParameters: queryParameters);
     List<Group> groups = [];
-    if (_apiKey.isNotEmpty) {
       final response = await client.get(
         groupURL,
         headers: {
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
           "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
           "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+          'x-access-token': Token
         },
           );
       final Map result = json.decode(response.body);
@@ -140,7 +142,7 @@ class ApiProvider {
         // If that call was not successful, throw an error.
         throw Exception(result["status"]);
       }
-    }
+
     return groups;
   }
 
@@ -151,12 +153,13 @@ class ApiProvider {
       groupaddURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        'x-access-token': Token,
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
         "Access-Control-Allow-Methods": "POST, OPTIONS"
       },
       body: jsonEncode({
-        'apiKey':apiKey,
+        'username':userBloc.getUserObject(),
         "name": groupName,
         "is_public": isPublic,
       }),
@@ -179,6 +182,7 @@ class ApiProvider {
     final response = await client.patch(
       groupupdateURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -202,6 +206,7 @@ class ApiProvider {
     final response = await client.delete(
       groupdeleteURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -224,6 +229,7 @@ class ApiProvider {
     final response = await client.get(
       groupmemberURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -258,6 +264,7 @@ class ApiProvider {
     final response = await client.post(
       groupmemberaddURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -283,6 +290,7 @@ class ApiProvider {
     final response = await client.patch(
       groupmemberupdateURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -313,6 +321,7 @@ class ApiProvider {
     final response = await client.delete(
       groupmemberdeleteURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -337,6 +346,7 @@ class ApiProvider {
     final response = await client.get(
       taskURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": 'true',
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -369,6 +379,7 @@ class ApiProvider {
     final response = await client.post(
       taskaddURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -387,6 +398,7 @@ class ApiProvider {
     final response = await client.patch(
       taskupdateURL,
       headers: {
+        'x-access-token': Token,
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
           "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
           "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -407,6 +419,7 @@ class ApiProvider {
     final response = await client.delete(
       taskdeleteURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -430,6 +443,7 @@ class ApiProvider {
     final response = await client.get(
       subtaskURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -465,6 +479,7 @@ class ApiProvider {
     final response = await client.post(
       subtaskaddURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -487,6 +502,7 @@ class ApiProvider {
     final response = await client.patch(
       subtaskupdateURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -515,6 +531,7 @@ class ApiProvider {
     final response = await client.delete(
       subtaskdeleteURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -531,7 +548,8 @@ class ApiProvider {
   Future<List<GroupMember>> searchUser(String searchTerm) async {
     final response = await client.post(
       searchURL,
-      headers: {"Authorization": apiKey,
+      headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -568,6 +586,7 @@ class ApiProvider {
     final response = await client.get(
       assignedtouserhgetURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -598,6 +617,7 @@ class ApiProvider {
     final response = await client.post(
       assignedtouserhaddURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -628,6 +648,7 @@ class ApiProvider {
     final response = await client.delete(
       assignedtouserhdeleteURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -646,6 +667,7 @@ class ApiProvider {
     final response = await client.post(
       sendmessage,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -671,6 +693,7 @@ class ApiProvider {
     final response = await client.get(
       messageURL,
       headers: {
+        'x-access-token': Token,
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": 'true',
         "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
@@ -693,18 +716,4 @@ class ApiProvider {
     }
   }
 
-
-  /// Save API key to Device's persistant storage
-  Future<void> saveApiKey(String apiKey) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('API_Token', apiKey);
-    this.apiKey = apiKey;
-  }
-
-  /// Get API Key from persistant storage.
-  Future<String> getApiKey() async {
-    //if(apiKey.isNotEmpty) return apiKey;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('API_Token') ?? "";
-  }
 }

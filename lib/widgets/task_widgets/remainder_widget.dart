@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/models/global.dart';
+import 'package:todolist/remainder/remainder.dart';
 
 class DatePicker extends StatefulWidget {
   @override
@@ -65,7 +66,13 @@ class DatePickerState extends State<DatePicker> {
                   style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return Container();//LocalNotifications();
+                          })
+                      );
+                    },
                     child: Text(
                       'Set Remainder',
                       style: TextStyle(color: Colors.blue),

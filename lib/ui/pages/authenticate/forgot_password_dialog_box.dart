@@ -104,7 +104,7 @@ class ForgotPasswordDialogBox extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 16 * unitHeightValue,
                 fontWeight: FontWeight.w600,
-                fontFamily: 'Segoe UI')),
+                fontFamily: 'Segoe ui')),
         SizedBox(height: 10 * unitHeightValue),
         Container(
           alignment: Alignment.centerLeft,
@@ -140,7 +140,7 @@ class ForgotPasswordDialogBox extends StatelessWidget {
       "Enter your email address below, a link will be sent to reset your password.",
       style: TextStyle(
         fontSize: 14 * unitHeightValue,
-        fontFamily: 'Segoe UI',
+        fontFamily: 'Segoe ui',
         color: Colors.black54,
       ),
       textAlign: TextAlign.center,
@@ -153,7 +153,7 @@ class ForgotPasswordDialogBox extends StatelessWidget {
       style: TextStyle(
           fontSize: 22 * unitHeightValue,
           fontWeight: FontWeight.w700,
-          fontFamily: 'Segoe UI',
+          fontFamily: 'Segoe ui',
           color: Colors.white),
       textAlign: TextAlign.center,
     );

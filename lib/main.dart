@@ -7,6 +7,7 @@ import 'package:todolist/UI/pages/sidebar_pages/create_new_group_page.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/bloc/resources/injection.dart';
+import 'package:todolist/jwt.dart';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,7 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   late final String apiKey;
   late double unitHeightValue;
+  JWT jwt= JWT();
 
   @override
   void initState() {
@@ -54,16 +56,6 @@ class _SplashState extends State<Splash> {
 
   /// Update Group list from server, then load homepage.
   Future<String> loadFromFuture() async {
-    apiKey = await repository.getApiKey();
-    if (apiKey.isNotEmpty && apiKey.length > 0) {
-      try {
-        userBloc.signinUser("", "", apiKey);
-        // <fetch data from server. ex. login>
-      } catch (e) {
-        print(e);
-      }
-      return HomePage.routeName;
-    } else
       return LoginPage.routeName;
   }
 

@@ -1,6 +1,5 @@
-
-
-/*import 'package:splashscreen/splashscreen.dart';
+/*
+import 'package:splashscreen/splashscreen.dart';
 import 'package:todolist/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -27,7 +26,22 @@ class _LocalNotificationsState extends State<LocalNotifications> {
         onClickNotification(details.payload));
 
   }
+  final _localNotifications = FlutterLocalNotificationsPlugin();
 
+  Future<void> initializePlatformNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('ic_stat_justwater');
+
+
+    final InitializationSettings initializationSettings =
+    InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+
+    await _localNotifications.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
+  }
   void requestPermissions() {
     flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
       alert: true,
@@ -101,4 +115,5 @@ class _LocalNotificationsState extends State<LocalNotifications> {
       ),
     );
   }
-}*/
+}
+*/

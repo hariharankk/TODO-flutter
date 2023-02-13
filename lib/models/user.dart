@@ -3,15 +3,13 @@
 
 // ignore: must_be_immutable
 class User extends GroupMember {
-  late int id;
   late String password;
-  late String apiKey;
 
   //List<Group> groups;
 
   User.blank(): super.blank();
 
-  User(this.id, this.password, this.apiKey,
+  User(this.password,
       {username, firstname, lastname, emailaddress, phonenumber, avatar})
       : super(
             username: username,
@@ -21,9 +19,7 @@ class User extends GroupMember {
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     return User(
-      parsedJson['id'],
       parsedJson['password'],
-      parsedJson['api_key'],
       username: parsedJson['username'],
       emailaddress: parsedJson['emailaddress'],
       firstname: parsedJson['firstname'],

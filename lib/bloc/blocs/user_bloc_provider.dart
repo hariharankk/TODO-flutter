@@ -39,9 +39,9 @@ class UserBloc {
   }
 
   Future<void> signinUser(
-      String username, String password, String apiKey) async {
+      String username, String password) async {
     try {
-      _user = await repository.signinUser(username, password, apiKey);
+      _user = await repository.signinUser(username, password);
       _userGetter.sink.add(_user);
     } catch (e) {
       throw e;
