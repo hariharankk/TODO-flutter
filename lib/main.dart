@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/UI/pages/authenticate/signup_page.dart';
 import 'package:todolist/UI/pages/home_page.dart';
 import 'package:flutter/services.dart';
-import 'package:todolist/UI/pages/authenticate/login_page.dart';
-import 'package:todolist/UI/pages/sidebar_pages/create_new_group_page.dart';
-import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
-import 'package:todolist/bloc/resources/repository.dart';
 import 'package:todolist/bloc/resources/injection.dart';
 import 'package:todolist/jwt.dart';
+import 'package:todolist/ui/pages/authenticate/login_page.dart';
+import 'dart:async';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +23,6 @@ class MyApp extends StatelessWidget {
       initialRoute: Splash.routeName,
       routes: <String, WidgetBuilder>{
         Splash.routeName: (BuildContext context) => Splash(),
-        LoginPage.routeName: (BuildContext context) => LoginPage(),
-        SignupPage.routeName: (BuildContext context) => SignupPage(),
         HomePage.routeName: (BuildContext context) => HomePage(),},
     );
   }
@@ -50,59 +45,24 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    loadFromFuture().then(
-        (navigateTo) => Navigator.of(context).pushReplacementNamed(navigateTo));
+    startTime();
+  }
+  startTime() async {
+    var _duration = Duration(seconds: 2);
+    return Timer(_duration, navigationPage);
   }
 
-  /// Update Group list from server, then load homepage.
-  Future<String> loadFromFuture() async {
-      return LoginPage.routeName;
+  // Navigate to root page after splash screen
+  void navigationPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
+
+
+  /// Update Group list from server, then load homepage.
 
   @override
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.white, Colors.white],
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Center(
-                  child: Text(
-                    "ToDo",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0 * unitHeightValue),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-              ),
-              Expanded(
-                flex: 1,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black54),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+    return Container();
   }
 }

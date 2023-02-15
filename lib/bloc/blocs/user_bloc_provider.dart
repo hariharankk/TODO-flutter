@@ -26,11 +26,11 @@ class UserBloc {
     return _user;
   }
 
-  Future<void> registerUser(String username, String password, String email,
-      String firstname, String lastname, String phonenumber, avatar) async {
+  Future<void> registerUser(String password, String email,
+      String phonenumber) async {
     try {
       _user = await repository.registerUser(
-          username, password, email, firstname, lastname, phonenumber, avatar);
+          password, email, phonenumber);
 
       _userGetter.sink.add(_user);
     } catch (e) {
@@ -39,9 +39,9 @@ class UserBloc {
   }
 
   Future<void> signinUser(
-      String username, String password) async {
+      String email, String password) async {
     try {
-      _user = await repository.signinUser(username, password);
+      _user = await repository.signinUser(email, password);
       _userGetter.sink.add(_user);
     } catch (e) {
       throw e;

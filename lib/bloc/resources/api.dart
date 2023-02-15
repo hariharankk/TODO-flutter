@@ -18,10 +18,10 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = 'e402-34-125-115-47.ngrok.io';
+  static String stageHost = '8a00-34-86-200-149.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
-  Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/login');
+  Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/login');
   Uri userURL = Uri(scheme: 'http', host: stageHost, path: '/api/register');
   Uri userupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/userupdate');
 
@@ -45,8 +45,8 @@ class ApiProvider {
 
   // User CRUD Functions
   /// Sign Up
-  Future<User> registerUser(String username, String password, String email,
-      String firstname, String lastname, String phonenumber, avatar) async {
+  Future<User> registerUser(String password, String email,
+      String phonenumber) async {
 
     print(userURL);
     final response = await client.post(
@@ -58,15 +58,12 @@ class ApiProvider {
         },
       body: jsonEncode({
         "emailaddress": email,
-        "username": username,
         "password": password,
-        "firstname": firstname,
-        "lastname": lastname,
         "phonenumber": phonenumber,
-        "avatar": avatar,
       }),
     );
     final Map result = json.decode(response.body);
+
     if (result['status'] == true) {
       // If the call to the server was successful, parse the JSON
 
@@ -79,23 +76,26 @@ class ApiProvider {
   }
 
   /// Sign User In using username and password or API_Key
-  Future signinUser(String username, String password) async {
+  Future signinUser(String email, String password) async {
+    print(signinURL);
     final response = await client.post(
       signinURL,
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
-        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-        "Access-Control-Allow-Methods": "POST, OPTIONS"
+        "Content-Type": "application/json",
+        "Accept": "application/json",
       },
       body: jsonEncode({
-        "username": username,
+        "emailaddress": email,
         "password": password,
       }),
     );
     final Map result = json.decode(response.body);
+    print(result['status']);
     if (result['status'] == true) {
       // If the call to the server was successful, parse the JSON
+      print('check signin');
+
       await jwt.store_token(result['token']);
       await Future<void>.delayed(const Duration(milliseconds: 200));
       return User.fromJson(result["data"]);
@@ -112,7 +112,7 @@ class ApiProvider {
   /// Get a list of the User's Groups
   Future<List<Group>> getUserGroups() async {
     final Token = await jwt.read_token();
-    final queryParameters = {'username':userBloc.getUserObject()};
+    final queryParameters = {'username':userBloc.getUserObject().username};
     Uri groupURL = Uri(scheme: 'http', host: stageHost, path: '/api/group',queryParameters: queryParameters);
     List<Group> groups = [];
       final response = await client.get(
@@ -159,7 +159,7 @@ class ApiProvider {
         "Access-Control-Allow-Methods": "POST, OPTIONS"
       },
       body: jsonEncode({
-        'username':userBloc.getUserObject(),
+        'username':userBloc.getUserObject().username,
         "name": groupName,
         "is_public": isPublic,
       }),

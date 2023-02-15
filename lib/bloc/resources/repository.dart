@@ -11,13 +11,12 @@ import 'package:todolist/models/user.dart';
 class Repository {
   final apiProvider = ApiProvider();
 
-  Future<User> registerUser(String username, String password, String email,
-          String firstname, String lastname, String phonenumber, avatar) =>
-      apiProvider.registerUser(
-          username, password, email, firstname, lastname, phonenumber, avatar);
+  Future<User> registerUser(String password, String email,
+          String phonenumber) =>
+      apiProvider.registerUser(password,email,phonenumber);
 
-  Future signinUser(String username, String password) =>
-      apiProvider.signinUser(username, password);
+  Future signinUser(String email, String password) =>
+      apiProvider.signinUser(email, password);
 
 
 

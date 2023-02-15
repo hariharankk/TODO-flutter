@@ -1,106 +1,292 @@
+import 'package:todolist/ui/pages/authenticate/validate.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/UI/pages/authenticate/authentication.dart';
-import 'package:todolist/UI/pages/authenticate/forgot_password_dialog_box.dart';
-import 'package:todolist/UI/pages/authenticate/signup_page.dart';
-import 'package:todolist/UI/pages/authenticate/widgets/textformfield_column.dart';
-import 'package:todolist/models/global.dart';
+import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
+import 'package:todolist/ui/pages/authenticate/alreadyhaveaaccount.dart';
+import 'package:todolist/ui/pages/authenticate/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
-  static const routeName = '/login';
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final Map<String, TextEditingController> controllers = {
-    "username": new TextEditingController(),
-    "password": new TextEditingController(),
-  };
-  final _signInFormKey = GlobalKey<FormState>();
-  late double unitHeightValue;
 
+  late String _email;
+  late String _password;
+  late String _phoneNumber;
+  late String _smsCode;
+  late String _errorMessage;
+
+  late bool _isLoading;
+  late bool _isPhone;
+  late bool _codeSent = false;
+
+  @override
+  void initState() {
+    _errorMessage = "";
+    _isLoading = false;
+    _codeSent = false;
+    _isPhone = true;
+    super.initState();
+  }
+
+  void toggleEmailAndPhone() {
+    setState(() {
+      _isPhone = !_isPhone;
+    });
+  }
+
+  Future get _attemptLogin async {
+    try {
+      await userBloc.signinUser(_email, _password);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Successful Login",
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+      await groupBloc
+          .updateGroups()
+          .then((_) => Navigator.pushReplacementNamed(context, "/home"));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("$e"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+
+
+
+  @override
   Widget build(BuildContext context) {
-    unitHeightValue = MediaQuery.of(context).size.height * 0.001;
-    return AuthenticationView(
-      title: "Sign In",
-      form: Form(
-        key: _signInFormKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormFieldColumn(
-              label: 'Username',
-              controller: controllers["username"]!,
-              iconData: Icons.account_circle,
-              hintText: 'Enter Username',
-              unitHeightValue: unitHeightValue,
-            ),
-            SizedBox(height: 30 * unitHeightValue),
-            TextFormFieldColumn(
-              label: 'Password',
-              controller: controllers["password"]!,
-              iconData: Icons.lock,
-              hintText: 'Enter a Password',
-              obscureText: true,
-              textInputAction: TextInputAction.done,
-              unitHeightValue: unitHeightValue,
-            ),
-            _buildForgotPasswordBtn,
-          ],
-        ),
-      ),
-      formKey: _signInFormKey,
-      mainButtonTitle: 'Login',
-      bottomBtn: _signupBtn,
-      controllers: controllers,
-    );
-  }
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _showForm(),
+          AlreadyHaveAnAccountCheck(login: false,
+            press: () async{
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return register();
+                  },
+                ),
+              );
+              Navigator.pop(context);
+            },
+          ),
 
-  Widget get _signupBtn {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(
-        context,
-        SignupPage.routeName,
-      ),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0 * unitHeightValue,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0 * unitHeightValue,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
+          _showCircularProgress(),
+        ],
       ),
     );
   }
 
-  Widget get _buildForgotPasswordBtn {
+  Widget _showForm() {
+    return new Container(
+        padding: EdgeInsets.all(16.0),
+        child: new Form(
+          child: new ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              //showLogo(),
+              !_isPhone ? showEmailInput() : Container(),
+              !_isPhone ? showPasswordInput() : Container(),
+              _isPhone ? showPhoneInput() : Container(),
+              SizedBox(
+                height: 10.0,
+              ),
+              showErrorMessage(),
+              showPrimaryButton(),
+              SizedBox(
+                height: 15.0,
+              ),
+              _codeSent ? Container() : showSecondaryButton(),
+            ],
+          ),
+        ));
+  }
+
+  Widget _showCircularProgress() {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Container(
-      alignment: Alignment.centerRight,
-      padding: EdgeInsets.only(right: 0.0),
-      child: TextButton(
-        onPressed: () {
-          print("Forgot Password");
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return ForgotPasswordDialogBox();
-              });
-        },
-        child: Text('Forgot Password?', style: labelStyle(unitHeightValue)),
+      height: 0.0,
+      width: 0.0,
+    );
+  }
+
+  Widget showErrorMessage() {
+    if (_errorMessage.length > 0 && _errorMessage != null) {
+      return new Text(
+        _errorMessage,
+        style: TextStyle(
+          fontSize: 13.0,
+          color: Colors.red,
+          height: 1.0,
+          fontWeight: FontWeight.w300,
+        ),
+      );
+    } else {
+      return new Container(
+        height: 0.0,
+      );
+    }
+  }
+
+  Widget showLogo() {
+    return new Hero(
+      tag: 'hero',
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 48.0,
+          child: Image.asset('assets/logo.jpg'),
+        ),
+      ),
+    );
+  }
+
+  Widget showEmailInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      child:  TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            hintText: 'Email',
+            icon: new Icon(
+              Icons.mail,
+              color: Colors.grey,
+            )),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (value) => value!.isEmpty ? 'Email can\'t be empty' : null,
+        onChanged: (value) => _email = value.trim(),
+      ),
+    );
+  }
+
+  Widget showPasswordInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        obscureText: true,
+        decoration: InputDecoration(
+          hintText: 'Password',
+          icon: new Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ),
+        ),
+        validator: (value) => value!.isEmpty ? 'Password can\'t be empty' : null,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: (value) => _password = value.trim(),
+      ),
+    );
+  }
+
+  Widget showPhoneInput() {
+    return _codeSent
+        ? showSmsCodeInput()
+        : Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        obscureText: false,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          hintText: "Phone Number",
+          icon: Icon(
+            Icons.phone,
+            color: Colors.grey,
+          ),
+        ),
+        validator: (value) => value!.isEmpty
+            ? 'Number can\'t be empty'
+            : new Validate().verfiyMobile(value),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: (value) => _phoneNumber = value.trim(),
+      ),
+    );
+  }
+
+  Widget showSmsCodeInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        obscureText: false,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          hintText: "Enter OTP",
+          icon: Icon(
+            Icons.keyboard,
+            color: Colors.grey,
+          ),
+        ),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (value) => value!.isEmpty
+            ? 'Number can\'t be empty'
+            : new Validate().verifyOTP(value),
+        onChanged: (value) => _smsCode = value.trim(),
+      ),
+    );
+  }
+
+  Widget showPrimaryButton() {
+    return new Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+      child: SizedBox(
+        height: 40.0,
+        child: new ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: Colors.blue,
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0)
+              )),
+          // elevation: 5.0,
+          // shape: new RoundedRectangleBorder(
+          //     borderRadius: new BorderRadius.circular(30.0)),
+          // color: Colors.blue,
+          child: new Text(
+            _isPhone ? (_codeSent ? 'Login' : 'Verify Phone') : 'Login',
+            style: new TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+          onPressed: () => _attemptLogin
+          ,
+        ),
+      ),
+    );
+  }
+
+  Widget showSecondaryButton() {
+    return InkWell(
+      onTap: toggleEmailAndPhone,
+      child: Center(
+        child: _isPhone
+            ? Text(
+          "Sign in with Email",
+          textScaleFactor: 1.1,
+        )
+            : Text(
+          "Sign in with Phone Number",
+          textScaleFactor: 1.1,
+        ),
       ),
     );
   }
