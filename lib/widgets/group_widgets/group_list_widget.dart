@@ -119,11 +119,9 @@ class _GroupListState extends State<GroupList> {
   Widget Privacy_widget(Group group){
     List<String> roles = group.members.map((element) => element.username==userBloc.getUserObject().username?element.role.trim():'').toList();
     roles.removeWhere( (item) => item == '');
-    print(roles);
     role = roles[0];
-    print(roles);
     print(role);
-    return role == null ? buildWaitingScreen() :role=='Admin'? buildGroupListTile(group):role=='Worker'?workerbuildGroupListTile(group):visitorbuildGroupListTile(group);
+    return role == null ? buildWaitingScreen() :role=='நிர்வாகம்'? buildGroupListTile(group):role=='தொழிலாளி'?workerbuildGroupListTile(group):visitorbuildGroupListTile(group);
     }
 
   Dismissible buildGroupListTile(Group group) {

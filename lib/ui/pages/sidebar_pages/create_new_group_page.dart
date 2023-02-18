@@ -6,10 +6,8 @@ import 'package:todolist/models/group.dart';
 import 'package:todolist/models/groupmember.dart';
 import 'package:todolist/widgets/global_widgets/background_color_container.dart';
 import 'package:todolist/widgets/global_widgets/custom_appbar.dart';
-import 'package:todolist/bloc/resources/injection.dart';
-import 'package:todolist/UI/pages/sidebar_pages/add _memebers.dart';
 import 'package:todolist/UI/pages/sidebar_pages/Listitem.dart';
-
+import 'package:todolist/UI/pages/sidebar_pages/add_members.dart';
 class CreateGroupPage extends StatefulWidget {
   static const routeName = '/create_group';
 
@@ -18,7 +16,7 @@ class CreateGroupPage extends StatefulWidget {
 }
 
 class _CreateGroupPageState extends State<CreateGroupPage> {
-  Group newGroup = locator<Group>(instanceName: 'creategroup');
+  Group newGroup = new Group.blank();
   int membersLength = 0;
   bool isPrivate = true;
   TextEditingController groupName = new TextEditingController();
@@ -30,7 +28,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   void initState() {
     if (newGroup.members.length == 0) {
       admin=userBloc.getUserObject();
-      admin.role='Admin';
+      admin.role='நிர்வாகம்';
       newGroup.addGroupMember(admin);
       membersLength = newGroup.members.length;
     }
@@ -316,23 +314,25 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   }
 
   Widget _addMembers() {
-    return !this.isPrivate
-        ? SizedBox.shrink()
-        : Align(
-            alignment: Alignment(0.9, 0.9),
-            child: FloatingActionButton(
-              tooltip: "உறுப்பினர்களைச் சேர்க்க தேடவும்",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddMembersPage(),
-                  ),
-                );
-              },
-              child: Icon(Icons.arrow_forward, size: 36 * unitHeightValue),
-            ),
-          );
-  }
+    return this.isPrivate
+          ? Align(
+        alignment: Alignment(0.9, 0.9),
+        child: FloatingActionButton(
+          tooltip: "உறுப்பினர்களைச் சேர்க்க தேடவும்",
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddMembersPage(
+                  group: newGroup,
+                ),
+              ),
+            );
+          },
+          child: Icon(Icons.arrow_forward, size: 36),
+        ),
+      )
+          : SizedBox.shrink();
+    }
 }
 

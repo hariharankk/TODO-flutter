@@ -4,6 +4,7 @@ class JWT{
   final storage = const FlutterSecureStorage();
 
   Future<void> store_token(var data)async{
+    print(data);
     await storage.write(key: 'token', value: data);
   }
 

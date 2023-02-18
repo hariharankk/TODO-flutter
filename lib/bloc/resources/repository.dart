@@ -6,14 +6,14 @@ import 'package:todolist/models/tasks.dart';
 import 'package:todolist/models/message.dart';
 
 import 'api.dart';
-import 'package:todolist/models/user.dart';
+
 
 class Repository {
   final apiProvider = ApiProvider();
 
-  Future<User> registerUser(String password, String email,
-          String phonenumber) =>
-      apiProvider.registerUser(password,email,phonenumber);
+  Future<GroupMember> registerUser(String password, String email,
+          String phonenumber,String username) =>
+      apiProvider.registerUser(password,email,phonenumber,username);
 
   Future signinUser(String email, String password) =>
       apiProvider.signinUser(email, password);

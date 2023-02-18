@@ -14,12 +14,12 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          login ? "Don’t have an Account ? " : "Already have an Account ? ",
+          login ? "கணக்கு இல்லையா?" : "ஏற்கனவே ஒரு கணக்கு உள்ளதா ?", // Don’t have an Account ? "  //Already have an Account ?
         ),
         GestureDetector(
           onTap: press ,
           child: Text(
-            login ? "Sign Up" : "Sign In",
+            login ? "பதிவு செய்யவும்" : "உள்நுழையவும்",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),

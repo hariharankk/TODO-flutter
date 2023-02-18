@@ -43,15 +43,13 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "Successful Login",
+            "வெற்றிகரமான உள்நுழைவு",
             textAlign: TextAlign.center,
           ),
           backgroundColor: Colors.green,
         ),
       );
-      await groupBloc
-          .updateGroups()
-          .then((_) => Navigator.pushReplacementNamed(context, "/home"));
+      await  Navigator.pushReplacementNamed(context, "/home");
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -71,19 +69,6 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: <Widget>[
           _showForm(),
-          AlreadyHaveAnAccountCheck(login: false,
-            press: () async{
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return register();
-                  },
-                ),
-              );
-              Navigator.pop(context);
-            },
-          ),
 
           _showCircularProgress(),
         ],
@@ -98,22 +83,50 @@ class _LoginPageState extends State<LoginPage> {
           child: new ListView(
             shrinkWrap: true,
             children: <Widget>[
-              //showLogo(),
+              showLogo(),
               !_isPhone ? showEmailInput() : Container(),
               !_isPhone ? showPasswordInput() : Container(),
               _isPhone ? showPhoneInput() : Container(),
               SizedBox(
-                height: 10.0,
+                height: 20.0,
               ),
               showErrorMessage(),
               showPrimaryButton(),
               SizedBox(
-                height: 15.0,
+                height: 30.0,
               ),
               _codeSent ? Container() : showSecondaryButton(),
+              SizedBox(
+                height: 20.0,
+              ),
+              AlreadyHaveAnAccountCheck(login: false,
+                press: () async{
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return register();
+                      },
+                    ),
+                  );
+                  Navigator.pop(context);
+                },
+              ),
+
             ],
           ),
         ));
+  }
+
+  Widget showLogo() {
+    return  Padding(
+        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 48.0,
+          child: Image.asset('assets/logo.jpg'),
+        ),
+    );
   }
 
   Widget _showCircularProgress() {
@@ -144,19 +157,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Widget showLogo() {
-    return new Hero(
-      tag: 'hero',
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 48.0,
-          child: Image.asset('assets/logo.jpg'),
-        ),
-      ),
-    );
-  }
 
   Widget showEmailInput() {
     return Padding(
@@ -165,13 +165,13 @@ class _LoginPageState extends State<LoginPage> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-            hintText: 'Email',
+            hintText: 'மின்னஞ்சல்', //Email
             icon: new Icon(
               Icons.mail,
               color: Colors.grey,
             )),
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (value) => value!.isEmpty ? 'Email can\'t be empty' : null,
+        validator: (value) => value!.isEmpty ? 'மின்னஞ்சல் காலியாக இருக்கக்கூடாது': null, //'Email can\'t be empty'
         onChanged: (value) => _email = value.trim(),
       ),
     );
@@ -184,13 +184,13 @@ class _LoginPageState extends State<LoginPage> {
         maxLines: 1,
         obscureText: true,
         decoration: InputDecoration(
-          hintText: 'Password',
+          hintText: 'கடவுச்சொல்', //'Password'
           icon: new Icon(
             Icons.lock,
             color: Colors.grey,
           ),
         ),
-        validator: (value) => value!.isEmpty ? 'Password can\'t be empty' : null,
+        validator: (value) => value!.isEmpty ? 'கடவுச்சொல் காலியாக இருக்க முடியாது' : null, //'Password can\'t be empty'
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: (value) => _password = value.trim(),
       ),
@@ -207,14 +207,14 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: false,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
-          hintText: "Phone Number",
+          hintText: "தொலைபேசி எண்",
           icon: Icon(
             Icons.phone,
             color: Colors.grey,
           ),
         ),
         validator: (value) => value!.isEmpty
-            ? 'Number can\'t be empty'
+            ? 'எண் காலியாக இருக்கக்கூடாது' //Number can\'t be empty
             : new Validate().verfiyMobile(value),
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: (value) => _phoneNumber = value.trim(),
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: false,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          hintText: "Enter OTP",
+          hintText: "OTP ஐ உள்ளிடவும்",
           icon: Icon(
             Icons.keyboard,
             color: Colors.grey,
@@ -238,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) => value!.isEmpty
-            ? 'Number can\'t be empty'
+            ? 'எண் காலியாக இருக்கக்கூடாது' //Number can\'t be empty
             : new Validate().verifyOTP(value),
         onChanged: (value) => _smsCode = value.trim(),
       ),
@@ -261,7 +261,7 @@ class _LoginPageState extends State<LoginPage> {
           //     borderRadius: new BorderRadius.circular(30.0)),
           // color: Colors.blue,
           child: new Text(
-            _isPhone ? (_codeSent ? 'Login' : 'Verify Phone') : 'Login',
+            _isPhone ? (_codeSent ? 'உள்நுழைய' : 'தொலைபேசியைச் சரிபார்க்கவும்') : 'உள்நுழைய',
             style: new TextStyle(
               fontSize: 20.0,
               color: Colors.white,
@@ -280,11 +280,11 @@ class _LoginPageState extends State<LoginPage> {
       child: Center(
         child: _isPhone
             ? Text(
-          "Sign in with Email",
+          "மின்னஞ்சலில் உள்நுழைக", //"Sign in with Email"
           textScaleFactor: 1.1,
         )
             : Text(
-          "Sign in with Phone Number",
+          "தொலைபேசி எண்ணுடன் உள்நுழைக", //"Sign in with Phone Number"
           textScaleFactor: 1.1,
         ),
       ),

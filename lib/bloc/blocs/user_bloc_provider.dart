@@ -5,12 +5,11 @@ import 'package:todolist/models/subtasks.dart';
 
 import '../resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:todolist/models/user.dart';
 import 'package:todolist/models/tasks.dart';
 
 class UserBloc {
-  final PublishSubject<User> _userGetter = PublishSubject<User>();
-  User _user = new User.blank();
+  final PublishSubject<GroupMember> _userGetter = PublishSubject<GroupMember>();
+  GroupMember _user = new GroupMember.blank();
 
   UserBloc._privateConstructor();
 
@@ -20,17 +19,17 @@ class UserBloc {
     return _instance;
   }
 
-  Stream<User> get getUser => _userGetter.stream;
+  Stream<GroupMember> get getUser => _userGetter.stream;
 
-  User getUserObject() {
+  GroupMember getUserObject() {
     return _user;
   }
 
   Future<void> registerUser(String password, String email,
-      String phonenumber) async {
+      String phonenumber,String username) async {
     try {
       _user = await repository.registerUser(
-          password, email, phonenumber);
+          password, email, phonenumber,username);
 
       _userGetter.sink.add(_user);
     } catch (e) {

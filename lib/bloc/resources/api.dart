@@ -6,7 +6,7 @@ import 'package:todolist/models/message.dart';
 import 'package:todolist/models/subtasks.dart';
 import 'package:todolist/models/tasks.dart';
 import 'dart:convert';
-import 'package:todolist/models/user.dart';
+
 import 'package:todolist/jwt.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
 
@@ -18,7 +18,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '8a00-34-86-200-149.ngrok.io';
+  static String stageHost = '5152-34-75-114-50.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/login');
@@ -45,8 +45,8 @@ class ApiProvider {
 
   // User CRUD Functions
   /// Sign Up
-  Future<User> registerUser(String password, String email,
-      String phonenumber) async {
+  Future<GroupMember> registerUser(String password, String email,
+      String phonenumber,String username) async {
 
     print(userURL);
     final response = await client.post(
@@ -60,6 +60,7 @@ class ApiProvider {
         "emailaddress": email,
         "password": password,
         "phonenumber": phonenumber,
+        'username':username
       }),
     );
     final Map result = json.decode(response.body);
@@ -67,8 +68,9 @@ class ApiProvider {
     if (result['status'] == true) {
       // If the call to the server was successful, parse the JSON
 
+      print(result['token'].runtimeType);
       await jwt.store_token(result['token']);
-      return User.fromJson(result["data"]);
+      return GroupMember.fromJson(result["data"]);
     } else {
       // If that call was not successful, throw an error.
       throw Exception(result["status"]);
@@ -88,17 +90,19 @@ class ApiProvider {
       body: jsonEncode({
         "emailaddress": email,
         "password": password,
+
       }),
     );
     final Map result = json.decode(response.body);
     print(result['status']);
     if (result['status'] == true) {
       // If the call to the server was successful, parse the JSON
-      print('check signin');
 
+      print(result['token'].runtimeType);
       await jwt.store_token(result['token']);
+
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      return User.fromJson(result["data"]);
+      return GroupMember.fromJson(result["data"]);
     } else {
       // If that call was not successful, throw an error.
       throw Exception(result["status"]);
@@ -149,6 +153,7 @@ class ApiProvider {
   /// Add a Group
   Future addGroup(String groupName, bool isPublic) async {
     print(groupaddURL);
+    final Token = await jwt.read_token();
     final response = await client.post(
       groupaddURL,
       headers: {
@@ -179,6 +184,7 @@ class ApiProvider {
 
   /// Update Group Info
   Future<bool> updateGroup(Group group) async {
+    final Token = await jwt.read_token();
     final response = await client.patch(
       groupupdateURL,
       headers: {
@@ -199,6 +205,7 @@ class ApiProvider {
 
   /// Delete a Group
   Future deleteGroup(String groupKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {
       "group_key": groupKey,
     };
@@ -222,6 +229,7 @@ class ApiProvider {
 // GroupMember CRUD Functions
   /// Get a list of the Group's Members.
   Future<List<GroupMember>> getGroupMembers(String groupKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {
       "groupKey":groupKey,
     };
@@ -258,8 +266,10 @@ class ApiProvider {
   /// * GroupKey: Unique Group Identifier
   /// * Username: Group Member's Username to be added
   Future addGroupMember(String groupKey, String username,String role) async {
+    final Token = await jwt.read_token();
+    print('${role},${username}');
     if (role==''){
-      role='Visitor';
+      role='பார்வையாளர்';
     }
     final response = await client.post(
       groupmemberaddURL,
@@ -284,8 +294,9 @@ class ApiProvider {
   }
 
   Future updateGroupMemberrole(String groupKey, String username,String role) async {
+    final Token = await jwt.read_token();
     if (role==''){
-      role='Visitor';
+      role='பார்வையாளர்';
     }
     final response = await client.patch(
       groupmemberupdateURL,
@@ -313,6 +324,7 @@ class ApiProvider {
   /// * GroupKey: Unique Group Identifier
   /// * Username: Group Member's Username to be added
   Future deleteGroupMember(String groupKey, String username) async {
+    final Token = await jwt.read_token();
     final queryParameters = {
       "groupKey":groupKey,
     "username": username,
@@ -341,6 +353,7 @@ class ApiProvider {
   /// Get a list of the Group's Tasks
   /// * GroupKey: Unique group identifier
   Future<List<Task>> getTasks(String groupKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {"group_key": groupKey};
     Uri taskURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-get',queryParameters: queryParameters);
     final response = await client.get(
@@ -376,6 +389,7 @@ class ApiProvider {
   /// * Index: Position within Group's task list
   /// * Completed: True or False, Has the task been completed
   Future addTask(String taskName, String groupKey) async {
+    final Token = await jwt.read_token();
     final response = await client.post(
       taskaddURL,
       headers: {
@@ -395,6 +409,7 @@ class ApiProvider {
 
   /// Update Task Info
   Future updateTask(Task task) async {
+    final Token = await jwt.read_token();
     final response = await client.patch(
       taskupdateURL,
       headers: {
@@ -414,6 +429,7 @@ class ApiProvider {
   }
 
   Future deleteTask(String taskKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {"task_key":taskKey};
     Uri taskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-delete',queryParameters: queryParameters);
     final response = await client.delete(
@@ -435,6 +451,7 @@ class ApiProvider {
 //Subtask CRUD Functions
   //Get Subtasks
   Future<List<Subtask>> getSubtasks(Task task) async {
+    final Token = await jwt.read_token();
     final queryParameters = {
       'taskKey':task.taskKey,
     };
@@ -476,6 +493,7 @@ class ApiProvider {
 
   //Add Subtask
   Future addSubtask(String taskKey, String subtaskName) async {
+    final Token = await jwt.read_token();
     final response = await client.post(
       subtaskaddURL,
       headers: {
@@ -499,6 +517,7 @@ class ApiProvider {
 
   //Update Subtask
   Future updateSubtask(Subtask subtask) async {
+    final Token = await jwt.read_token();
     final response = await client.patch(
       subtaskupdateURL,
       headers: {
@@ -524,6 +543,7 @@ class ApiProvider {
 
   //Delete Subtask
   Future deleteSubtask(String subtaskKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {
       "subtask_key": subtaskKey,
     };
@@ -546,6 +566,8 @@ class ApiProvider {
 
   //Search API Calls
   Future<List<GroupMember>> searchUser(String searchTerm) async {
+    final Token = await jwt.read_token();
+    print(searchTerm);
     final response = await client.post(
       searchURL,
       headers: {
@@ -562,6 +584,7 @@ class ApiProvider {
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON
       List<GroupMember> searchResults = [];
+      print(result["data"]);
       for (Map<String, dynamic> json_ in result["data"]) {
         try {
           searchResults.add(GroupMember.fromJson(json_));
@@ -580,6 +603,7 @@ class ApiProvider {
   ///AssignedToUser API Calls
   ///GET
   Future<List<GroupMember>> getUsersAssignedToSubtask(String subtaskKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {
       "subtask_key": subtaskKey,};
     Uri assignedtouserhgetURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-get', queryParameters: queryParameters);
@@ -614,6 +638,7 @@ class ApiProvider {
   /// * SubtaskKey: Unique Subtask Identifier
   /// * Username: Group Member's Username to be added
   Future assignSubtaskToUser(String subtaskKey, String username) async {
+    final Token = await jwt.read_token();
     final response = await client.post(
       assignedtouserhaddURL,
       headers: {
@@ -640,6 +665,7 @@ class ApiProvider {
   /// * SubtaskKey: Unique Subtask Identifier
   /// * Username: Group Member's Username to be added
   Future unassignSubtaskToUser(String subtaskKey, String username) async {
+    final Token = await jwt.read_token();
     final queryParameters ={
       "subtask_key": subtaskKey,
     "username":username,
@@ -664,6 +690,7 @@ class ApiProvider {
   }
 
   Future send_message(String message,String sender,String subtaskKey) async{
+    final Token = await jwt.read_token();
     final response = await client.post(
       sendmessage,
       headers: {
@@ -688,6 +715,7 @@ class ApiProvider {
   }
 
   Future<List<Message>> getMessages(String subtaskKey) async {
+    final Token = await jwt.read_token();
     final queryParameters = {"subtask_key": subtaskKey};
     Uri messageURL = Uri(scheme: 'http', host: stageHost, path: '/api/message-get',queryParameters: queryParameters);
     final response = await client.get(
