@@ -12,15 +12,15 @@ class  box extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child:
         Container(
-          height: height*1,
-          width: width*1.5,
+          height: height,
+          width: width,
           padding: EdgeInsets.only(left: height/100, right: width/100),
           child: Center(
               child: Text(priorityText[index],
                 style: TextStyle(
                 color: Colors.white,
                 fontSize: height*0.3,
-                fontWeight: FontWeight.bold)),
+                )),
               ),
           decoration: BoxDecoration(
             color: priorityColor[index],

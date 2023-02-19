@@ -5,12 +5,17 @@ import 'package:todolist/bloc/resources/injection.dart';
 import 'package:todolist/jwt.dart';
 import 'package:todolist/ui/pages/authenticate/login_page.dart';
 import 'dart:async';
+import 'package:todolist/remainder/remainder.dart';
 
-main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
+  NotificationService notificationService = NotificationService();
+  await notificationService.init();
   runApp(MyApp());
 }
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   @override

@@ -161,12 +161,20 @@ class _ToDoTabState extends State<ToDoTab> {
   Dismissible _buildListTile(Task item) {
     return Dismissible(
       key: Key(item.taskKey),
-        child: ListTile(
-          key: Key(item.title),
-          title: TaskListItemWidget(
-            group: group,
-            task: item,
-          ),
+        child: Column(
+          children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: MediaQuery.of(context).size.width,
+                key: Key(item.title),
+                child: TaskListItemWidget(
+                  group: group,
+                  task: item,
+                ),
+              ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
+          ],
         ),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
@@ -418,21 +426,29 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
       child: ListView(
         key: UniqueKey(),
         padding: EdgeInsets.only(top: height + 40, bottom: 90),
-        children: group.tasks.map<ListTile>((Task item) {
+        children: group.tasks.map<Column>((Task item) {
           return _buildListTile(item);
         }).toList(),
       ),
     );
   }
 
-  ListTile _buildListTile(Task item) {
-    return ListTile(
+  Column _buildListTile(Task item) {
+    return Column(
+      children: [
+        Container(
         key: Key(item.title),
-        title: WorkerTaskListItemWidget(
-          group: group,
-          task: item,
+        padding: EdgeInsets.only(left: 10.0,right: 10.0,top: 1000,bottom: 20),
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: MediaQuery.of(context).size.width,
+        child: WorkerTaskListItemWidget(
+            group: group,
+            task: item,
+          ),
         ),
-      );
+        SizedBox(height: MediaQuery.of(context).size.height * 0.1,)
+      ]
+    );
   }
 
   PopupMenuButton _popupMenuButton() {
@@ -644,20 +660,28 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
       child: ListView(
         key: UniqueKey(),
         padding: EdgeInsets.only(top: height + 40, bottom: 90),
-        children: group.tasks.map<ListTile>((Task item) {
+        children: group.tasks.map<Column>((Task item) {
           return _buildListTile(item);
         }).toList(),
       ),
     );
   }
 
-  ListTile _buildListTile(Task item) {
-    return ListTile(
-      key: Key(item.title),
-      title: VisitorTaskListItemWidget(
-        group: group,
-        task: item,
-      ),
+  Column _buildListTile(Task item) {
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(left: 10.0,right: 10.0),
+          height: MediaQuery.of(context).size.height * 0.2,
+          width: MediaQuery.of(context).size.width,
+          key: Key(item.title),
+          child: TaskListItemWidget(
+            group: group,
+            task: item,
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
+      ],
     );
   }
 

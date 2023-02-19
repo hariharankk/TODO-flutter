@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/models/global.dart';
 import 'package:todolist/remainder/remainder.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 
 class DatePicker extends StatefulWidget {
   @override
@@ -9,8 +12,73 @@ class DatePicker extends StatefulWidget {
 }
 
 class DatePickerState extends State<DatePicker> {
-  String selectedDate = '', hour = '',repeat_text='Never';
+  String selectedDate = '', hour = '',repeat_text='One-Time';
   late double unitHeightValue, unitWidthValue;
+  NotificationService notificationService = NotificationService();
+  DateTime? eventDate;
+  TimeOfDay? eventTime;
+  DateTime currentDate = DateTime.now();
+  TimeOfDay currentTime = TimeOfDay.now();
+
+  void selectEventDate() async {
+    final today =
+    DateTime(currentDate.year, currentDate.month, currentDate.day);
+     if (repeat_text == 'Daily') {
+      eventDate = today;
+    } else if (repeat_text == 'Weekly') {
+      CustomDayPicker(
+        onDaySelect: (val) {
+          print("$val: ${CustomDayPicker.weekdays[val]}");
+          eventDate = today.add(
+              Duration(days: (val - today.weekday + 1) % DateTime.daysPerWeek));
+        },
+      ).show(context);
+    }
+  }
+
+  Future<void> onCreate() async {
+    await notificationService.showNotification(
+      0,
+      '',
+      "A new event has been created.",
+      jsonEncode({
+        "title": '',
+        "eventDate": DateFormat("EEEE, d MMM y").format(eventDate!),
+        "eventTime": eventTime!.format(context),
+      }),
+    );
+
+    await notificationService.scheduleNotification(
+      1,
+      '',
+      "Reminder for your scheduled event at ${eventTime!.format(context)}",
+      eventDate!,
+      eventTime!,
+      jsonEncode({
+        "title": '',
+        "eventDate": DateFormat("EEEE, d MMM y").format(eventDate!),
+        "eventTime": eventTime!.format(context),
+      }),
+      getDateTimeComponents(),
+    );
+
+    resetForm();
+  }
+
+  void resetForm() {
+    eventDate = null;
+    eventTime = null;
+    selectedDate='';
+    hour = '';
+  }
+
+  DateTimeComponents? getDateTimeComponents() {
+    if ( repeat_text == 'Daily') {
+      return DateTimeComponents.time;
+    } else if ( repeat_text == 'Weekly') {
+      return DateTimeComponents.dayOfWeekAndTime;
+    }
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -21,11 +89,42 @@ class DatePickerState extends State<DatePicker> {
 
     if (picked != null)
       setState(() {
+        eventDate=picked;
         var Format = DateFormat('dd/MM/yyyy');
         selectedDate = Format.format(picked);
       });
   }
 
+  Future<void> cancelAllNotifications() async {
+    await notificationService.cancelAllNotifications();
+  }
+
+  Widget _buildCancelAllButton() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.indigo[100],
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 24.0,
+        vertical: 12.0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Cancel all the reminders",
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+            ),
+          ),
+          Icon(Icons.clear),
+        ],
+      ),
+    );
+  }
   Future<Null> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -33,6 +132,7 @@ class DatePickerState extends State<DatePicker> {
     );
     if (picked != null)
       setState(() {
+        eventTime= picked;
         hour = picked.format(context);
       });
   }
@@ -67,17 +167,32 @@ class DatePickerState extends State<DatePicker> {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return Container();//LocalNotifications();
-                          })
+                      onCreate();
+                      SnackBar(
+                        content: Text(
+                          "Remainder sucessful",
+                          textAlign: TextAlign.center,
+                        ),
+                        backgroundColor: Colors.green,
                       );
+                      Navigator.pop(context);
                     },
                     child: Text(
                       'Set Remainder',
                       style: TextStyle(color: Colors.blue),
                     ))
               ],
+            ),
+            GestureDetector(
+              onTap: () async {
+                await cancelAllNotifications();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("All notfications cancelled"),
+                  ),
+                );
+              },
+              child: _buildCancelAllButton(),
             ),
             SizedBox(
               height: 5,
@@ -161,6 +276,7 @@ class DatePickerState extends State<DatePicker> {
                       builder: (context) =>  ListItems()).then((value){
                     setState(() {
                       repeat_text=value.toString();
+                      selectEventDate();
                     });
                   });
                 },
@@ -215,6 +331,55 @@ class ListItems extends StatelessWidget {
               );
           }
         ),
+      ),
+    );
+  }
+}
+
+class CustomDayPicker extends StatelessWidget {
+  const CustomDayPicker({Key? key, required this.onDaySelect})
+      : super(key: key);
+  final ValueChanged<int> onDaySelect;
+
+  Future<bool?> show(BuildContext context) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) => this,
+    );
+  }
+
+  static final List<String> weekdays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Select a day"),
+      content: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 3,
+        children: [
+          for (int index = 0; index < weekdays.length; index++)
+            ElevatedButton(
+              onPressed: () {
+                onDaySelect(index);
+                Navigator.pop(context);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Colors.indigo,
+                ),
+              ),
+              child: Text(weekdays[index]),
+            ),
+        ],
       ),
     );
   }

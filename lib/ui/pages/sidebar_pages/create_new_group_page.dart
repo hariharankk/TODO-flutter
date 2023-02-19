@@ -82,7 +82,9 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         ),
       ),
     )
-        : Center(child: CircularProgressIndicator(),);
+        : Container(
+        color:Colors.white,
+        child: Center(child: CircularProgressIndicator(),));
   }
 
   void saveGroup() async {
@@ -101,7 +103,10 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       String groupKey = await repository.addGroup(groupName.text, isPrivate);
       for (GroupMember member in newGroup.members) {
         try {
-          await repository.addGroupMember(groupKey, member.username,member.role);
+          if(member.username != userBloc.getUserObject().username) {
+            await repository.addGroupMember(
+                groupKey, member.username, member.role);
+          }
         } catch (e) {
           print(e);
         }
@@ -169,19 +174,19 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         hintText: "குழு பெயர்",
         hintStyle: TextStyle(
           color: Colors.black54,
-          fontSize: 24 * unitHeightValue,
+          fontSize: 22 * unitHeightValue,
         ),
         suffixIcon: Icon(
           Icons.edit,
           color: Colors.black54,
-          size: 24 * unitHeightValue,
+          size: 30 * unitHeightValue,
         ),
         isDense: true,
       ),
       style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black54,
-          fontSize: 30 * unitHeightValue),
+          fontSize: 20 * unitHeightValue),
       onChanged: (groupName) => newGroup.name = groupName,
     );
   }
@@ -302,7 +307,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 16 * unitHeightValue,
+                fontSize: 10 * unitHeightValue,
               ),
             ),
 

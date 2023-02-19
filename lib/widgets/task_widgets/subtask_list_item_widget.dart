@@ -58,94 +58,97 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
               blurRadius: 15.0,
             ),
           ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            height: listItemHeight,
-            width: listItemWidth * 0.8,
-            padding: EdgeInsets.only(left: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Checkbox(
-                      value: widget.subtask.completed,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.subtask.completed = newValue!;
-                          repository.updateSubtask(widget.subtask);
-                        });
-                      }),
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.subtask.title,
-                        style: toDoListTileStyle(unitHeightValue),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                      ),
-                      widget.subtask.note.isNotEmpty
-                          ? Text(
-                              widget.subtask.note,
-                              style: toDoListTiletimeStyle(unitHeightValue),
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              maxLines: 2,
-                            )
-                          : Text(
-                              "குறிப்புகள் இல்லை",
-                              style: toDoListTiletimeStyle(unitHeightValue)
-                            ),
-                      widget.subtask.assignedTo.length > 0
-                          ? _buildAssignedMemberAvatars()
-                          : Text(
-                              "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
-                              style: toDoListTiletimeStyle(unitHeightValue),
-                            ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 100 * unitWidthValue,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-          Row(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Icon(Icons.calendar_today,
-                color: Colors.blue, size: 20 * unitHeightValue),
-            SizedBox(width: 5 * unitWidthValue),
-            Text(
-            "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
-              style: toDoListTiletimeStyle(unitHeightValue*0.7),
-             ),
-          ],
-        ),
-
-             Padding(
-                padding: const EdgeInsets.only(right: 50.0),
-                child:
-                box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
+            Container(
+              height: listItemHeight,
+              width: listItemWidth * 0.8,
+              padding: EdgeInsets.only(left: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Checkbox(
+                        value: widget.subtask.completed,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.subtask.completed = newValue!;
+                            repository.updateSubtask(widget.subtask);
+                          });
+                        }),
+                  ),
+                  Flexible(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.subtask.title,
+                          style: toDoListTileStyle(unitHeightValue),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                        ),
+                        SizedBox(height: 10,),
+                        widget.subtask.note.isNotEmpty
+                            ? Text(
+                                widget.subtask.note,
+                                style: toDoListTiletimeStyle(unitHeightValue),
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                maxLines: 2,
+                              )
+                            : Text(
+                                "குறிப்புகள் இல்லை",
+                                style: toDoListTilesubtimeStyle(unitHeightValue)
+                              ),
+                        SizedBox(height: 10,),
+                        widget.subtask.assignedTo.length > 0
+                            ? _buildAssignedMemberAvatars()
+                            : Text(
+                                "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
+                                style: toDoListTilesubtimeStyle(unitHeightValue),
+                              ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+            ),
 
-
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+            Row(
+            children: [
+              Icon(Icons.calendar_today,
+                  color: Colors.blue, size: 20 * unitHeightValue),
+              SizedBox(width: 5 * unitWidthValue),
+              Text(
+              "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+                style: toDoListTiletimeStyle(unitHeightValue*0.7),
+               ),
             ],
           ),
-        ],
+
+               Padding(
+                  padding: const EdgeInsets.only(right: 50.0),
+                  child:
+                  box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
+                ),
+
+
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -174,9 +177,8 @@ class WorkerSubtaskListItemWidget extends StatefulWidget {
 }
 
 class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidget> {
-  late double listItemWidth;
   late Size mediaQuery;
-  late double listItemHeight;
+  late double listItemHeight,listItemWidth;
   bool change = false;
   late double unitHeightValue, unitWidthValue;
   //
@@ -216,94 +218,97 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
               blurRadius: 15.0,
             ),
           ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            height: listItemHeight,
-            width: listItemWidth * 0.8,
-            padding: EdgeInsets.only(left: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Checkbox(
-                      value: widget.subtask.completed,
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          widget.subtask.completed = newValue!;
-                          repository.updateSubtask(widget.subtask);
-                        });
-                      }),
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.subtask.title,
-                        style: toDoListTileStyle(unitHeightValue),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                      ),
-                      widget.subtask.note.isNotEmpty
-                          ? Text(
-                        widget.subtask.note,
-                        style: toDoListTiletimeStyle(unitHeightValue),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        maxLines: 2,
-                      )
-                          : Text(
-                          "குறிப்புகள் இல்லை",
-                          style: toDoListTiletimeStyle(unitHeightValue)
-                      ),
-                      widget.subtask.assignedTo.length > 0
-                          ? _buildAssignedMemberAvatars()
-                          : Text(
-                        "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
-                        style: toDoListTiletimeStyle(unitHeightValue),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 100 * unitWidthValue,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              height: listItemHeight,
+              width: listItemWidth * 0.8,
+              padding: EdgeInsets.only(left: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.calendar_today,
-                      color: Colors.blue, size: 20 * unitHeightValue),
-                  SizedBox(width: 5 * unitWidthValue),
-                  Text(
-                    "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
-                    style: TextStyle(color: Colors.blue),
+                  Flexible(
+                    flex: 1,
+                    child: Checkbox(
+                        value: widget.subtask.completed,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            widget.subtask.completed = newValue!;
+                            repository.updateSubtask(widget.subtask);
+                          });
+                        }),
+                  ),
+                  Flexible(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.subtask.title,
+                          style: toDoListTileStyle(unitHeightValue),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                        ),
+                        widget.subtask.note.isNotEmpty
+                            ? Text(
+                          widget.subtask.note,
+                          style: toDoListTiletimeStyle(unitHeightValue),
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          maxLines: 2,
+                        )
+                            : Text(
+                            "குறிப்புகள் இல்லை",
+                            style: toDoListTiletimeStyle(unitHeightValue)
+                        ),
+                        widget.subtask.assignedTo.length > 0
+                            ? _buildAssignedMemberAvatars()
+                            : Text(
+                          "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
+                          style: toDoListTiletimeStyle(unitHeightValue),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
+            ),
+            SizedBox(width: 100 * unitWidthValue,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today,
+                        color: Colors.blue, size: 20 * unitHeightValue),
+                    SizedBox(width: 5 * unitWidthValue),
+                    Text(
+                      "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
 
-              Padding(
-                padding: const EdgeInsets.only(right: 50.0),
-                child:
-                box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 50.0),
+                  child:
+                  box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
+                ),
 
 
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -374,90 +379,92 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
               blurRadius: 15.0,
             ),
           ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            height: listItemHeight,
-            width: listItemWidth * 0.8,
-            padding: EdgeInsets.only(left: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Checkbox(
-                      value: widget.subtask.completed,
-                      onChanged: (bool? newValue) {
-                      }),
-                 ),
-                Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.subtask.title,
-                        style: toDoListTileStyle(unitHeightValue),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                      ),
-                      widget.subtask.note.isNotEmpty
-                          ? Text(
-                        widget.subtask.note,
-                        style: toDoListTiletimeStyle(unitHeightValue),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        maxLines: 2,
-                      )
-                          : Text(
-                          "குறிப்புகள் இல்லை",
-                          style: toDoListTiletimeStyle(unitHeightValue)
-                      ),
-                      widget.subtask.assignedTo.length > 0
-                          ? _buildAssignedMemberAvatars()
-                          : Text(
-                        "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
-                        style: toDoListTiletimeStyle(unitHeightValue),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 100 * unitWidthValue,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Row(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(Icons.calendar_today,
-                      color: Colors.blue, size: 20 * unitHeightValue),
-                  SizedBox(width: 5 * unitWidthValue),
-                  Text(
-                    "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
-                    style: TextStyle(color: Colors.blue),
+                  Flexible(
+                    flex: 1,
+                    child: Checkbox(
+                        value: widget.subtask.completed,
+                        onChanged: (bool? newValue) {
+                        }),
+                   ),
+                  SizedBox(width: 5,),
+                  Flexible(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.subtask.title,
+                          style: toDoListTileStyle(unitHeightValue),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                        ),
+                        widget.subtask.note.isNotEmpty
+                            ? Text(
+                          widget.subtask.note,
+                          style: toDoListTiletimeStyle(unitHeightValue),
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          maxLines: 2,
+                        )
+                            : Text(
+                            "குறிப்புகள் இல்லை",
+                            style: toDoListTiletimeStyle(unitHeightValue)
+                        ),
+                        widget.subtask.assignedTo.length > 0
+                            ? _buildAssignedMemberAvatars()
+                            : Text(
+                          "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
+                          style: toDoListTiletimeStyle(unitHeightValue),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
+            ),
+            SizedBox(width: 100 * unitWidthValue,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today,
+                        color: Colors.blue, size: 20 * unitHeightValue),
+                    SizedBox(width: 5 * unitWidthValue),
+                    Text(
+                      "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                ),
 
-              Padding(
-                padding: const EdgeInsets.only(right: 50.0),
-                child:
-                box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 50.0),
+                  child:
+                  box(index: widget.subtask.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
+                ),
 
 
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -143,16 +143,24 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
       ),
     );
   }
-
   Dismissible _buildListTile(Subtask subtask) {
+    print('otha');
     return Dismissible(
       key: Key(subtask.subtaskKey),
-      child: ListTile(
-        key: Key(subtask.title),
-        title: SubtaskListItemWidget(
-          subtask: subtask,
-          group: group,
-        ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            key:   Key(subtask.title),
+            padding: EdgeInsets.only(left: 10.0,right: 10.0),
+            height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.width,
+            child: SubtaskListItemWidget(
+              subtask: subtask,
+              group: group,
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
+        ],
       ),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
@@ -175,7 +183,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
           ),
         ));
       },
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.startToEnd,
     );
   }
 
@@ -421,20 +429,28 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
       child: ListView(
         key: UniqueKey(),
         padding: EdgeInsets.only(top: height + 40, bottom: 90),
-        children: task.subtasks.map<ListTile>((Subtask item) {
+        children: task.subtasks.map<Column>((Subtask item) {
           return _buildListTile(item);
         }).toList(),
       ),
     );
   }
 
-  ListTile _buildListTile(Subtask subtask) {
-    return ListTile(
-      key: Key(subtask.title),
-      title: WorkerSubtaskListItemWidget(
-        subtask: subtask,
-        group: group,
-      ),
+  Column _buildListTile(Subtask subtask) {
+    return Column(
+      children: [
+        Container(
+          key:   Key(subtask.title),
+          padding: EdgeInsets.only(left: 10.0,right: 10.0),
+          height: MediaQuery.of(context).size.height * 0.25,
+          width: MediaQuery.of(context).size.width,
+          child: WorkerSubtaskListItemWidget(
+            subtask: subtask,
+            group: group,
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
+      ],
     );
   }
 
@@ -660,21 +676,29 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
       child: ListView(
         key: UniqueKey(),
         padding: EdgeInsets.only(top: height + 40, bottom: 90),
-        children: task.subtasks.map<ListTile>((Subtask item) {
+        children: task.subtasks.map<Column>((Subtask item) {
           return _buildListTile(item);
         }).toList(),
       ),
     );
   }
 
-  ListTile _buildListTile(Subtask subtask) {
-    return ListTile(
-        key: Key(subtask.title),
-        title: VisitorSubtaskListItemWidget(
-          subtask: subtask,
-          group: group,
-        ),
-      );
+  Column _buildListTile(Subtask subtask) {
+    return Column(
+      children: [
+        Container(
+          key:   Key(subtask.title),
+          padding: EdgeInsets.only(left: 10.0,right: 10.0),
+          height: MediaQuery.of(context).size.height * 0.25,
+          width: MediaQuery.of(context).size.width,
+          child: VisitorSubtaskListItemWidget(
+              subtask: subtask,
+              group: group,
+            ),
+          ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
+      ],
+    );
   }
 
 

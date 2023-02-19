@@ -61,7 +61,6 @@ TextStyle cardTitleStyle(double unitHeightValue) => new TextStyle(
     );
 
 TextStyle toDoListTileStyle(double unitHeightValue) => new TextStyle(
-      fontWeight: FontWeight.bold,
       color: Colors.blue,
       fontSize: 25 * unitHeightValue,
     );
@@ -70,6 +69,12 @@ TextStyle toDoListTiletimeStyle(double unitHeightValue) => new TextStyle(
   color: Colors.blue,
   fontSize: 25 * unitHeightValue,
 );
+
+TextStyle toDoListTilesubtimeStyle(double unitHeightValue) => new TextStyle(
+  color: Colors.blue,
+  fontSize: 15 * unitHeightValue,
+);
+
 
 TextStyle toDoListSubtitleStyle(double unitHeightValue) => new TextStyle(
       fontWeight: FontWeight.w300,
@@ -105,8 +110,8 @@ List<int> index =[0,1,2];
 List<String> priorityText = ['குறைந்த', 'நடுத்தர', 'உயர்'];
 List<Color> priorityColor = [Colors.green, Colors.lightGreen, Colors.red];
 
-const boxlength = 40;
-const boxwidth = 40;
+const boxlength = 50;
+const boxwidth = 200;
 
 
 const kMessageContainerDecoration = BoxDecoration(
@@ -122,11 +127,11 @@ const kMessageTextFieldDecoration = InputDecoration(
 );
 
 const kSendButtonTextStyle = TextStyle(
-  color: Colors.white,
+  color: Colors.blue,
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
 
-List<String> popup_repeat = ['Never','Daily','Weekly'];
+List<String> popup_repeat = ['One-Time','Daily','Weekly'];
 
 List<String> group_permissions = ['பார்வையாளர்','தொழிலாளி','நிர்வாகம்'];

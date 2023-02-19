@@ -20,43 +20,48 @@ class _DueDateRowState extends State<DueDateRow> {
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
-    return Row(
-      children: [
-        SizedBox(width: 20 * unitWidthValue),
-        GestureDetector(
-          onTap: () => _showDatePicker(context),
-          child: Row(
-              children:[
-                Icon(Icons.calendar_today,
-                    color: Colors.blue, size: 20 * unitHeightValue),
-                SizedBox(width: 5 * unitWidthValue),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () => _showDatePicker(context),
+            child: Row(
+                children:[
+                  Icon(Icons.calendar_today,
+                      color: Colors.blue, size: 20 * unitHeightValue),
+                  SizedBox(width: 5 * unitWidthValue),
 
-                Text(
-                  "நிலுவைத் தேதி: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
-                  style: labelStyle1(unitHeightValue),
-                ),
-              ]
+                  Text(
+                    "நிலுவைத் தேதி: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
+                    style: labelStyle1(unitHeightValue),
+                  ),
+                ]
+            ),
           ),
-        ),
 
-        SizedBox(width: 20 * unitWidthValue),
-        GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) =>  DatePicker());
-          },
-          child: Row(
-              children:<Widget>[
-                Icon(Icons.calendar_today,
-                    color: Colors.blue, size: 20 * unitHeightValue),
-                SizedBox(width: 5 * unitWidthValue),
-                Text('மீதியை அமைக்கவும்',style: labelStyle1(unitHeightValue))
-              ]
-          ),
-        )
-      ],
+          SizedBox(width: 30 * unitWidthValue),
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) =>  DatePicker());
+            },
+            child: Row(
+                children:<Widget>[
+                  Icon(Icons.alarm,
+                      color: Colors.blue, size: 20 * unitHeightValue),
+                  SizedBox(width: 5 * unitWidthValue),
+                  Text('மீதியை அமைக்கவும்',style: labelStyle1(unitHeightValue))
+                ]
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -65,7 +70,7 @@ class _DueDateRowState extends State<DueDateRow> {
     showCupertinoModalPopup(
       context: context,
       builder: (_) => Container(
-        height: 250 * unitHeightValue,
+        height: 300 * unitHeightValue,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -74,13 +79,14 @@ class _DueDateRowState extends State<DueDateRow> {
         child: Column(
           children: [
             Container(
-              height: 200 * unitHeightValue,
+              height: 240 * unitHeightValue,
               child: CupertinoDatePicker(
                   initialDateTime: widget.viewmodel.deadline,
                   mode: CupertinoDatePickerMode.date,
                   onDateTimeChanged: (date) =>
                       widget.viewmodel.deadline = date),
             ),
+            SizedBox(width: 10,),
             // Close the modal
             TextButton(
               child: Text(
@@ -119,40 +125,45 @@ class _VisitorDueDateRowState extends State<VisitorDueDateRow> {
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
-    return Row(
-      children: [
-        SizedBox(width: 10 * unitWidthValue),
-        Row(
-          children:[
-              Icon(Icons.calendar_today,
-                  color: Colors.blue, size: 20 * unitHeightValue),
-            SizedBox(width: 5 * unitWidthValue),
-
-            Text(
-              "நிலுவைத் தேதி: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
-              style: labelStyle1(unitHeightValue),
-            ),
-           ]
-          ),
-        SizedBox(width: 5 * unitWidthValue),
-        GestureDetector(
-          onTap: () {
-              showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) =>  DatePicker());
-          },
-          child: Row(
-            children:<Widget>[
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children:[
                 Icon(Icons.calendar_today,
                     color: Colors.blue, size: 20 * unitHeightValue),
-                SizedBox(width: 5 * unitWidthValue),
-                Text('மீதியை அமைக்கவும்',style: labelStyle1(unitHeightValue))
-            ]
-          ),
-        )
+              SizedBox(width: 5 * unitWidthValue),
 
-      ],
+              Text(
+                "நிலுவைத் தேதி: ${widget.viewmodel.deadline.month}/${widget.viewmodel.deadline.day}/${widget.viewmodel.deadline.year}",
+                style: labelStyle1(unitHeightValue),
+              ),
+             ]
+            ),
+          SizedBox(width: 30 * unitWidthValue),
+          GestureDetector(
+            onTap: () {
+                showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) =>  DatePicker());
+            },
+            child: Row(
+              children:<Widget>[
+                  Icon(Icons.alarm,
+                      color: Colors.blue, size: 20 * unitHeightValue),
+                  SizedBox(width: 5 * unitWidthValue),
+                  Text('மீதியை அமைக்கவும்',style: labelStyle1(unitHeightValue))
+              ]
+            ),
+          )
+
+        ],
+      ),
     );
   }
 }

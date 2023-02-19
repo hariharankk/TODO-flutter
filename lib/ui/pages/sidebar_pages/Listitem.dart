@@ -15,22 +15,21 @@ class ListItems extends StatelessWidget {
           children: <Widget>[
             Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 2,),
-                Text(
-                  'குழு உறுப்பினரின் பங்கைத் தேர்ந்தெடுக்கவும்',
-                  style: TextStyle(color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold),
-                ),
-                TextButton(
+                IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(
-                      'திரும்பிச் செல்லுங்கள்',
-                      style: TextStyle(color: Colors.blue),
+                    icon: Icon(
+                        Icons.arrow_back_outlined, color: Colors.blue
                     )),
+                SizedBox(width: 2,),
+                Text(
+                  'குழு உறுப்பினரின் பங்கைத் தேர்ந்தெடுக்கவும்',
+                  style: TextStyle(color: Colors.black, fontSize: 10,fontWeight: FontWeight.bold),
+                ),
 
               ],
             ),

@@ -1,119 +1,103 @@
-/*
-import 'package:splashscreen/splashscreen.dart';
-import 'package:todolist/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:todolist/main.dart';
+import 'package:todolist/ui/pages/authenticate/login_page.dart';
 
-class LocalNotifications extends StatefulWidget {
-
-
-  @override
-  _LocalNotificationsState createState() => _LocalNotificationsState();
-}
-
-class _LocalNotificationsState extends State<LocalNotifications> {
-
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  @override
-  void initState() {
-    super.initState();
-    requestPermissions();
-    var androidSettings = AndroidInitializationSettings('app_icon');
-
-    var initSetttings = InitializationSettings();
-    flutterLocalNotificationsPlugin.initialize(initSetttings, onDidReceiveNotificationResponse: (details) =>
-        onClickNotification(details.payload));
-
+class NotificationService {
+  // Singleton pattern
+  static final NotificationService _notificationService =
+  NotificationService._internal();
+  factory NotificationService() {
+    return _notificationService;
   }
-  final _localNotifications = FlutterLocalNotificationsPlugin();
 
-  Future<void> initializePlatformNotifications() async {
-    const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('ic_stat_justwater');
+  NotificationService._internal();
+
+  static const channelId = "1";
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  static final AndroidNotificationDetails _androidNotificationDetails =
+  AndroidNotificationDetails(
+    channelId,
+    "thecodexhub",
+    channelDescription:
+    "This channel is responsible for all the local notifications",
+    playSound: true,
+    priority: Priority.high,
+    importance: Importance.high,
+  );
+
+
+  final NotificationDetails notificationDetails = NotificationDetails(
+    android: _androidNotificationDetails,
+  );
+
+  Future<void> init() async {
+    final AndroidInitializationSettings androidInitializationSettings =
+    AndroidInitializationSettings("@mipmap/ic_launcher");
 
 
     final InitializationSettings initializationSettings =
     InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
+      android: androidInitializationSettings,
     );
 
-    await _localNotifications.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
-  }
-  void requestPermissions() {
-    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
+    // *** Initialize timezone here ***
+    tz.initializeTimeZones();
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+        onDidReceiveNotificationResponse:(payload){ onSelectNotification;},
+      //onDidReceiveBackgroundNotificationResponse: (payload){ onSelectNotification;},
     );
   }
 
-  Future<void> onClickNotification(String? payload) {
-    return Navigator.push(context, MaterialPageRoute(builder: (context) => SplashScreen()));
-  }
-
-  showSimpleNotification() async {
-    var androidDetails = AndroidNotificationDetails('id', 'channel ', priority: Priority.high, importance: Importance.max);
-
-    var platformDetails = new NotificationDetails();
-    await flutterLocalNotificationsPlugin.show(0, 'Flutter Local Notification', 'Flutter Simple Notification',
-        platformDetails, payload: 'Destination Screen (Simple Notification)');
-  }
-
-  Future<void> showScheduleNotification() async {
-    var scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 5));
-    var androidDetails = AndroidNotificationDetails(
-      'channel_id',
-      'Channel Name',
-
-      icon: 'app_icon',
-      largeIcon: DrawableResourceAndroidBitmap('app_icon'),
+  Future<void> showNotification(
+      int id, String title, String body, String payload) async {
+    await flutterLocalNotificationsPlugin.show(
+      id,
+      title,
+      body,
+      notificationDetails,
+      payload: payload,
     );
-    var platformDetails = NotificationDetails();
-    await flutterLocalNotificationsPlugin.schedule(0, 'Flutter Local Notification', 'Flutter Schedule Notification',
-        scheduledNotificationDateTime, platformDetails, payload: 'Destination Screen(Schedule Notification)');
   }
 
-  Future<void> showPeriodicNotification() async {
-    const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('channel_id', 'Channel Name');
-    const NotificationDetails notificationDetails = NotificationDetails();
-    await flutterLocalNotificationsPlugin.periodicallyShow(0, 'Flutter Local Notification', 'Flutter Periodic Notification',
-        RepeatInterval.daily, notificationDetails, payload: 'Destination Screen(Periodic Notification)');
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('')),
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RaisedButton(
-                child: Text('Simple Notification'),
-                onPressed: () => showSimpleNotification(),
-              ),
-              SizedBox(height: 15),
-              RaisedButton(
-                child: Text('Schedule Notification'),
-                onPressed: () => showScheduleNotification(),
-              ),
-              SizedBox(height: 15),
-              RaisedButton(
-                child: Text('Periodic Notification'),
-                onPressed: () => showPeriodicNotification(),
-              ),
-
-            ],
-          ),
-        ),
-      ),
+  Future<void> scheduleNotification(int id, String title, String body,
+      DateTime eventDate, TimeOfDay eventTime, String payload,
+      [DateTimeComponents? dateTimeComponents]) async {
+    final scheduledTime = eventDate.add(Duration(
+      hours: eventTime.hour,
+      minutes: eventTime.minute,
+    ));
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      notificationDetails,
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      payload: payload,
+      matchDateTimeComponents: dateTimeComponents,
     );
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  Future<void> cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 }
-*/
+
+Future<void> onSelectNotification(String? payload) async {
+  await navigatorKey.currentState
+      ?.push(MaterialPageRoute(builder: (_) => LoginPage()));
+}

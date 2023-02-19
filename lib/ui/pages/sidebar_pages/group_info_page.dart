@@ -68,7 +68,9 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
           ),
         ),
       ),
-    ): Center(child: CircularProgressIndicator(),);
+    ): Container(
+        color:Colors.white,
+        child: Center(child: CircularProgressIndicator(),));
   }
 
    void updateGroup() async {
@@ -252,8 +254,8 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200 * unitWidthValue,
           childAspectRatio: 0.75,
-          crossAxisSpacing: 10 * unitWidthValue,
-          mainAxisSpacing: 10 * unitHeightValue,),
+          crossAxisSpacing: 30 * unitWidthValue,
+          mainAxisSpacing: 30 * unitHeightValue,),
         itemBuilder: (context, index) => Column(
           children: [
             group.members[index].role == ''?
@@ -307,7 +309,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 16 * unitHeightValue,
+                fontSize: 10 * unitHeightValue,
               ),
             ),
 

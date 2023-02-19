@@ -85,7 +85,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: 32.0 * unitHeightValue,
+        fontSize: 25.0 * unitHeightValue,
       ),
     );
   }

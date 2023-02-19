@@ -263,7 +263,7 @@ class _LoginPageState extends State<LoginPage> {
           child: new Text(
             _isPhone ? (_codeSent ? 'உள்நுழைய' : 'தொலைபேசியைச் சரிபார்க்கவும்') : 'உள்நுழைய',
             style: new TextStyle(
-              fontSize: 20.0,
+              fontSize: 15.0,
               color: Colors.white,
             ),
           ),
@@ -281,11 +281,17 @@ class _LoginPageState extends State<LoginPage> {
         child: _isPhone
             ? Text(
           "மின்னஞ்சலில் உள்நுழைக", //"Sign in with Email"
-          textScaleFactor: 1.1,
+          style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold
+          ),
         )
             : Text(
           "தொலைபேசி எண்ணுடன் உள்நுழைக", //"Sign in with Phone Number"
-          textScaleFactor: 1.1,
+          style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold
+          ),
         ),
       ),
     );

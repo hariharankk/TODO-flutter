@@ -52,14 +52,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
           endColor: Colors.white,
           widget: Scaffold(
             appBar: AppBar(
-              title: Text(
-                widget.subtask.title,
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSize * unitHeightValue,
-                ),
-              ),
+              title: Text(''),
               backgroundColor: Colors.transparent,
               centerTitle: true,
               elevation: 0.0,
@@ -79,12 +72,14 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                   setState(() {});
                 }
                 ),
-                SizedBox(width: 10,),
+                SizedBox(width: 5,),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 25.0 * unitHeightValue,
-                      bottom: 25.0 * unitHeightValue,
-                      right: 8.0 * unitWidthValue),
+                      top:  5*unitHeightValue,
+                      bottom: 5*unitHeightValue,
+                      //right: 8.0 * unitWidthValue
+                    //
+                    ),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       primary: Colors.blue,
@@ -106,13 +101,15 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                         ? _buildProgressIndicator()
                         : Text(
                             "தரவைப் புதுப்பிக்கவும்",
+                            maxLines: 2,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24 * unitHeightValue,
+                                fontSize: 13 * unitHeightValue,
                                 fontWeight: FontWeight.bold),
                           ),
                   ),
                 ),
+                SizedBox(width: 5,),
               ],
             ),
             backgroundColor: Colors.grey.shade100,
@@ -159,6 +156,18 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 25.0 * unitHeightValue),
+        Center(
+          child: Text(
+            widget.subtask.title,
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              fontSize: fontSize * unitHeightValue,
+            ),
+          ),
+        ),
+        SizedBox(height: 25.0 * unitHeightValue),
         Text("விளக்கம்", style: labelStyle1(unitHeightValue)),
         SizedBox(height: 15.0 * unitHeightValue),
         _notesContainer(),
