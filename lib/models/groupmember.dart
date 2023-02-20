@@ -73,7 +73,7 @@ class GroupMember extends Equatable {
               style: TextStyle(
                 fontFamily: "Segoe ui",
                 fontWeight: FontWeight.bold,
-                fontSize: radius * unitHeightValue,
+                fontSize: radius * unitHeightValue*0.7,
                 color: Colors.white,
               ),
             ),

@@ -64,7 +64,7 @@ class _ToDoTabState extends State<ToDoTab> {
             key: _scaffoldKey,
             appBar: AppBar(
               title: Text(
-                group.name,
+                'திட்டங்கள்',
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
@@ -104,7 +104,7 @@ class _ToDoTabState extends State<ToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'திட்டங்கள்',
+                    title: group.name,
                     child: _buildStreamBuilder(),
                   ),
                 ),
@@ -155,17 +155,15 @@ class _ToDoTabState extends State<ToDoTab> {
       child: ListView(
         key: UniqueKey(),
         padding: EdgeInsets.only(top: height + 40, bottom: 90),
-        children: group.tasks.map<Dismissible>((Task item) {
+        children: group.tasks.map<Column>((Task item) {
           return _buildListTile(item);
         }).toList(),
       ),
     );
   }
 
-  Dismissible _buildListTile(Task item) {
-    return Dismissible(
-      key: Key(item.taskKey),
-        child: Column(
+  Column _buildListTile(Task item) {
+    return Column(
           children: <Widget>[
               Container(
                 padding: EdgeInsets.only(left: 10.0,right: 10.0),
@@ -178,46 +176,10 @@ class _ToDoTabState extends State<ToDoTab> {
                 ),
               ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
-          ],
-        ),
-      background: Container(
-        alignment: AlignmentDirectional.centerEnd,
-        color: Colors.red,
-        child: Icon(
-          Icons.delete,
-          color: Colors.blue,
-          size: 28 * unitHeightValue,
-        ),
-      ),
-      onDismissed: (direction) async {
-        await deleteTask(item);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("திட்டம் " + item.title + " நீக்கப்பட்டது"),
-            action: SnackBarAction(
-              label: 'செயல்தவிர்',
-              onPressed: () {
-                reAddTask(item);
-              },
-            ),
-          ),
-        );
-      },
-      direction: DismissDirection.endToStart,
+          ]
     );
   }
 
-  void reAddTask(Task task) async {
-    await taskBloc.addTask(task.title).then((value) {
-      setState(() {});
-    });
-  }
-
-  Future<Null> deleteTask(Task task) async {
-    await taskBloc.deleteTask(task.taskKey).then((value) {
-      setState(() {});
-    });
-  }
 
   PopupMenuButton _popupMenuButton() {
     return PopupMenuButton<String>(
@@ -353,7 +315,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
             key: _scaffoldKey,
             appBar: AppBar(
               title: Text(
-                group.name,
+                'திட்டங்கள்',
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
@@ -379,7 +341,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'திட்டங்கள்',
+                    title: group.name,
                     child: _buildStreamBuilder(),
                   ),
                 ),
@@ -589,7 +551,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
             key: _scaffoldKey,
             appBar: AppBar(
               title: Text(
-                group.name,
+                'திட்டங்கள்',
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
@@ -616,7 +578,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget: TitleCard(
-                    title: 'திட்டங்கள்',
+                    title: group.name,
                     child: _buildStreamBuilder(),
                   ),
                 ),

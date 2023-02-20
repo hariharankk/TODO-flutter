@@ -33,6 +33,8 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   bool buffering = true;
   bool updating = false;
   final double fontSize= 32.0;
+  late SubtaskBloc subtaskBloc;
+
 
   @override
   void initState() {
@@ -46,6 +48,8 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
+    subtaskBloc = locator<SubtaskBloc>();
+
     return SafeArea(
         child: BackgroundColorContainer(
           startColor: Colors.white,
@@ -67,12 +71,33 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                 color: Colors.white,
               ),
               actions: <Widget>[
+                SizedBox(width: 10,),
+                IconButton(
+                  onPressed: ()async{
+                    deleteSubtask(widget.subtask);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("பணி " + widget.subtask.title + " நீக்கப்பட்டது"),
+                      action: SnackBarAction(
+                        label: 'செயல்தவிர்',
+                        onPressed: () {
+                          reAddSubtask(widget.subtask);
+                        },
+                      ),
+                    ));
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                      Icons.delete,
+                      size: 32.0 * unitHeightValue, color:Colors.blue),),
+                SizedBox(width: 10,),
+
+
                 PriorityPicker(colors: Colors.blue,onTap: (int value){
                   viewmodel.priority = value;
                   setState(() {});
                 }
                 ),
-                SizedBox(width: 5,),
+                SizedBox(width: 10,),
                 Padding(
                   padding: EdgeInsets.only(
                       top:  5*unitHeightValue,
@@ -89,6 +114,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
                           borderRadius: BorderRadius.circular(25)),
                     ),
                     onPressed: () {
+                      if (!mounted) return;
                       setState(() {
                         updating = true;
                       });
@@ -135,6 +161,14 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
     return Center(
       child: CircularProgressIndicator(color: Colors.blue),
     );
+  }
+
+  void reAddSubtask(Subtask subtask) async {
+    await subtaskBloc.addSubtask(subtask.title);
+  }
+
+  Future<Null> deleteSubtask(Subtask subtask) async {
+    await subtaskBloc.deleteSubtask(subtask.subtaskKey);
   }
 
   Column _buildBody() {

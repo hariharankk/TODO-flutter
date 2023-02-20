@@ -97,13 +97,15 @@ class _SubtaskListItemWidgetState extends State<SubtaskListItemWidget> {
                         ),
                         SizedBox(height: 10,),
                         widget.subtask.note.isNotEmpty
-                            ? Text(
-                                widget.subtask.note,
-                                style: toDoListTiletimeStyle(unitHeightValue),
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                                maxLines: 2,
-                              )
+                            ? Expanded(
+                              child: Text(
+                                  widget.subtask.note,
+                                  style: toDoListTiletimeStyle(unitHeightValue),
+                                  overflow: TextOverflow.fade,
+                                  softWrap: true,
+                                  maxLines: 1,
+                                ),
+                            )
                             : Text(
                                 "குறிப்புகள் இல்லை",
                                 style: toDoListTilesubtimeStyle(unitHeightValue)
@@ -225,8 +227,6 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              height: listItemHeight,
-              width: listItemWidth * 0.8,
               padding: EdgeInsets.only(left: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -257,13 +257,15 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                           softWrap: true,
                         ),
                         widget.subtask.note.isNotEmpty
-                            ? Text(
+                            ? Expanded(
+                              child: Text(
                           widget.subtask.note,
                           style: toDoListTiletimeStyle(unitHeightValue),
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
-                          maxLines: 2,
-                        )
+                          maxLines: 1,
+                        ),
+                            )
                             : Text(
                             "குறிப்புகள் இல்லை",
                             style: toDoListTiletimeStyle(unitHeightValue)

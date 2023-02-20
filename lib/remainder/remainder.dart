@@ -1,9 +1,10 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:todolist/main.dart';
 import 'package:todolist/ui/pages/authenticate/login_page.dart';
+import 'package:todolist/widgets/task_widgets/Remainder Screen.dart';
 
 class NotificationService {
   // Singleton pattern
@@ -99,5 +100,5 @@ class NotificationService {
 
 Future<void> onSelectNotification(String? payload) async {
   await navigatorKey.currentState
-      ?.push(MaterialPageRoute(builder: (_) => LoginPage()));
-} */
+      ?.push(MaterialPageRoute(builder: (_) => DetailsPage(payload: payload)));
+}

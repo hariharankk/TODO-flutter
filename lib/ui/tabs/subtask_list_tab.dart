@@ -27,6 +27,7 @@ class SubtaskListTab extends StatefulWidget {
 
 class _SubtaskListTabState extends State<SubtaskListTab> {
 
+  late TaskBloc taskBloc;
   late SubtaskBloc subtaskBloc;
   late Group group;
   late Task task;
@@ -48,6 +49,8 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
     height = mediaQuery.height * 0.13;
     locator.registerLazySingleton<SubtaskBloc>(() =>SubtaskBloc(task));
     subtaskBloc = locator<SubtaskBloc>();
+    taskBloc = locator<TaskBloc>();
+
     return KeyboardSizeProvider(
       child: SafeArea(
         child: GestureDetector(
@@ -61,7 +64,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(
-                task.title,
+                'பணிகள்',
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
@@ -76,6 +79,28 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
+                SizedBox(width: 10,),
+                IconButton(
+                  onPressed: ()async{
+                    await deleteTask(widget.task);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("திட்டம் " + widget.task.title + " நீக்கப்பட்டது"),
+                        action: SnackBarAction(
+                          label: 'செயல்தவிர்',
+                          onPressed: () {
+                            reAddTask(widget.task);
+                          },
+                        ),
+                      ),
+                    );
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                      Icons.delete,
+                      size: 32.0 * unitHeightValue, color:Colors.white),),
+                SizedBox(width: 10,),
+
                 _popupMenuButton(),
                 SizedBox(width: 10,),
                 PriorityPicker(colors: Colors.white,onTap: (int value){
@@ -92,7 +117,7 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget:
-                      TitleCard(title: 'பணிகள்', child: _buildStreamBuilder()),
+                      TitleCard(title: task.title, child: _buildStreamBuilder()),
                 ),
                 AddSubtask(),
               ],
@@ -101,6 +126,15 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
         ),
       ),
     );
+  }
+  void reAddTask(Task task) async {
+    await taskBloc.addTask(task.title).then((value) {
+    });
+  }
+
+  Future<Null> deleteTask(Task task) async {
+    await taskBloc.deleteTask(task.taskKey).then((value) {
+    });
   }
 
   StreamBuilder<List<Subtask>> _buildStreamBuilder() {
@@ -137,17 +171,14 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
       child: ListView(
         key: UniqueKey(),
         padding: EdgeInsets.only(top: height + 40, bottom: 90),
-        children: task.subtasks.map<Dismissible>((Subtask item) {
+        children: task.subtasks.map<Column>((Subtask item) {
           return _buildListTile(item);
         }).toList(),
       ),
     );
   }
-  Dismissible _buildListTile(Subtask subtask) {
-    print('otha');
-    return Dismissible(
-      key: Key(subtask.subtaskKey),
-      child: Column(
+  Column _buildListTile(Subtask subtask) {
+    return Column(
         children: <Widget>[
           Container(
             key:   Key(subtask.title),
@@ -161,43 +192,11 @@ class _SubtaskListTabState extends State<SubtaskListTab> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
         ],
-      ),
-      background: Container(
-        alignment: AlignmentDirectional.centerEnd,
-        color: Colors.red,
-        child: Icon(
-          Icons.delete,
-          color: Colors.black,
-          size: 28 * unitHeightValue,
-        ),
-      ),
-      onDismissed: (direction) {
-        deleteSubtask(subtask);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("பணி " + subtask.title + " நீக்கப்பட்டது"),
-          action: SnackBarAction(
-            label: 'செயல்தவிர்',
-            onPressed: () {
-              reAddSubtask(subtask);
-            },
-          ),
-        ));
-      },
-      direction: DismissDirection.startToEnd,
-    );
+      );
   }
 
 
 
-  void reAddSubtask(Subtask subtask) async {
-    await subtaskBloc.addSubtask(subtask.title);
-    setState(() {});
-  }
-
-  Future<Null> deleteSubtask(Subtask subtask) async {
-    await subtaskBloc.deleteSubtask(subtask.subtaskKey);
-    setState(() {});
-  }
 
   PopupMenuButton _popupMenuButton() {
     return PopupMenuButton<String>(
@@ -352,7 +351,7 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(
-                task.title,
+                'பணிகள்',
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
@@ -384,7 +383,7 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget:
-                  TitleCard(title: 'பணிகள்', child: _buildStreamBuilder()),
+                  TitleCard(title: task.title, child: _buildStreamBuilder()),
                 ),
                 AddSubtask(),
               ],
@@ -607,7 +606,7 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(
-                task.title,
+                'பணிகள்',
                 style: appTitleStyle(unitHeightValue),
               ),
               centerTitle: true,
@@ -632,7 +631,7 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
                   startColor: Colors.white,
                   endColor: Colors.white,
                   widget:
-                  TitleCard(title: 'பணிகள்', child: _buildStreamBuilder()),
+                  TitleCard(title: task.title, child: _buildStreamBuilder()),
                 ),
               ],
             ),

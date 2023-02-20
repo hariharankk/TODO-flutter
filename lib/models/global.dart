@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 TextStyle appTitleStyle(double unitHeightValue) => TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
-      fontSize: 36.0 * unitHeightValue,
+      fontSize: 25.0 * unitHeightValue,
     );
 
 TextStyle appTitleStyle1(double unitHeightValue) => TextStyle(
@@ -57,7 +57,7 @@ BoxDecoration profileBoxDecorationStyle() => BoxDecoration(
 TextStyle cardTitleStyle(double unitHeightValue) => new TextStyle(
       fontWeight: FontWeight.bold,
       color: Colors.white,
-      fontSize: 50 * unitHeightValue,
+      fontSize: 35 * unitHeightValue,
     );
 
 TextStyle toDoListTileStyle(double unitHeightValue) => new TextStyle(
@@ -67,7 +67,7 @@ TextStyle toDoListTileStyle(double unitHeightValue) => new TextStyle(
 
 TextStyle toDoListTiletimeStyle(double unitHeightValue) => new TextStyle(
   color: Colors.blue,
-  fontSize: 25 * unitHeightValue,
+  fontSize: 20 * unitHeightValue,
 );
 
 TextStyle toDoListTilesubtimeStyle(double unitHeightValue) => new TextStyle(
