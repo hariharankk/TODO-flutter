@@ -117,9 +117,10 @@ class _GroupListState extends State<GroupList> {
   }
 
   Widget Privacy_widget(Group group){
-    List<String> roles = group.members.map((element) => element.username==userBloc.getUserObject().username?element.role.trim():'').toList();
-    roles.removeWhere( (item) => item == '');
-    role = roles[0];
+//    List<String> roles = group.members.map((element) => element.username==userBloc.getUserObject().username?element.role.trim():'').toList();
+//    roles.removeWhere( (item) => item == '');
+//    role = roles[0];
+    role=GroupBloc().getroleList().containsKey(group.name)?GroupBloc().getroleList()[group.name]:null;
     print(role);
     return role == null ? buildWaitingScreen() :role=='நிர்வாகம்'? buildGroupListTile(group):role=='தொழிலாளி'?workerbuildGroupListTile(group):visitorbuildGroupListTile(group);
     }
@@ -140,7 +141,8 @@ class _GroupListState extends State<GroupList> {
       ),
       onDismissed: (direction) async {
         if (group.members.length == 1) {
-          await repository.deleteGroup(group.groupKey);
+          await repository.deleteGroupMember(
+              group.groupKey, userBloc.getUserObject().username);
         } else if (group.members.length > 1) {
           try {
             await repository.deleteGroupMember(

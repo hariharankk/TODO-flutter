@@ -55,85 +55,86 @@ class _TaskListItemWidgetState extends State<TaskListItemWidget> {
                 ),
               ],
             ),
-            child: SingleChildScrollView(
-             scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: listItemHeight,
-                    width: listItemWidth * 0.8,
-                    padding: EdgeInsets.only(left: 10.0),
-                    child: Row(
-                      children: <Widget>[
+             child: SingleChildScrollView(
+               scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: listItemHeight,
+                      width: listItemWidth * 0.8,
+                      padding: EdgeInsets.only(left: 10.0),
+                      child: Row(
+                        children: <Widget>[
+                          Flexible(
+                            flex: 1,
+                            child: Checkbox(
+                                value: widget.task.completed,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    widget.task.completed = newValue!;
+                                    repository.updateTask(widget.task);
+                                  });
+                                }),
+                          ),
+                          SizedBox(width: 5,),
+
+
                         Flexible(
-                          flex: 1,
-                          child: Checkbox(
-                              value: widget.task.completed,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  widget.task.completed = newValue!;
-                                  repository.updateTask(widget.task);
-                                });
-                              }),
-                        ),
-                        SizedBox(width: 5,),
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                    widget.task.title,
+                                    style: toDoListTileStyle(unitHeightValue),
+                                    maxLines: 1,
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            ],
+                          ),
+                        )
+                       ],
+                      ),
+                     ),
+                  Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
+                         children: <Widget>[
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Icon(Icons.calendar_today,
+                                   color: Colors.blue, size: 20 * unitHeightValue),
+                               SizedBox(width: 5 * unitWidthValue),
+                               Text(
+                                 "உருவாக்கப்பட்டது: ${widget.task.timeCreated.toString().substring(0,11)}",
+                                 style: toDoListTiletimeStyle(unitHeightValue*0.7),
+                               ),
+                              ]
+                            ),
+                           //Padding(
+                           //  padding: const EdgeInsets.only(left: 100.0),
+                             //child:
+                             box(
+                             index: widget.task.priority,
+                             height: unitHeightValue*boxlength,
+                             width: unitWidthValue*boxwidth,),
+                           //),
 
-                      Flexible(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                                  widget.task.title,
-                                  style: toDoListTileStyle(unitHeightValue),
-                                  maxLines: 1,
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          ],
-                        ),
-                      )
-                     ],
+                         ],
+                         ),
+                     ]
                     ),
                    ),
-                Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            )
 
-                       children: <Widget>[
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: [
-                             Icon(Icons.calendar_today,
-                                 color: Colors.blue, size: 20 * unitHeightValue),
-                             SizedBox(width: 5 * unitWidthValue),
-                             Text(
-                               "உருவாக்கப்பட்டது: ${widget.task.timeCreated.toString().substring(0,11)}",
-                               style: toDoListTiletimeStyle(unitHeightValue*0.7),
-                             ),
-                            ]
-                          ),
-                         //Padding(
-                         //  padding: const EdgeInsets.only(left: 100.0),
-                           //child:
-                           box(
-                           index: widget.task.priority,
-                           height: unitHeightValue*boxlength,
-                           width: unitWidthValue*boxwidth,),
-                         //),
-
-                       ],
-                       ),
-                   ]
-                  ),
-                 )
-               ),
     );
   }
 }

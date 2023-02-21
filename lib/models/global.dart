@@ -132,6 +132,6 @@ const kSendButtonTextStyle = TextStyle(
   fontSize: 18.0,
 );
 
-List<String> popup_repeat = ['One-Time','Daily','Weekly'];
+List<String> popup_repeat = ['ஒரு முறை','தினசரி','வாரந்தோறும்'];
 
 List<String> group_permissions = ['பார்வையாளர்','தொழிலாளி','நிர்வாகம்'];

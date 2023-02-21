@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/models/global.dart';
 import 'package:todolist/remainder/remainder.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
@@ -12,9 +12,9 @@ class DatePicker extends StatefulWidget {
 }
 
 class DatePickerState extends State<DatePicker> {
-  String selectedDate = '', hour = '',repeat_text='One-Time';
+  String selectedDate = '', hour = '',repeat_text='ஒரு முறை';
   late double unitHeightValue, unitWidthValue;
-  NotificationService notificationService = NotificationService();
+  //NotificationService notificationService = NotificationService();
   DateTime? eventDate;
   TimeOfDay? eventTime;
   DateTime currentDate = DateTime.now();
@@ -23,9 +23,9 @@ class DatePickerState extends State<DatePicker> {
   void selectEventDate() async {
     final today =
     DateTime(currentDate.year, currentDate.month, currentDate.day);
-     if (repeat_text == 'Daily') {
+     if (repeat_text == 'தினசரி') {
       eventDate = today;
-    } else if (repeat_text == 'Weekly') {
+    } else if (repeat_text == 'வாரந்தோறும்') {
       CustomDayPicker(
         onDaySelect: (val) {
           print("$val: ${CustomDayPicker.weekdays[val]}");
@@ -36,11 +36,11 @@ class DatePickerState extends State<DatePicker> {
     }
   }
 
-  Future<void> onCreate() async {
+ /* Future<void> onCreate() async {
     await notificationService.showNotification(
       0,
       '',
-      "A new event has been created.",
+      "ஒரு புதிய நிகழ்வு உருவாக்கப்பட்டது.",
       jsonEncode({
         "title": '',
         "eventDate": DateFormat("EEEE, d MMM y").format(eventDate!),
@@ -51,7 +51,7 @@ class DatePickerState extends State<DatePicker> {
     await notificationService.scheduleNotification(
       1,
       '',
-      "Reminder for your scheduled event at ${eventTime!.format(context)}",
+      "உங்கள் திட்டமிடப்பட்ட நிகழ்வுக்கான நினைவூட்டல் ${eventTime!.format(context)}",
       eventDate!,
       eventTime!,
       jsonEncode({
@@ -63,7 +63,7 @@ class DatePickerState extends State<DatePicker> {
     );
 
     resetForm();
-  }
+  }*/
 
   void resetForm() {
     eventDate = null;
@@ -72,13 +72,13 @@ class DatePickerState extends State<DatePicker> {
     hour = '';
   }
 
-  DateTimeComponents? getDateTimeComponents() {
+  /*DateTimeComponents? getDateTimeComponents() {
     if ( repeat_text == 'Daily') {
       return DateTimeComponents.time;
     } else if ( repeat_text == 'Weekly') {
       return DateTimeComponents.dayOfWeekAndTime;
     }
-  }
+  }*/
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -95,9 +95,9 @@ class DatePickerState extends State<DatePicker> {
       });
   }
 
-  Future<void> cancelAllNotifications() async {
+ /* Future<void> cancelAllNotifications() async {
     await notificationService.cancelAllNotifications();
-  }
+  }*/
 
   Widget _buildCancelAllButton() {
     return Container(
@@ -113,7 +113,7 @@ class DatePickerState extends State<DatePicker> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Cancel all the reminders",
+            "அனைத்து நினைவூட்டல்களையும் ரத்துசெய்",
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w500,
@@ -158,19 +158,19 @@ class DatePickerState extends State<DatePicker> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Cancel',
+                      'ரத்து',
                       style: TextStyle(color: Colors.blue),
                     )),
                 Text(
-                  'Details',
+                  'விவரங்கள்',
                   style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
                 TextButton(
                     onPressed: () {
-                      onCreate();
+                      //onCreate();
                       SnackBar(
                         content: Text(
-                          "Remainder sucessful",
+                          "மீதமுள்ளவை வெற்றிகரமாக உள்ளன",
                           textAlign: TextAlign.center,
                         ),
                         backgroundColor: Colors.green,
@@ -178,17 +178,17 @@ class DatePickerState extends State<DatePicker> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Set Remainder',
+                      'மீதியை அமைக்கவும்',
                       style: TextStyle(color: Colors.blue),
                     ))
               ],
             ),
             GestureDetector(
               onTap: () async {
-                await cancelAllNotifications();
+                //await cancelAllNotifications();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text("All notfications cancelled"),
+                    content: Text("அனைத்து அறிவிப்புகளும் ரத்து செய்யப்பட்டன"),
                   ),
                 );
               },
@@ -218,7 +218,7 @@ class DatePickerState extends State<DatePicker> {
                       size: 40,
                     ),
                     title: Text(
-                      'Date',
+                      'தேதி',
                       style: TextStyle(fontSize: 25, color: Colors.black),
                     ),
                     subtitle: Text(selectedDate,
@@ -241,7 +241,7 @@ class DatePickerState extends State<DatePicker> {
                       color: Colors.blue,
                       size: 40,
                     ),
-                    title: Text('Time',
+                    title: Text('நேரம்',
                         style: TextStyle(fontSize: 25, color: Colors.black)),
                     subtitle:
                         Text(hour,
@@ -275,9 +275,10 @@ class DatePickerState extends State<DatePicker> {
                       isScrollControlled: true,
                       builder: (context) =>  ListItems()).then((value){
                     setState(() {
-                      repeat_text=value.toString();
+                    if(value!=null ) {
+                      repeat_text = value.toString();
                       selectEventDate();
-                    });
+                    }});
                   });
                 },
                 leading: Icon(
@@ -286,7 +287,7 @@ class DatePickerState extends State<DatePicker> {
                   size: 40,
                 ),
                 title: Text(
-                  'Repeat',
+                  'மீண்டும் செய்யவும்',
                   style: TextStyle(fontSize: 25, color: Colors.black),
                 ),
                 subtitle: Text(repeat_text,
@@ -312,24 +313,30 @@ class ListItems extends StatelessWidget {
     final yourScrollController = ScrollController();
     return Scrollbar(
       controller: yourScrollController,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: ListView.separated(
-          padding: const EdgeInsets.all(8),
-          itemCount: popup_repeat.length,
-            controller: yourScrollController,
-          separatorBuilder: (BuildContext context,int index) {
-            return Divider(color: Colors.grey,);
-            },
-          itemBuilder: (BuildContext context,int index) {
-            return ListTile(
-                title: Text(popup_repeat[index],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                trailing: Icon(Icons.arrow_forward_outlined,color: Colors.black,),
-                onTap: (){
-                  Navigator.pop(context,popup_repeat[index]);
-               }
-              );
-          }
+      child:       Container(
+        height: MediaQuery.of(context).size.height * 0.25,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: ListView.separated(
+            padding: const EdgeInsets.all(8),
+            itemCount: popup_repeat.length,
+              controller: yourScrollController,
+            separatorBuilder: (BuildContext context,int index) {
+              return Divider(color: Colors.grey,);
+              },
+            itemBuilder: (BuildContext context,int index) {
+              return ListTile(
+                  title: Text(popup_repeat[index],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                  trailing: Icon(Icons.arrow_forward_outlined,color: Colors.black,),
+                  onTap: (){
+                    Navigator.pop(context,popup_repeat[index]);
+                 }
+                );
+            }
+          ),
         ),
       ),
     );
@@ -349,22 +356,23 @@ class CustomDayPicker extends StatelessWidget {
   }
 
   static final List<String> weekdays = [
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun',
+    'திங்கள்',
+    'செவ்வாய்',
+    'புதன்',
+    'வியாழன்',
+    'வெள்ளி',
+    'சனி',
+    'ஞாயிறு',
   ];
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Select a day"),
+      title: Text("ஒரு நாளைத் தேர்ந்தெடுக்கவும்"),
       content: Wrap(
+        direction: Axis.vertical,
         alignment: WrapAlignment.center,
-        spacing: 3,
+        spacing: 15,
         children: [
           for (int index = 0; index < weekdays.length; index++)
             ElevatedButton(

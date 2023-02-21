@@ -54,7 +54,10 @@ class UserBloc {
 
 class GroupBloc {
   final _groupSubject = BehaviorSubject<List<Group>>();
+  var _role;
+
   List<Group> _groups = [];
+
 
   GroupBloc._privateConstructor();
   static final GroupBloc _instance = GroupBloc._privateConstructor();
@@ -72,6 +75,10 @@ class GroupBloc {
     return _groups;
   }
 
+  dynamic getroleList() {
+    return _role;
+  }
+
   Future<void> deleteGroup(String groupKey) async {
     await repository.deleteGroup(groupKey);
     await updateGroups();
@@ -84,8 +91,11 @@ class GroupBloc {
   }
 
   Future<void> updateGroups() async {
+    List data;
     await Future<void>.delayed(const Duration(milliseconds: 150));
-    _groups = await repository.getUserGroups();
+    data = await repository.getUserGroups();
+    _groups=data[0];
+    _role=data[1];
     _groupSubject.add(_groups);
   }
 }

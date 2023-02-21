@@ -76,7 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       //repository.send_message(messageText, loggedInUser,widget.subtaskKey);
                     },
                     child: Text(
-                      'Send',
+                      'அனுப்பு',
                       style: kSendButtonTextStyle,
                     ),
                   ),

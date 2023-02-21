@@ -18,7 +18,7 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '4406-34-90-224-209.ngrok.io';
+  static String stageHost = '7b41-35-227-11-103.ngrok.io';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
   Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/login');
@@ -114,11 +114,12 @@ class ApiProvider {
 
   /// Group CRUD Functions
   /// Get a list of the User's Groups
-  Future<List<Group>> getUserGroups() async {
+  Future<List> getUserGroups() async {
     final Token = await jwt.read_token();
     final queryParameters = {'username':userBloc.getUserObject().username};
     Uri groupURL = Uri(scheme: 'http', host: stageHost, path: '/api/group',queryParameters: queryParameters);
     List<Group> groups = [];
+    List data;
       final response = await client.get(
         groupURL,
         headers: {
@@ -129,7 +130,8 @@ class ApiProvider {
         },
           );
       final Map result = json.decode(response.body);
-      print('group ${result["data"]}');
+      var roles = result['roles'];
+
       if (response.statusCode == 200) {
         // If the call to the server was successful, parse the JSON
         for (Map<String, dynamic> json_ in result["data"]) {
@@ -141,7 +143,8 @@ class ApiProvider {
             print(Exception);
           }
         }
-        return groups;
+        data=[groups,roles];
+        return data;
       } else {
         // If that call was not successful, throw an error.
         throw Exception(result["status"]);

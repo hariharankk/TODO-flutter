@@ -21,7 +21,7 @@ class Repository {
 
 
   //Groups: Get, Post, Delete
-  Future<List<Group>> getUserGroups() => apiProvider.getUserGroups();
+  Future<List> getUserGroups() => apiProvider.getUserGroups();
 
   Future addGroup(String groupName, bool isPublic) =>
       apiProvider.addGroup(groupName, isPublic);

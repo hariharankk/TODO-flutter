@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text("அணிகள்", style: appTitleStyle(unitHeightValue)),
           centerTitle: true,
           backgroundColor: Colors.blue,

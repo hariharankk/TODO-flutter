@@ -5,13 +5,13 @@ import 'package:todolist/bloc/resources/injection.dart';
 import 'package:todolist/jwt.dart';
 import 'package:todolist/ui/pages/authenticate/login_page.dart';
 import 'dart:async';
-import 'package:todolist/remainder/remainder.dart';
+//import 'package:todolist/remainder/remainder.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
-  NotificationService notificationService = NotificationService();
-  await notificationService.init();
+  //NotificationService notificationService = NotificationService();
+  //await notificationService.init();
   runApp(MyApp());
 }
 
