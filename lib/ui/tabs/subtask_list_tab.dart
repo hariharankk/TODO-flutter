@@ -338,6 +338,7 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
     height = mediaQuery.height * 0.13;
     locator.registerLazySingleton<SubtaskBloc>(() =>SubtaskBloc(task));
     subtaskBloc = locator<SubtaskBloc>();
+
     return KeyboardSizeProvider(
       child: SafeArea(
         child: GestureDetector(
@@ -366,15 +367,15 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
+                SizedBox(width: 10,),
                 _popupMenuButton(),
                 SizedBox(width: 10,),
-                PriorityPicker(colors: Colors.blue,onTap: (int value){
+                PriorityPicker(colors: Colors.white,onTap: (int value){
                   widget.task.priority = value;
                   locator<TaskBloc>().updateTask(widget.task);
                   setState(() {});
                 } ),
                 SizedBox(width: 5,)
-
               ],
             ),
             body: Stack(
@@ -434,16 +435,15 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
       ),
     );
   }
-
   Column _buildListTile(Subtask subtask) {
     return Column(
-      children: [
+      children: <Widget>[
         Container(
           key:   Key(subtask.title),
           padding: EdgeInsets.only(left: 10.0,right: 10.0),
           height: MediaQuery.of(context).size.height * 0.25,
           width: MediaQuery.of(context).size.width,
-          child: WorkerSubtaskListItemWidget(
+          child: SubtaskListItemWidget(
             subtask: subtask,
             group: group,
           ),
@@ -453,14 +453,17 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
     );
   }
 
+
+
+
   PopupMenuButton _popupMenuButton() {
     return PopupMenuButton<String>(
       padding: EdgeInsets.symmetric(
           vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
-      tooltip: 'வகைபடுத்து',
       icon: Icon(Icons.sort,
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
+      tooltip: 'வகைபடுத்து',
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -557,6 +560,7 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
     await prefs.setString('SUBTASK_ORDER_LIST', orderBy);
     this.orderBy = orderBy;
   }
+
 }
 
 class VisitorSubtaskListTab extends StatefulWidget {
@@ -593,6 +597,7 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
     height = mediaQuery.height * 0.13;
     locator.registerLazySingleton<SubtaskBloc>(() =>SubtaskBloc(task));
     subtaskBloc = locator<SubtaskBloc>();
+
     return KeyboardSizeProvider(
       child: SafeArea(
         child: GestureDetector(
@@ -621,8 +626,9 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
                 color: Colors.white,
               ),
               actions: [
+                SizedBox(width: 10,),
                 _popupMenuButton(),
-                SizedBox(width: 10,)
+                SizedBox(width: 10,),
               ],
             ),
             body: Stack(
@@ -681,34 +687,35 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
       ),
     );
   }
-
   Column _buildListTile(Subtask subtask) {
     return Column(
-      children: [
+      children: <Widget>[
         Container(
           key:   Key(subtask.title),
           padding: EdgeInsets.only(left: 10.0,right: 10.0),
           height: MediaQuery.of(context).size.height * 0.25,
           width: MediaQuery.of(context).size.width,
-          child: VisitorSubtaskListItemWidget(
-              subtask: subtask,
-              group: group,
-            ),
+          child: SubtaskListItemWidget(
+            subtask: subtask,
+            group: group,
           ),
+        ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
       ],
     );
   }
 
 
+
+
   PopupMenuButton _popupMenuButton() {
     return PopupMenuButton<String>(
       padding: EdgeInsets.symmetric(
           vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
-      tooltip: 'வகைபடுத்து',
       icon: Icon(Icons.sort,
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
+      tooltip: 'வகைபடுத்து',
       offset: Offset(0, 70 * unitHeightValue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -762,7 +769,7 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
           value: "இறுதி தேதி",
           child: Row(children: [
             Icon(Icons.date_range,color: Colors.blue, size: 20 * unitHeightValue),
-            SizedBox(width:5.0 * unitWidthValue),
+            SizedBox(width: 5.0 * unitWidthValue),
             Text(
               "இறுதி தேதி",
               style: TextStyle(

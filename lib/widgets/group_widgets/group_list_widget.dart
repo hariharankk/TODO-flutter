@@ -250,6 +250,7 @@ class _GroupListState extends State<GroupList> {
   }
 
   GestureDetector workerbuildGroupListTile(Group group) {
+
     group.addListener(() {
       if (this.mounted) {
         setState(() {});

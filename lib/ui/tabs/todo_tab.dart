@@ -294,6 +294,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
 
   @override
   Widget build(BuildContext context) {
+
     group = widget.group;
     locator.registerLazySingleton<TaskBloc>(() =>TaskBloc(group.groupKey));
     taskBloc = locator<TaskBloc>();
@@ -301,6 +302,7 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
     height = mediaQuery.height * 0.13;
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
+
     return KeyboardSizeProvider(
       child: SafeArea(
         child: GestureDetector(
@@ -330,9 +332,11 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
                 },
                 color: Colors.white,
               ),
+
               actions: [
                 _popupMenuButton(),
-                SizedBox(width: 10,)
+                SizedBox(width: 10,),
+
               ],
             ),
             body: Stack(
@@ -401,31 +405,32 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
 
   Column _buildListTile(Task item) {
     return Column(
-      children: [
-        Container(
-        key: Key(item.title),
-        padding: EdgeInsets.only(left: 10.0,right: 10.0,top: 1000,bottom: 20),
-        height: MediaQuery.of(context).size.height * 0.2,
-        width: MediaQuery.of(context).size.width,
-        child: WorkerTaskListItemWidget(
-            group: group,
-            task: item,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 10.0,right: 10.0),
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width,
+            key: Key(item.title),
+            child: WorkerTaskListItemWidget(
+              group: group,
+              task: item,
+            ),
           ),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.1,)
-      ]
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02,)
+        ]
     );
   }
+
 
   PopupMenuButton _popupMenuButton() {
     return PopupMenuButton<String>(
       padding: EdgeInsets.symmetric(
-          vertical: 8 * unitHeightValue, horizontal: 20 * unitWidthValue),
+          vertical: 8 * unitHeightValue, horizontal: 8 * unitWidthValue),
       icon: Icon(Icons.sort,
           size: 32.0 * unitHeightValue, color: Colors.white),
       color: Colors.white,
-      tooltip: 'வகைபடுத்து',
       offset: Offset(0, 70 * unitHeightValue),
+      tooltip: 'வகைபடுத்து',
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(15.0),
@@ -507,7 +512,6 @@ class _WorkerToDoTabState extends State<WorkerToDoTab> {
     this.orderBy = orderBy;
   }
 }
-
 class VisitorToDoTab extends StatefulWidget {
   Group group;
   VisitorToDoTab({required this.group});
@@ -641,7 +645,7 @@ class _VisitorToDoTabState extends State<VisitorToDoTab> {
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width,
           key: Key(item.title),
-          child: TaskListItemWidget(
+          child: VisitorTaskListItemWidget(
             group: group,
             task: item,
           ),

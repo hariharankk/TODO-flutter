@@ -168,15 +168,16 @@ class _WorkerTaskListItemWidgetState extends State<WorkerTaskListItemWidget> {
     height = mediaQuery.height * 0.1;
     listItemWidth = mediaQuery.width * 0.85;
     listItemHeight = mediaQuery.height * 0.13;
+    print('workertask');
 
 
-    return GestureDetector(
-      key: UniqueKey(),
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => WorkerSubtaskListTab(group:widget.group, task:widget.task)));
-      },
+    return  GestureDetector(
+        key: UniqueKey(),
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => WorkerSubtaskListTab(group:widget.group, task:widget.task)));
+        },
 
-      child: Container(
+        child: Container(
           height: height,
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           decoration: BoxDecoration(
@@ -189,76 +190,86 @@ class _WorkerTaskListItemWidgetState extends State<WorkerTaskListItemWidget> {
               ),
             ],
           ),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  height: listItemHeight,
-                  width: listItemWidth * 0.8,
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Row(
-                    children: <Widget>[
-                      Flexible(
-                        flex: 1,
-                        child: Checkbox(
-                            value: widget.task.completed,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                widget.task.completed = newValue!;
-                                repository.updateTask(widget.task);
-                              });
-                            }),
-                      ),
-                      SizedBox(width: 5,),
-
-                      Flexible(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              widget.task.title,
-                              style: toDoListTileStyle(unitHeightValue),
-                              maxLines: 3,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: listItemHeight,
+                    width: listItemWidth * 0.8,
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Row(
+                      children: <Widget>[
+                        Flexible(
+                          flex: 1,
+                          child: Checkbox(
+                              value: widget.task.completed,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  widget.task.completed = newValue!;
+                                  repository.updateTask(widget.task);
+                                });
+                              }),
                         ),
+                        SizedBox(width: 5,),
+
+
+                        Flexible(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.task.title,
+                                style: toDoListTileStyle(unitHeightValue),
+                                maxLines: 1,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                    children: <Widget>[
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(Icons.calendar_today,
+                                color: Colors.blue, size: 20 * unitHeightValue),
+                            SizedBox(width: 5 * unitWidthValue),
+                            Text(
+                              "உருவாக்கப்பட்டது: ${widget.task.timeCreated.toString().substring(0,11)}",
+                              style: toDoListTiletimeStyle(unitHeightValue*0.7),
+                            ),
+                          ]
                       ),
+                      //Padding(
+                      //  padding: const EdgeInsets.only(left: 100.0),
+                      //child:
+                      box(
+                        index: widget.task.priority,
+                        height: unitHeightValue*boxlength,
+                        width: unitWidthValue*boxwidth,),
+                      //),
+
                     ],
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                ]
+            ),
+          ),
+        )
 
-                  children: <Widget>[
-                    Row(
-                        children: [
-                          Icon(Icons.calendar_today,
-                              color: Colors.blue, size: 20 * unitHeightValue),
-                          SizedBox(width: 5 * unitWidthValue),
-                          Text(
-                            "உருவாக்கப்பட்டது: ${widget.task.timeCreated.toString().substring(0,11)}",
-                            style: toDoListTiletimeStyle(unitHeightValue*0.7),
-                          ),
-                        ]
-                    ),
-                    //Padding(
-                    //  padding: const EdgeInsets.only(left: 100.0),
-                    //child:
-                    box(index: widget.task.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
-                    //),
-
-                  ],
-                ),
-              ]
-          )
-      ),
     );
   }
 }
@@ -276,6 +287,7 @@ class VisitorTaskListItemWidget extends StatefulWidget {
 
 class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
   late double unitHeightValue , unitWidthValue;
+  late double height;
   late double listItemHeight,listItemWidth;
 
 
@@ -289,31 +301,36 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
     Size mediaQuery = MediaQuery.of(context).size;
     unitHeightValue = mediaQuery.height * 0.001;
     unitWidthValue = MediaQuery.of(context).size.width * 0.001;
+    height = mediaQuery.height * 0.1;
     listItemWidth = mediaQuery.width * 0.85;
     listItemHeight = mediaQuery.height * 0.13;
+    print('visitortask');
 
 
-    return GestureDetector(
+    return  GestureDetector(
         key: UniqueKey(),
         onTap: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => VisitorSubtaskListTab(group:widget.group, task:widget.task)));
         },
 
         child: Container(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Colors.white,
-              boxShadow: [
-                new BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
-                  blurRadius: 25.0,
-                ),
-              ],
-            ),
+          height: height,
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.white,
+            boxShadow: [
+              new BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 25.0,
+              ),
+            ],
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     height: listItemHeight,
@@ -326,30 +343,35 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
                           child: Checkbox(
                               value: widget.task.completed,
                               onChanged: (bool? newValue) {
+                                setState(() {
+                                  widget.task.completed = newValue!;
+                                  repository.updateTask(widget.task);
+                                });
                               }),
                         ),
                         SizedBox(width: 5,),
+
 
                         Flexible(
                           flex: 3,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                             Text(
-                              widget.task.title,
-                              style: toDoListTileStyle(unitHeightValue),
-                              maxLines: 3,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                widget.task.title,
+                                style: toDoListTileStyle(unitHeightValue),
+                                maxLines: 1,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         )
-                        ),
                       ],
                     ),
                   ),
-                  SizedBox(width: 75 * unitWidthValue,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
@@ -357,6 +379,7 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
 
                     children: <Widget>[
                       Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Icon(Icons.calendar_today,
                                 color: Colors.blue, size: 20 * unitHeightValue),
@@ -370,17 +393,18 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
                       //Padding(
                       //  padding: const EdgeInsets.only(left: 100.0),
                       //child:
-                   Padding(
-                      padding: const EdgeInsets.only(right: 100.0),
-                      child:
-                      box(index: widget.task.priority,height: unitHeightValue*boxlength,width: unitWidthValue*boxwidth,),
-                   )//),
+                      box(
+                        index: widget.task.priority,
+                        height: unitHeightValue*boxlength,
+                        width: unitWidthValue*boxwidth,),
+                      //),
 
                     ],
                   ),
                 ]
-            )
-        ),
+            ),
+          ),
+        )
 
     );
   }
