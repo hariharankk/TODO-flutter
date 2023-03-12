@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:todolist/models/global.dart';
 import 'package:todolist/bloc/blocs/user_bloc_provider.dart';
@@ -17,22 +19,22 @@ class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   late String loggedInUser;
   late String messageText;
-  //message_StreamSocket socket= message_StreamSocket();
-  //messageExitSocket exitSocket = messageExitSocket();
-  late messageBloc message;
+  message_StreamSocket socket= message_StreamSocket();
+  messageExitSocket exitSocket = messageExitSocket();
+  //late messageBloc message;
 
   @override
   void initState() {
-    message =messageBloc(widget.subtaskKey);
+    //message =messageBloc(widget.subtaskKey);
     super.initState();
     getCurrentUser();
-    //socket.openingapprovalconnectAndListen(widget.subtaskKey);
+    socket.openingapprovalconnectAndListen(widget.subtaskKey);
   }
 
   void dispose() {
     super.dispose();
     print('dispose messagepage');
-    //exitSocket.Stopthread();
+    exitSocket.Stopthread();
   }
 
   void getCurrentUser() async {
@@ -52,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            MessagesStream(loggedInUser: loggedInUser, data:message.getmessages),
+            MessagesStream(loggedInUser: loggedInUser, data:socket),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -72,8 +74,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   TextButton(
                     onPressed: () {
                       messageTextController.clear();
-                      message.addmessage(messageText, loggedInUser);
-                      //repository.send_message(messageText, loggedInUser,widget.subtaskKey);
+                      //message.addmessage(messageText, loggedInUser);
+                      repository.send_message(messageText, loggedInUser,widget.subtaskKey);
                     },
                     child: Text(
                       'அனுப்பு',
@@ -90,7 +92,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
 class MessagesStream extends StatelessWidget {
   final String loggedInUser;
-  final Stream<List<dynamic>> data;
+  final  message_StreamSocket data;
   late List<dynamic> messages;
 
 
@@ -98,9 +100,9 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: data,
+      stream: data.getResponse,
       initialData: [],
-      builder: (context, snapshot) {
+      builder: (context,  AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(
@@ -108,12 +110,19 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        messages = snapshot.data as List<dynamic>;
         List<MessageBubble> messageBubbles = [];
+        messages = snapshot.data as List<dynamic>;
+        if (messages.isEmpty) {
+          return Center(
+            child: Container(
+              color: Colors.white,
+            ),
+          );
+        }
         messageBubbles = messages.map((var message){
-          final messageText = message.message;
-          final messageSender = message.sender;
-          final currenttime = message.timeCreated;
+          final messageText = message['message'];
+          final messageSender = message['sender'];
+          final currenttime = message['time_created'];
           final currentUser = loggedInUser;
 
           return MessageBubble(
@@ -133,6 +142,7 @@ class MessagesStream extends StatelessWidget {
               reverse: true,
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
               children: messageBubbles,
+
             );
       },
     );
@@ -145,7 +155,7 @@ class MessageBubble extends StatelessWidget {
   final String sender;
   final String text;
   final bool isMe;
-  final DateTime timeCreated;
+  final String timeCreated;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -190,7 +200,7 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 5.0),
             child: Text(
-                timeCreated.toString().substring(0,11),
+                timeCreated.substring(0,10),
                 style: TextStyle(
                   fontSize: 13.0,
                   color: Colors.black,

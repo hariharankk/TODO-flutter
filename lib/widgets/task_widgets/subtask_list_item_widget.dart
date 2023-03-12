@@ -184,6 +184,7 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
   bool change = false;
   late double unitHeightValue, unitWidthValue;
   //
+  //
   @override
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
@@ -196,7 +197,7 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
       key: UniqueKey(),
       onTap: () => Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
-            return SubtaskInfo(
+            return WorkerSubtaskInfo(
               subtask: widget.subtask,
               members: widget.group.members,
             );
@@ -227,6 +228,8 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
+              height: listItemHeight,
+              width: listItemWidth * 0.8,
               padding: EdgeInsets.only(left: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -246,7 +249,6 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                     flex: 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -256,25 +258,27 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
                         ),
+                        SizedBox(height: 10,),
                         widget.subtask.note.isNotEmpty
                             ? Expanded(
-                              child: Text(
-                          widget.subtask.note,
-                          style: toDoListTiletimeStyle(unitHeightValue),
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          maxLines: 1,
-                        ),
-                            )
+                          child: Text(
+                            widget.subtask.note,
+                            style: toDoListTiletimeStyle(unitHeightValue),
+                            overflow: TextOverflow.fade,
+                            softWrap: true,
+                            maxLines: 1,
+                          ),
+                        )
                             : Text(
                             "குறிப்புகள் இல்லை",
-                            style: toDoListTiletimeStyle(unitHeightValue)
+                            style: toDoListTilesubtimeStyle(unitHeightValue)
                         ),
+                        SizedBox(height: 10,),
                         widget.subtask.assignedTo.length > 0
                             ? _buildAssignedMemberAvatars()
                             : Text(
                           "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
-                          style: toDoListTiletimeStyle(unitHeightValue),
+                          style: toDoListTilesubtimeStyle(unitHeightValue),
                         ),
                       ],
                     ),
@@ -282,10 +286,9 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                 ],
               ),
             ),
-            SizedBox(width: 100 * unitWidthValue,),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Row(
@@ -295,7 +298,7 @@ class _WorkerSubtaskListItemWidgetState extends State<WorkerSubtaskListItemWidge
                     SizedBox(width: 5 * unitWidthValue),
                     Text(
                       "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
-                      style: TextStyle(color: Colors.blue),
+                      style: toDoListTiletimeStyle(unitHeightValue*0.7),
                     ),
                   ],
                 ),
@@ -345,6 +348,7 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
   bool change = false;
   late double unitHeightValue, unitWidthValue;
   //
+  //
   @override
   Widget build(BuildContext context) {
     unitHeightValue = MediaQuery.of(context).size.height * 0.001;
@@ -388,6 +392,8 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
+              height: listItemHeight,
+              width: listItemWidth * 0.8,
               padding: EdgeInsets.only(left: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -397,14 +403,14 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
                     child: Checkbox(
                         value: widget.subtask.completed,
                         onChanged: (bool? newValue) {
+                          setState(() {
+                          });
                         }),
-                   ),
-                  SizedBox(width: 5,),
+                  ),
                   Flexible(
                     flex: 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -414,23 +420,27 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
                         ),
+                        SizedBox(height: 10,),
                         widget.subtask.note.isNotEmpty
-                            ? Text(
-                          widget.subtask.note,
-                          style: toDoListTiletimeStyle(unitHeightValue),
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          maxLines: 2,
+                            ? Expanded(
+                          child: Text(
+                            widget.subtask.note,
+                            style: toDoListTiletimeStyle(unitHeightValue),
+                            overflow: TextOverflow.fade,
+                            softWrap: true,
+                            maxLines: 1,
+                          ),
                         )
                             : Text(
                             "குறிப்புகள் இல்லை",
-                            style: toDoListTiletimeStyle(unitHeightValue)
+                            style: toDoListTilesubtimeStyle(unitHeightValue)
                         ),
+                        SizedBox(height: 10,),
                         widget.subtask.assignedTo.length > 0
                             ? _buildAssignedMemberAvatars()
                             : Text(
                           "ஒதுக்கப்பட்ட உறுப்பினர்கள் இல்லை",
-                          style: toDoListTiletimeStyle(unitHeightValue),
+                          style: toDoListTilesubtimeStyle(unitHeightValue),
                         ),
                       ],
                     ),
@@ -438,10 +448,9 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
                 ],
               ),
             ),
-            SizedBox(width: 100 * unitWidthValue,),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Row(
@@ -451,7 +460,7 @@ class _VisitorSubtaskListItemWidgetState extends State<VisitorSubtaskListItemWid
                     SizedBox(width: 5 * unitWidthValue),
                     Text(
                       "இறுதி தேதி: ${widget.subtask.deadline.month}/${widget.subtask.deadline.day}/${widget.subtask.deadline.year}",
-                      style: TextStyle(color: Colors.blue),
+                      style: toDoListTiletimeStyle(unitHeightValue*0.7),
                     ),
                   ],
                 ),

@@ -354,6 +354,7 @@ class _SubtaskInfoState extends State<SubtaskInfo> {
   }
 }
 
+
 class VisitorSubtaskInfo extends StatefulWidget {
   final List<GroupMember> members;
   final Subtask subtask;
@@ -562,6 +563,328 @@ class _VisitorSubtaskInfoState extends State<VisitorSubtaskInfo> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: ()  {
+            },
+            child: Column(
+              children: [
+                viewmodel.members[index].cAvatar(
+                    radius: 34,
+                    color: Colors.blue,
+                    unitHeightValue: unitHeightValue),
+                Text(
+                  viewmodel.members[index].username,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16 * unitHeightValue,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        itemCount: viewmodel.members.length,
+      ),
+    );
+  }
+}
+
+
+class WorkerSubtaskInfo extends StatefulWidget {
+  final List<GroupMember> members;
+  final Subtask subtask;
+
+  const WorkerSubtaskInfo({
+    required this.subtask,
+    required this.members,
+  }) ;
+
+  @override
+  _WorkerSubtaskInfoState createState() => _WorkerSubtaskInfoState();
+}
+
+class _WorkerSubtaskInfoState extends State<WorkerSubtaskInfo> {
+  late final SubtaskViewModel viewmodel;
+  late double unitHeightValue, unitWidthValue;
+  TextEditingController notesController = new TextEditingController();
+  bool buffering = true;
+  bool updating = false;
+  final double fontSize= 32.0;
+  late SubtaskBloc subtaskBloc;
+
+
+  @override
+  void initState() {
+    viewmodel = SubtaskViewModel(
+        subtask: widget.subtask,
+        members: widget.members);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    unitHeightValue = MediaQuery.of(context).size.height * 0.001;
+    unitWidthValue = MediaQuery.of(context).size.width * 0.001;
+    subtaskBloc = locator<SubtaskBloc>();
+
+    return SafeArea(
+      child: BackgroundColorContainer(
+        startColor: Colors.white,
+        endColor: Colors.white,
+        widget: Scaffold(
+          appBar: AppBar(
+            title: Text(''),
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
+            elevation: 0.0,
+            toolbarHeight: 100.0,
+            leading: IconButton(
+              tooltip: 'பின்னால்',
+              icon: Icon(Icons.arrow_back,
+                  size: 32.0 * unitHeightValue, color: Colors.blue),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: Colors.white,
+            ),
+            actions: <Widget>[
+              SizedBox(width: 10,),
+              PriorityPicker(colors: Colors.blue,onTap: (int value){
+                viewmodel.priority = value;
+                setState(() {});
+              }
+              ),
+              SizedBox(width: 10,),
+              Padding(
+                padding: EdgeInsets.only(
+                  top:  5*unitHeightValue,
+                  bottom: 5*unitHeightValue,
+                  //right: 8.0 * unitWidthValue
+                  //
+                ),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.blue,
+                    backgroundColor: Colors.blue,
+                    elevation: 9.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                  ),
+                  onPressed: () {
+                    if (!mounted) return;
+                    setState(() {
+                      updating = true;
+                    });
+                    viewmodel.note = notesController.text;
+                    viewmodel
+                        .updateSubtaskInfo()
+                        .then((_) => Navigator.pop(context));
+                  },
+                  child: updating
+                      ? _buildProgressIndicator()
+                      : Text(
+                    "தரவைப் புதுப்பிக்கவும்",
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13 * unitHeightValue,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(width: 5,),
+            ],
+          ),
+          backgroundColor: Colors.grey.shade100,
+          body:
+          SingleChildScrollView(
+            child: FutureBuilder(
+              future: viewmodel.getUsersAssignedtoSubtask(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting)
+                  buffering = true;
+                else
+                  buffering = false;
+                return _buildBody();
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Center _buildProgressIndicator() {
+    return Center(
+      child: CircularProgressIndicator(color: Colors.blue),
+    );
+  }
+
+  void reAddSubtask(Subtask subtask) async {
+    await subtaskBloc.addSubtask(subtask.title);
+  }
+
+  Future<Null> deleteSubtask(Subtask subtask) async {
+    await subtaskBloc.deleteSubtask(subtask.subtaskKey);
+  }
+
+  Column _buildBody() {
+    return
+      Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: _subtaskInfoColumn(),
+          ),
+          _buildExpandedCard(),
+          ChatScreen(subtaskKey: widget.subtask.subtaskKey),
+        ],
+      );
+  }
+
+  /// Column containing pertinent Subtask Info
+  Column _subtaskInfoColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 25.0 * unitHeightValue),
+        Center(
+          child: Text(
+            widget.subtask.title,
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              fontSize: fontSize * unitHeightValue,
+            ),
+          ),
+        ),
+        SizedBox(height: 25.0 * unitHeightValue),
+        Text("விளக்கம்", style: labelStyle1(unitHeightValue)),
+        SizedBox(height: 15.0 * unitHeightValue),
+        _notesContainer(),
+        SizedBox(height: 25 * unitHeightValue),
+        DueDateRow(viewmodel),
+        SizedBox(height: 25 * unitHeightValue),
+      ],
+    );
+  }
+
+
+  /// Container for Notes
+  ///
+  /// Contains
+  /// * Container
+  /// * Textfield for editing notes
+  Container _notesContainer() {
+    return Container(
+      height: 150,
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: TextField(
+        controller: notesController..text = viewmodel.note,
+        onChanged: (val) {
+          viewmodel.note = val;
+        },
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        minLines: 4,
+        decoration: InputDecoration(border: InputBorder.none),
+        style: TextStyle(fontSize: 16 * unitHeightValue,color: Colors.black),
+      ),
+    );
+  }
+
+  Container _buildExpandedCard() {
+    return Container(
+      height: MediaQuery.of(context).size.height/2.5,
+      width: MediaQuery.of(context).size.width,
+      child: _buildMembersContainer(),
+    );
+  }
+
+  Container _buildMembersContainer() {
+    return Container(
+      alignment: Alignment.topLeft,
+      padding: EdgeInsets.only(left: 24.0, top: 18.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(50.0),
+        ),
+      ),
+      child: Stack(
+        children: [
+          _buildMembersLabelRow(),
+          buffering ? _buildProgressIndicator() : _buildMembersList(),
+        ],
+      ),
+    );
+  }
+
+  Row _buildMembersLabelRow() {
+    return Row(children: [
+      Text(
+        "ஒதுக்கப்படும்:",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+            fontSize: 22 * unitHeightValue),
+      ),
+      SizedBox(width: 5 * unitWidthValue),
+      CircleAvatar(
+        radius: 20 * unitHeightValue,
+        backgroundColor: Colors.blue,
+        child: Text(
+          "${widget.subtask.assignedTo.length}",
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16 * unitHeightValue),
+        ),
+      ),
+      SizedBox(width: 5 * unitWidthValue),
+      widget.subtask.assignedTo.length > 1
+          ?Text("நபர்கள்",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+            fontSize: 22 * unitHeightValue),
+      )
+          :Text("நபர்",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+            fontSize: 22 * unitHeightValue),
+      )
+    ]);
+  }
+
+  Padding _buildMembersList() {
+    return Padding(
+      padding: EdgeInsets.only(
+          top: 75.0 * unitHeightValue, right: 24.0 * unitWidthValue),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200 * unitWidthValue,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: 10 * unitWidthValue,
+          mainAxisSpacing: 10 * unitHeightValue,
+        ),
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () async {
+              try {
+                viewmodel.alreadySelected(index)
+                    ? await viewmodel.unassignSubtaskToUser(index)
+                    : await viewmodel.assignSubtaskToUser(index);
+                setState(() {});
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("$e"), backgroundColor: Colors.red),
+                );
+              }
             },
             child: Column(
               children: [

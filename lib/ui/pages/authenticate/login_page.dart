@@ -51,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       await  Navigator.pushReplacementNamed(context, "/home");
     } catch (e) {
+      print("$e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("$e"),

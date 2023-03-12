@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 class Message extends Equatable {
   String message;
   String sender;
-  DateTime timeCreated;
+  String timeCreated;
   String subtaskKey;
   String messageKey;
 
@@ -18,7 +18,7 @@ class Message extends Equatable {
       sender: parsedJson['sender'],
       subtaskKey: parsedJson['subtaskKey'],
       messageKey: parsedJson['messageKey'],
-      timeCreated: DateTime.parse(parsedJson['time_created']),
+      timeCreated: parsedJson['time_created'],
     );
   }
 

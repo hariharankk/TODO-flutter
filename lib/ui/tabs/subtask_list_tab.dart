@@ -443,7 +443,7 @@ class _WorkerSubtaskListTabState extends State<WorkerSubtaskListTab> {
           padding: EdgeInsets.only(left: 10.0,right: 10.0),
           height: MediaQuery.of(context).size.height * 0.25,
           width: MediaQuery.of(context).size.width,
-          child: SubtaskListItemWidget(
+          child: WorkerSubtaskListItemWidget(
             subtask: subtask,
             group: group,
           ),
@@ -695,7 +695,7 @@ class _VisitorSubtaskListTabState extends State<VisitorSubtaskListTab> {
           padding: EdgeInsets.only(left: 10.0,right: 10.0),
           height: MediaQuery.of(context).size.height * 0.25,
           width: MediaQuery.of(context).size.width,
-          child: SubtaskListItemWidget(
+          child: VisitorSubtaskListItemWidget(
             subtask: subtask,
             group: group,
           ),

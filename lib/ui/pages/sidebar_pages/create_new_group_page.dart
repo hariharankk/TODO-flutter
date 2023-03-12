@@ -100,7 +100,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         saving=false;
       });
 
-      String groupKey = await repository.addGroup(groupName.text, isPrivate);
+      String groupKey = await repository.addGroup(groupName.text, isPrivate,admin.role);
       for (GroupMember member in newGroup.members) {
         try {
           if(member.username != userBloc.getUserObject().username) {

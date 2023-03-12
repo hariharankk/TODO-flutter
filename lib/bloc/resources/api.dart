@@ -18,29 +18,29 @@ class ApiProvider {
   //static Uri baseURL = 'https://taskmanager-group-stage.herokuapp.com/api';
   //static String baseURL = "http://10.0.2.2:5000/api";
 
-  static String stageHost = '28f3-35-245-197-98.ngrok.io';
+  static String stageHost = 'http://127.0.0.1:5000';
   static String productionHost = 'taskmanager-group-pro.herokuapp.com';
   static String localhost = "10.0.2.2:5000";
-  Uri signinURL = Uri(scheme: 'http', host: stageHost, path: '/api/login');
-  Uri userURL = Uri(scheme: 'http', host: stageHost, path: '/api/register');
-  Uri userupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/userupdate');
+  String signinURL = stageHost + '/api/login';
+  String userURL = stageHost+'/api/register';
+  String userupdateURL = stageHost+'/api/userupdate';
 
-  Uri taskaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-add');
-  Uri taskupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-update');
+  String taskaddURL = stageHost+'/api/tasks-add';
+  String taskupdateURL = stageHost+'/api/tasks-update';
 
-  Uri subtaskaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-add');
-  Uri subtaskupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-update');
+  String subtaskaddURL = stageHost+'/api/subtasks-add';
+  String subtaskupdateURL = stageHost+'/api/subtasks-update';
 
-  Uri groupaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-add');
-  Uri groupupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-update');
+  String groupaddURL = stageHost+'/api/group-add';
+  String groupupdateURL = stageHost+'/api/group-update';
 
-  Uri groupmemberaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-add');
+  String groupmemberaddURL = stageHost+'/api/groupmember-add';
 
-  Uri searchURL = Uri(scheme: 'http', host: stageHost, path: '/api/search');
-  Uri groupmemberupdateURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-update');
-  Uri assignedtouserhaddURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-add');
+  String searchURL = stageHost+'/api/search';
+  String groupmemberupdateURL = stageHost+'/api/groupmember-update';
+  String assignedtouserhaddURL = stageHost+'/api/assignedtouserhURL-add';
 
-  Uri sendmessage = Uri(scheme: 'http', host: stageHost, path: '/api/message_send');
+  String sendmessage = stageHost+'/api/message_send';
 
 
   // User CRUD Functions
@@ -50,7 +50,7 @@ class ApiProvider {
 
     print(userURL);
     final response = await client.post(
-      userURL,
+        Uri.parse(userURL),
         headers: {
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ class ApiProvider {
   Future signinUser(String email, String password) async {
     print(signinURL);
     final response = await client.post(
-      signinURL,
+      Uri.parse(signinURL),
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ class ApiProvider {
   Future<List> getUserGroups() async {
     final Token = await jwt.read_token();
     final queryParameters = {'username':userBloc.getUserObject().username};
-    Uri groupURL = Uri(scheme: 'http', host: stageHost, path: '/api/group',queryParameters: queryParameters);
+    Uri groupURL = Uri.parse(stageHost+'/api/group').replace(queryParameters: queryParameters);
     List<Group> groups = [];
     List data;
       final response = await client.get(
@@ -154,11 +154,11 @@ class ApiProvider {
   }
 
   /// Add a Group
-  Future addGroup(String groupName, bool isPublic) async {
+  Future addGroup(String groupName, bool isPublic,String role) async {
     print(groupaddURL);
     final Token = await jwt.read_token();
     final response = await client.post(
-      groupaddURL,
+        Uri.parse(groupaddURL),
       headers: {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
         'x-access-token': Token,
@@ -168,6 +168,7 @@ class ApiProvider {
       },
       body: jsonEncode({
         'username':userBloc.getUserObject().username,
+        'role':role,
         "name": groupName,
         "is_public": isPublic,
       }),
@@ -189,7 +190,7 @@ class ApiProvider {
   Future<bool> updateGroup(Group group) async {
     final Token = await jwt.read_token();
     final response = await client.patch(
-      groupupdateURL,
+        Uri.parse(groupupdateURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -212,7 +213,7 @@ class ApiProvider {
     final queryParameters = {
       "group_key": groupKey,
     };
-    Uri groupdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/group-delete',queryParameters: queryParameters);
+    Uri groupdeleteURL = Uri.parse(stageHost+'/api/group-delete').replace(queryParameters: queryParameters);
     final response = await client.delete(
       groupdeleteURL,
       headers: {
@@ -236,7 +237,7 @@ class ApiProvider {
     final queryParameters = {
       "groupKey":groupKey,
     };
-    Uri groupmemberURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-get',queryParameters: queryParameters);
+    Uri groupmemberURL = Uri.parse(stageHost+'/api/groupmember-get').replace(queryParameters: queryParameters);
     final response = await client.get(
       groupmemberURL,
       headers: {
@@ -275,7 +276,7 @@ class ApiProvider {
       role='பார்வையாளர்';
     }
     final response = await client.post(
-      groupmemberaddURL,
+      Uri.parse(groupmemberaddURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -302,7 +303,7 @@ class ApiProvider {
       role='பார்வையாளர்';
     }
     final response = await client.patch(
-      groupmemberupdateURL,
+      Uri.parse(groupmemberupdateURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -332,7 +333,7 @@ class ApiProvider {
       "groupKey":groupKey,
     "username": username,
     };
-    Uri groupmemberdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/groupmember-delete',queryParameters: queryParameters);
+    Uri groupmemberdeleteURL = Uri.parse(stageHost+'/api/groupmember-delete').replace(queryParameters: queryParameters);
     final response = await client.delete(
       groupmemberdeleteURL,
       headers: {
@@ -358,7 +359,7 @@ class ApiProvider {
   Future<List<Task>> getTasks(String groupKey) async {
     final Token = await jwt.read_token();
     final queryParameters = {"group_key": groupKey};
-    Uri taskURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-get',queryParameters: queryParameters);
+    Uri taskURL = Uri.parse(stageHost+'/api/tasks-get').replace(queryParameters: queryParameters);
     final response = await client.get(
       taskURL,
       headers: {
@@ -394,7 +395,7 @@ class ApiProvider {
   Future addTask(String taskName, String groupKey) async {
     final Token = await jwt.read_token();
     final response = await client.post(
-      taskaddURL,
+      Uri.parse(taskaddURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -414,7 +415,7 @@ class ApiProvider {
   Future updateTask(Task task) async {
     final Token = await jwt.read_token();
     final response = await client.patch(
-      taskupdateURL,
+      Uri.parse(taskupdateURL),
       headers: {
         'x-access-token': Token,
           "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -434,7 +435,7 @@ class ApiProvider {
   Future deleteTask(String taskKey) async {
     final Token = await jwt.read_token();
     final queryParameters = {"task_key":taskKey};
-    Uri taskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/tasks-delete',queryParameters: queryParameters);
+    Uri taskdeleteURL = Uri.parse(stageHost+'/api/tasks-delete').replace(queryParameters: queryParameters);
     final response = await client.delete(
       taskdeleteURL,
       headers: {
@@ -458,7 +459,7 @@ class ApiProvider {
     final queryParameters = {
       'taskKey':task.taskKey,
     };
-    Uri subtaskURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-get',queryParameters: queryParameters);
+    Uri subtaskURL = Uri.parse(stageHost+'/api/subtasks-get').replace(queryParameters: queryParameters);
 
     final response = await client.get(
       subtaskURL,
@@ -498,7 +499,7 @@ class ApiProvider {
   Future addSubtask(String taskKey, String subtaskName) async {
     final Token = await jwt.read_token();
     final response = await client.post(
-      subtaskaddURL,
+      Uri.parse(subtaskaddURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -522,7 +523,7 @@ class ApiProvider {
   Future updateSubtask(Subtask subtask) async {
     final Token = await jwt.read_token();
     final response = await client.patch(
-      subtaskupdateURL,
+      Uri.parse(subtaskupdateURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -550,7 +551,7 @@ class ApiProvider {
     final queryParameters = {
       "subtask_key": subtaskKey,
     };
-    Uri subtaskdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/subtasks-delete',queryParameters: queryParameters);
+    Uri subtaskdeleteURL = Uri.parse(stageHost+'/api/subtasks-delete').replace(queryParameters: queryParameters);
     final response = await client.delete(
       subtaskdeleteURL,
       headers: {
@@ -572,7 +573,7 @@ class ApiProvider {
     final Token = await jwt.read_token();
     print(searchTerm);
     final response = await client.post(
-      searchURL,
+      Uri.parse(searchURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -609,7 +610,7 @@ class ApiProvider {
     final Token = await jwt.read_token();
     final queryParameters = {
       "subtask_key": subtaskKey,};
-    Uri assignedtouserhgetURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-get', queryParameters: queryParameters);
+    Uri assignedtouserhgetURL = Uri.parse(stageHost+'/api/assignedtouserhURL-get').replace( queryParameters: queryParameters);
     final response = await client.get(
       assignedtouserhgetURL,
       headers: {
@@ -643,7 +644,7 @@ class ApiProvider {
   Future assignSubtaskToUser(String subtaskKey, String username) async {
     final Token = await jwt.read_token();
     final response = await client.post(
-      assignedtouserhaddURL,
+      Uri.parse(assignedtouserhaddURL),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -673,7 +674,7 @@ class ApiProvider {
       "subtask_key": subtaskKey,
     "username":username,
     };
-    Uri assignedtouserhdeleteURL = Uri(scheme: 'http', host: stageHost, path: '/api/assignedtouserhURL-delete',queryParameters: queryParameters);
+    Uri assignedtouserhdeleteURL = Uri.parse(stageHost+'/api/assignedtouserhURL-delete').replace(queryParameters: queryParameters);
     final response = await client.delete(
       assignedtouserhdeleteURL,
       headers: {
@@ -695,7 +696,7 @@ class ApiProvider {
   Future send_message(String message,String sender,String subtaskKey) async{
     final Token = await jwt.read_token();
     final response = await client.post(
-      sendmessage,
+      Uri.parse(sendmessage),
       headers: {
         'x-access-token': Token,
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work

@@ -84,8 +84,8 @@ class GroupBloc {
     await updateGroups();
   }
 
-  Future<String> addGroup(String groupName, bool isPublic) async {
-    String groupKey = await repository.addGroup(groupName, isPublic);
+  Future<String> addGroup(String groupName, bool isPublic,String role) async {
+    String groupKey = await repository.addGroup(groupName, isPublic,role);
     await updateGroups();
     return groupKey;
   }

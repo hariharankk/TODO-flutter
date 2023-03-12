@@ -19,6 +19,7 @@ class message_StreamSocket{
   void openingapprovalconnectAndListen(String id){
     socket.emit('/message/get',id);
     socket.on('/message/get', (data) {
+      print(data['data']);
       addResponse(data['data']);
     });
 

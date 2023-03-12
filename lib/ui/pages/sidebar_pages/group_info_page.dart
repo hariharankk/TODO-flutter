@@ -108,6 +108,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
 
     await groupBloc.updateGroups();
     Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   Stack _buildStack() {

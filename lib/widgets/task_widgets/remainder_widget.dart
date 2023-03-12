@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todolist/models/global.dart';
 import 'package:todolist/remainder/remainder.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
@@ -14,7 +14,7 @@ class DatePicker extends StatefulWidget {
 class DatePickerState extends State<DatePicker> {
   String selectedDate = '', hour = '',repeat_text='ஒரு முறை';
   late double unitHeightValue, unitWidthValue;
- // NotificationService notificationService = NotificationService();
+ NotificationService notificationService = NotificationService();
   DateTime? eventDate;
   TimeOfDay? eventTime;
   DateTime currentDate = DateTime.now();
@@ -36,7 +36,7 @@ class DatePickerState extends State<DatePicker> {
     }
   }
 
- /* Future<void> onCreate() async {
+  Future<void> onCreate() async {
     await notificationService.showNotification(
       0,
       '',
@@ -78,7 +78,7 @@ class DatePickerState extends State<DatePicker> {
     } else if ( repeat_text == 'Weekly') {
       return DateTimeComponents.dayOfWeekAndTime;
     }
-  }*/
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -95,9 +95,9 @@ class DatePickerState extends State<DatePicker> {
       });
   }
 
- /* Future<void> cancelAllNotifications() async {
+  Future<void> cancelAllNotifications() async {
     await notificationService.cancelAllNotifications();
-  }*/
+  }
 
   Widget _buildCancelAllButton() {
     return Container(
@@ -167,7 +167,7 @@ class DatePickerState extends State<DatePicker> {
                 ),
                 TextButton(
                     onPressed: () {
-     //                 onCreate();
+                      onCreate();
                       SnackBar(
                         content: Text(
                           "மீதமுள்ளவை வெற்றிகரமாக உள்ளன",
@@ -185,7 +185,7 @@ class DatePickerState extends State<DatePicker> {
             ),
             GestureDetector(
               onTap: () async {
-                //await cancelAllNotifications();
+                await cancelAllNotifications();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("அனைத்து அறிவிப்புகளும் ரத்து செய்யப்பட்டன"),

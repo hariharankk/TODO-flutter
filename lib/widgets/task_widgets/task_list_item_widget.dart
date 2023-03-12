@@ -344,8 +344,6 @@ class _VisitorTaskListItemWidgetState extends State<VisitorTaskListItemWidget> {
                               value: widget.task.completed,
                               onChanged: (bool? newValue) {
                                 setState(() {
-                                  widget.task.completed = newValue!;
-                                  repository.updateTask(widget.task);
                                 });
                               }),
                         ),
